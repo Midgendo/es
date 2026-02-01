@@ -1,0 +1,238 @@
+{
+  "timestamp": "2026-01-31T21:47:06.526144",
+  "pixels_per_meter": 50.0,
+  "floorplan_filename": "wall.png",
+  "agents": [
+    {
+      "agent_type": "Default",
+      "position": [
+        487,
+        481
+      ],
+      "sim_position": [
+        177,
+        456
+      ],
+      "speed": 150.0,
+      "radius": 15,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        573,
+        347
+      ],
+      "sim_position": [
+        263,
+        322
+      ],
+      "speed": 150.0,
+      "radius": 15,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        469,
+        363
+      ],
+      "sim_position": [
+        159,
+        338
+      ],
+      "speed": 150.0,
+      "radius": 15,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        504,
+        383
+      ],
+      "sim_position": [
+        194,
+        358
+      ],
+      "speed": 150.0,
+      "radius": 15,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        563,
+        419
+      ],
+      "sim_position": [
+        253,
+        394
+      ],
+      "speed": 150.0,
+      "radius": 15,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        611,
+        464
+      ],
+      "sim_position": [
+        301,
+        439
+      ],
+      "speed": 150.0,
+      "radius": 15,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        632,
+        408
+      ],
+      "sim_position": [
+        322,
+        383
+      ],
+      "speed": 150.0,
+      "radius": 15,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Type A",
+      "position": [
+        702,
+        505
+      ],
+      "sim_position": [
+        392,
+        480
+      ],
+      "speed": 150.0,
+      "radius": 15,
+      "colour": [
+        255,
+        100,
+        100
+      ]
+    },
+    {
+      "agent_type": "Type A",
+      "position": [
+        724,
+        405
+      ],
+      "sim_position": [
+        414,
+        380
+      ],
+      "speed": 150.0,
+      "radius": 15,
+      "colour": [
+        255,
+        100,
+        100
+      ]
+    },
+    {
+      "agent_type": "Type A",
+      "position": [
+        675,
+        353
+      ],
+      "sim_position": [
+        365,
+        328
+      ],
+      "speed": 150.0,
+      "radius": 15,
+      "colour": [
+        255,
+        100,
+        100
+      ]
+    },
+    {
+      "agent_type": "Type A",
+      "position": [
+        637,
+        358
+      ],
+      "sim_position": [
+        327,
+        333
+      ],
+      "speed": 150.0,
+      "radius": 15,
+      "colour": [
+        255,
+        100,
+        100
+      ]
+    },
+    {
+      "agent_type": "Type A",
+      "position": [
+        371,
+        387
+      ],
+      "sim_position": [
+        61,
+        362
+      ],
+      "speed": 150.0,
+      "radius": 15,
+      "colour": [
+        255,
+        100,
+        100
+      ]
+    }
+  ],
+  "exits": [
+    {
+      "position": [
+        1098,
+        390
+      ],
+      "number": 1,
+      "radius": 18,
+      "colour": [
+        0,
+        200,
+        0
+      ]
+    }
+  ]
+}

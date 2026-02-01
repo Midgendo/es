@@ -1,0 +1,141 @@
+{
+  "timestamp": "2026-01-28T17:50:51.623925",
+  "pixels_per_meter": 50.0,
+  "floorplan_filename": "floorplan.png",
+  "agents": [
+    {
+      "position": [
+        1091,
+        483
+      ],
+      "sim_position": [
+        675,
+        458
+      ],
+      "speed": 225.0,
+      "radius": 15,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "position": [
+        959,
+        479
+      ],
+      "sim_position": [
+        543,
+        454
+      ],
+      "speed": 225.0,
+      "radius": 15,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "position": [
+        997,
+        493
+      ],
+      "sim_position": [
+        581,
+        468
+      ],
+      "speed": 225.0,
+      "radius": 15,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "position": [
+        1047,
+        499
+      ],
+      "sim_position": [
+        631,
+        474
+      ],
+      "speed": 225.0,
+      "radius": 15,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "position": [
+        1010,
+        458
+      ],
+      "sim_position": [
+        594,
+        433
+      ],
+      "speed": 225.0,
+      "radius": 15,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "position": [
+        1060,
+        461
+      ],
+      "sim_position": [
+        644,
+        436
+      ],
+      "speed": 225.0,
+      "radius": 15,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "position": [
+        1113,
+        439
+      ],
+      "sim_position": [
+        697,
+        414
+      ],
+      "speed": 225.0,
+      "radius": 15,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    }
+  ],
+  "exits": [
+    {
+      "position": [
+        566,
+        618
+      ],
+      "number": 1,
+      "radius": 18,
+      "colour": [
+        0,
+        200,
+        0
+      ]
+    }
+  ]
+}

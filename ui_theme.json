@@ -1,0 +1,29 @@
+{
+    "#floorplan_picker": {
+        "colours": {
+            "normal_bg": "#4c5052"
+        }
+    },
+    "#agent_size_input": {
+        "colours": {
+            "dark_bg": "#ffffff",
+            "disabled_dark_bg": "#ffffff",
+            "normal_border": "#000000",
+            "normal_text": "#000000",
+            "selected_bg": "#3b78ff",
+            "selected_text": "#ffffff",
+            "text_cursor": "#000000"
+        }
+    },
+    "#agent_speed_input": {
+        "colours": {
+            "dark_bg": "#ffffff",
+            "disabled_dark_bg": "#ffffff",
+            "normal_border": "#000000",
+            "normal_text": "#000000",
+            "selected_bg": "#3b78ff",
+            "selected_text": "#ffffff",
+            "text_cursor": "#000000"
+        }
+    }
+}
