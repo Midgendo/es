@@ -275,11 +275,9 @@ class EvacuationSimulator:
             
         elif new_state == AppState.EDITING:
             if reset_sim:
-                self.simulation.reset()
+                self.simulation.reset(False)
             self.tool = "agent"
             
-            self.agent_panel.clear_cards()
-            self.agent_panel._add_agent_type(self.default_agent_type)
             self.agent_panel.focused_index = 0
             self.editing_agent_type = self.default_agent_type
             
@@ -328,6 +326,8 @@ class EvacuationSimulator:
         if self._first_load:
             self.ui_panel.enter(delay=0.25)
             self.agent_panel.enter(delay=0.35)
+            self.agent_panel._add_agent_type(self.default_agent_type)
+
             self._first_load = False
         
         log(f"Loaded floorplan: {self.floorplan_filename}")

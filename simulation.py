@@ -46,7 +46,7 @@ class Simulation:
         
     def generate_grid_nodes(self):
         spacing = self.sim_config.grid_spacing_meters * self.sim_config.pixels_per_meter
-        agent_radius = self.sim_config.agent_size
+        agent_radius = self.sim_config.pixels_per_meter * 0.4
         
         self.grid_nodes = []
         for y in range(int(spacing), int(self.floorplan.height), int(spacing)):
@@ -54,9 +54,10 @@ class Simulation:
                 if not has_wall_collision(x, y, agent_radius, self.floorplan.wall_polygons):
                     self.grid_nodes.append((float(x), float(y)))
                     
-    def reset(self):
-        self.agents.empty()
-        self.exits.empty()
+    def reset(self, clear_agents=True):
+        if clear_agents:
+            self.agents.empty()
+            self.exits.empty()
         self.roadmap = []
         self.exit_indices = []
         self.time = 0.0
