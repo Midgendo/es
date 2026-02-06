@@ -1,7 +1,81 @@
 import pygame
 import pygame_gui
 import pytweening
-from config import ColourScheme, AgentType, CustomAgentDefaults
+from config import ColourScheme, AgentType, CustomAgentDefaults, AppState
+from sprites import Agent, Exit, has_wall_collision, has_agent_collision
+
+
+class SceneData:
+    def __init__(self, ppm=50.0):
+        self.agents = []
+        self.exits = []
+        self.floorplan = None
+        self.ppm = ppm
+    
+    def set_floorplan(self, floorplan):
+        self.floorplan = floorplan
+    
+    def add_agent(self, screen_x, screen_y, agent_type):
+        sim_x, sim_y = self.floorplan.screen_to_sim(screen_x, screen_y)
+        radius_px = agent_type.radius_px(self.ppm)
+        if has_wall_collision(sim_x, sim_y, radius_px, self.floorplan.wall_polygons):
+            return False
+        if has_agent_collision((sim_x, sim_y), radius_px, self.agents):
+            return False
+        agent = Agent(screen_x, screen_y, agent_type, self.floorplan.offset_x, self.floorplan.offset_y, self.ppm)
+        self.agents.append(agent)
+        return True
+    
+    def remove_agent_at(self, screen_x, screen_y):
+        for agent in self.agents:
+            if agent.rect.collidepoint((screen_x, screen_y)):
+                self.agents.remove(agent)
+                return True
+        return False
+    
+    def remove_agents_of_type(self, agent_type):
+        self.agents = [a for a in self.agents if a.agent_type != agent_type]
+    
+    def add_exit(self, screen_x, screen_y, sim_config):
+        sim_x, sim_y = self.floorplan.screen_to_sim(screen_x, screen_y)
+        if has_wall_collision(sim_x, sim_y, sim_config.agent_size, self.floorplan.wall_polygons):
+            return False
+        exit_obj = Exit(
+            screen_x, screen_y, len(self.exits) + 1,
+            radius=sim_config.agent_size * 1.2, colour=(0, 200, 0),
+            offset_x=self.floorplan.offset_x, offset_y=self.floorplan.offset_y
+        )
+        self.exits.append(exit_obj)
+        return True
+    
+    def remove_exit_at(self, screen_x, screen_y):
+        for exit_obj in self.exits:
+            if exit_obj.rect.collidepoint((screen_x, screen_y)):
+                self.exits.remove(exit_obj)
+                for idx, e in enumerate(self.exits, 1):
+                    e.set_number(idx)
+                return True
+        return False
+    
+    def update_agents_of_type(self, agent_type, radius_m=None, speed_mps=None):
+        if radius_m is not None:
+            agent_type.radius_m = radius_m
+        if speed_mps is not None:
+            agent_type.speed_mps = speed_mps
+        for agent in self.agents:
+            if agent.agent_type is agent_type:
+                agent.radius = int(agent_type.radius_px(self.ppm))
+                agent.speed = agent_type.speed_px(self.ppm)
+                agent.rebuild_image()
+    
+    def update_ppm(self, ppm):
+        self.ppm = ppm
+        for agent in self.agents:
+            agent.update_ppm(ppm)
+    
+    def clear(self):
+        self.agents = []
+        self.exits = []
 
 
 class UIConfig:
@@ -260,12 +334,12 @@ class AgentTypeCard:
             self.size_input = None
 
     def _get_size_meters(self, pixels_per_meter):
-        return (self.agent_type.radius * 2) / pixels_per_meter
+        return self.agent_type.radius_m * 2
 
     def _get_speed_meters(self, pixels_per_meter):
-        return self.agent_type.speed / pixels_per_meter
+        return self.agent_type.speed_mps
 
-    def commit_edits(self, simulation, pixels_per_meter):
+    def commit_edits(self, scene_data, pixels_per_meter):
         committed = False
         if self.edit_size and self.size_input is not None:
             raw = self.size_input.get_text().strip()
@@ -274,8 +348,7 @@ class AgentTypeCard:
             except ValueError:
                 value = None
             if value is not None and 0.1 <= value <= 2.0:
-                radius_px = (value / 2.0) * pixels_per_meter
-                simulation.update_agents_of_type(self.agent_type, radius=radius_px)
+                scene_data.update_agents_of_type(self.agent_type, radius_m=value / 2.0)
                 committed = True
             else:
                 if self._prev_size_m is not None:
@@ -291,8 +364,7 @@ class AgentTypeCard:
             except ValueError:
                 value = None
             if value is not None and 0.0 <= value <= 10.0:
-                speed_px = value * pixels_per_meter
-                simulation.update_agents_of_type(self.agent_type, speed=speed_px)
+                scene_data.update_agents_of_type(self.agent_type, speed_mps=value)
                 committed = True
             else:
                 if self._prev_speed_m is not None:
@@ -341,7 +413,7 @@ class AgentTypeCard:
             pygame.draw.circle(
                 surface, self.agent_type.colour,
                 (int(x + 40), int(y + 40)),
-                int(self.agent_type.radius / pixels_per_meter * 50)
+                int(self.agent_type.radius_m * 50)  # Scale for preview
             )
             
             if name.startswith("Type ") and len(name) > 5:
@@ -352,8 +424,8 @@ class AgentTypeCard:
                 letter_y = y + 40 - letter_text.get_height() // 2
                 surface.blit(letter_text, (letter_x, letter_y))
             
-            size_text = Fonts.AGENT_DETAILS.render(f"Size: {self.agent_type.radius * 2 / pixels_per_meter} m", True, (255, 255, 255))
-            speed_text = Fonts.AGENT_DETAILS.render(f"Speed: {self.agent_type.speed / pixels_per_meter} m/s", True, (255, 255, 255))
+            size_text = Fonts.AGENT_DETAILS.render(f"Size: {self.agent_type.radius_m * 2} m", True, (255, 255, 255))
+            speed_text = Fonts.AGENT_DETAILS.render(f"Speed: {self.agent_type.speed_mps} m/s", True, (255, 255, 255))
 
             text_x = x + 80
             size_y = y + 34
@@ -387,7 +459,7 @@ class AgentPanel:
     CARD_SPACING = 180
     MAX_VISIBLE_CARDS = 6
     
-    def __init__(self, manager, pixels_per_meter=50.0, colours=None, simulation = None):
+    def __init__(self, manager, pixels_per_meter=50.0, colours=None, sim_config=None, scene_data=None, state_getter=None):
         self.manager = manager
         self.pixels_per_meter = pixels_per_meter
         self.colours = colours or ColourScheme()
@@ -401,7 +473,9 @@ class AgentPanel:
         self.cards = []
         self.focused_index = None
         self.custom_defaults = CustomAgentDefaults()
-        self.simulation = simulation
+        self.sim_config = sim_config
+        self.scene_data = scene_data
+        self.state_getter = state_getter
     
     def enter(self, delay=0.0):
         self.animation_started = True
@@ -462,7 +536,7 @@ class AgentPanel:
                 if in_delete_chip:
                     if self.cards[i].agent_type.name == "Default":
                         return False
-                    self.simulation.remove_agents(self.cards[i].agent_type)
+                    self.scene_data.remove_agents_of_type(self.cards[i].agent_type)
                     self._delete_agent_type(i)
                     return True
                 else:
@@ -471,7 +545,8 @@ class AgentPanel:
                     self.cards[i].handle_click(mx, my, self.pixels_per_meter)
                     return True
         
-        if len(self.cards) < self.MAX_VISIBLE_CARDS:
+        # Plus card
+        if len(self.cards) < self.MAX_VISIBLE_CARDS and self.state_getter() == AppState.EDITING:
             plus_card_x = self.X + len(self.cards) * self.CARD_SPACING
             plus_card_y = self.current_pos
             
@@ -500,20 +575,16 @@ class AgentPanel:
                     
                     defaults = self.custom_defaults
                     colour_index = (ord(type_letter) - 65) % len(defaults.colours)
-                    cfg = self.simulation.sim_config
-                    neighbor_dist = cfg.neighbor_dist * self.pixels_per_meter
-                    max_neighbors = cfg.max_neighbors
-                    time_horizon = cfg.time_horizon
-                    time_horizon_obst = cfg.time_horizon_obst
+                    cfg = self.sim_config
                     new_type = AgentType(
                         name=f"Type {type_letter}",
-                        speed=defaults.speed_meters_per_sec * self.pixels_per_meter,
-                        radius=defaults.radius_meters * self.pixels_per_meter,
+                        speed_mps=defaults.speed_meters_per_sec,
+                        radius_m=defaults.radius_meters,
                         colour=defaults.colours[colour_index],
-                        neighbor_dist=neighbor_dist,
-                        max_neighbors=max_neighbors,
-                        time_horizon=time_horizon,
-                        time_horizon_obst=time_horizon_obst
+                        neighbor_dist_m=cfg.neighbor_dist,
+                        max_neighbors=cfg.max_neighbors,
+                        time_horizon=cfg.time_horizon,
+                        time_horizon_obst=cfg.time_horizon_obst
                     )
                     self._add_agent_type(new_type)
                     self.focused_index = len(self.cards) - 1
@@ -529,14 +600,14 @@ class AgentPanel:
                     return False
                 if card.speed_rect.collidepoint(mx, my):
                     return False
-                card.commit_edits(self.simulation, self.pixels_per_meter)
+                card.commit_edits(self.scene_data, self.pixels_per_meter)
                 return True
         return False
 
     def handle_text_entry_finished(self, ui_element):
         for card in self.cards:
             if ui_element == card.size_input or ui_element == card.speed_input:
-                card.commit_edits(self.simulation, self.pixels_per_meter)
+                card.commit_edits(self.scene_data, self.pixels_per_meter)
                 return True
         return False
 
@@ -581,7 +652,8 @@ class AgentPanel:
             temp_surface.blit(minus_text, (12, -14))
             surface.blit(temp_surface, (card_x + card.WIDTH - chip_size + 3, card_y + 1))
         
-        if len(self.cards) < self.MAX_VISIBLE_CARDS:
+        # Plus card
+        if len(self.cards) < self.MAX_VISIBLE_CARDS and self.state_getter() == AppState.EDITING:
             circle_x = x + len(self.cards) * self.CARD_SPACING + self.CARD_SPACING // 2
             circle_y = y + self.HEIGHT - 90
             circle_radius = 30
@@ -704,20 +776,23 @@ class SimWindow:
                     end = self.floorplan.sim_to_screen(*simulation.roadmap[neighbor_idx].position)
                     pygame.draw.line(surface, (0, 100, 255, 128), start, end, 1)
     
-    def draw(self, surface, simulation, show_paths=False, show_crosshair=False, mouse_pos=None, tool="agent"):
+    def draw(self, surface, simulation, scene_data=None, show_paths=False, show_crosshair=False, mouse_pos=None, tool="agent"):
         surface.blit(self.floorplan.walls_surface, (self.floorplan.offset_x, self.floorplan.offset_y))
         if self.grid_surface is not None:
             surface.blit(self.grid_surface, (self.floorplan.offset_x, self.floorplan.offset_y))
         if self.border_rect is not None:
             pygame.draw.rect(surface, (0, 0, 0), self.border_rect, self.BORDER_THICKNESS)
 
-        for exit_obj in simulation.exits:
+        exits = scene_data.exits if scene_data else simulation.exits
+        agents = scene_data.agents if scene_data else simulation.agents
+
+        for exit_obj in exits:
             surface.blit(exit_obj.image, exit_obj.rect)
 
         if show_paths and simulation.roadmap:
             self._draw_roadmap(surface, simulation)
 
-        for agent in simulation.agents:
+        for agent in agents:
             surface.blit(agent.image, agent.rect)
 
         if show_crosshair and self.crosshair and mouse_pos:

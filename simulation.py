@@ -3,7 +3,7 @@ import pygame
 import pyrvo
 
 from config import RoadmapVertex
-from sprites import Agent, Exit, has_wall_collision, has_agent_collision
+from sprites import has_wall_collision
 
 
 class Simulation:
@@ -61,100 +61,9 @@ class Simulation:
         self.roadmap = []
         self.exit_indices = []
         self.time = 0.0
-        self.evacuated_count = 0
-        self.paused = False
-
-    def reset_run_state(self):
-        self.time = 0.0
         self.simulation_time = 0.0
         self.evacuated_count = 0
         self.paused = False
-        
-    def add_agent(self, screen_x, screen_y, agent_type):
-        sim_x, sim_y = self.floorplan.screen_to_sim(screen_x, screen_y)
-        agent_size = int(agent_type.radius)
-        
-        if has_wall_collision(sim_x, sim_y, agent_size, self.floorplan.wall_polygons):
-            return False
-        if has_agent_collision((sim_x, sim_y), agent_size, self.agents):
-            return False
-            
-        agent = Agent(
-            screen_x, screen_y,
-            agent_type=agent_type,
-            offset_x=self.floorplan.offset_x,
-            offset_y=self.floorplan.offset_y
-        )
-        self.agents.add(agent)
-        return True
-        
-    def remove_agent_at(self, screen_x, screen_y):
-        for agent in self.agents:
-            if agent.rect.collidepoint((screen_x, screen_y)):
-                self.agents.remove(agent)
-                return True
-        return False
-    
-    def remove_agents(self, agent_type):
-        to_remove = [agent for agent in self.agents if agent.agent_type == agent_type]
-        for agent in to_remove:
-            self.agents.remove(agent)
-        return len(to_remove)
-
-    def update_agents_of_type(self, agent_type, radius=None, speed=None):
-        if radius is not None:
-            agent_type.radius = radius
-        if speed is not None:
-            agent_type.speed = speed
-        for agent in self.agents:
-            if agent.agent_type != agent_type:
-                continue
-            if radius is not None:
-                agent.radius = int(radius)
-                agent.rebuild_image()
-            if speed is not None:
-                agent.speed = speed
-            if agent.rvo_id is not None and self.rvo_sim is not None:
-                if radius is not None:
-                    if hasattr(self.rvo_sim, "set_agent_radius"):
-                        self.rvo_sim.set_agent_radius(agent.rvo_id, agent.radius)
-                    elif hasattr(self.rvo_sim, "setAgentRadius"):
-                        self.rvo_sim.setAgentRadius(agent.rvo_id, agent.radius)
-                if speed is not None:
-                    if hasattr(self.rvo_sim, "set_agent_max_speed"):
-                        self.rvo_sim.set_agent_max_speed(agent.rvo_id, agent.speed)
-                    elif hasattr(self.rvo_sim, "setAgentMaxSpeed"):
-                        self.rvo_sim.setAgentMaxSpeed(agent.rvo_id, agent.speed)
-        
-    def add_exit(self, screen_x, screen_y):
-        sim_x, sim_y = self.floorplan.screen_to_sim(screen_x, screen_y)
-        agent_size = self.sim_config.agent_size
-        
-        if has_wall_collision(sim_x, sim_y, agent_size, self.floorplan.wall_polygons):
-            return False
-            
-        exit_number = len(self.exits) + 1
-        exit_obj = Exit(
-            screen_x, screen_y,
-            exit_number,
-            radius=agent_size * 1.2,
-            colour=(0, 200, 0),
-            offset_x=self.floorplan.offset_x,
-            offset_y=self.floorplan.offset_y
-        )
-        self.exits.add(exit_obj)
-        self.rebuild_roadmap()
-        return True
-        
-    def remove_exit_at(self, screen_x, screen_y):
-        for exit_obj in self.exits:
-            if exit_obj.rect.collidepoint((screen_x, screen_y)):
-                self.exits.remove(exit_obj)
-                for idx, e in enumerate(self.exits, 1):
-                    e.set_number(idx)
-                self.rebuild_roadmap()
-                return True
-        return False
         
     def rebuild_roadmap(self):
         if len(self.exits) > 0 and len(self.grid_nodes) > 0:
@@ -224,7 +133,7 @@ class Simulation:
         
         for agent in self.agents:
             if agent.rvo_id is None:
-                agent.register_with_rvo(self.rvo_sim, self.sim_config)
+                agent.register_with_rvo(self.rvo_sim)
                 
     def update(self, dt, mouse_override=None):
         if self.paused:

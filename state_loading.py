@@ -1,97 +1,73 @@
 import json
 from datetime import datetime
-
-DATA = {}
-
-def load(all_agents, all_exits, filename, PIXELS_PER_METER, AGENT_SIZE, maxSpeed, PIXELS_PER_METER_SCALE, SIM_OFFSET_X, SIM_OFFSET_Y, Agent, Exit, log, memory=False):
-    try:
-        if not memory:
-            with open(filename, 'r') as f:
-                data = json.load(f)
-        else:
-            data = DATA
-        
-        all_agents.empty()
-        all_exits.empty()
-        
-        if data.get("pixels_per_meter") != PIXELS_PER_METER:
-            log("Incompatible scale in JSON file.", 'E')
-            return False
-        
-        for agent_data in data.get("agents", []):
-            pos = agent_data["position"]
-            agent = Agent(
-                pos[0], pos[1],
-                speed=agent_data.get("speed", maxSpeed * PIXELS_PER_METER_SCALE),
-                radius=agent_data.get("radius", AGENT_SIZE),
-                colour=tuple(agent_data.get("colour", [255, 255, 0])),
-                offset_x=SIM_OFFSET_X,
-                offset_y=SIM_OFFSET_Y,
-                agent_type=agent_data.get("agent_type")
-            )
-            all_agents.add(agent)
-        
-        exits_data = data.get("exits", [])
-        for exit_data in exits_data:
-            pos = exit_data["position"]
-            exit = Exit(
-                pos[0], pos[1],
-                exit_data["number"],
-                radius=exit_data.get("radius", AGENT_SIZE),
-                colour=tuple(exit_data.get("colour", [0, 200, 0])),
-                offset_x=SIM_OFFSET_X,
-                offset_y=SIM_OFFSET_Y
-            )
-            all_exits.add(exit)
-        
-        if not memory:
-            log(f"Loaded from {filename}")
-        return len(data.get('agents', [])), True
-        
-    except FileNotFoundError:
-        log(f"{filename} not found.", 'E')
-        return 0, False
-    except Exception as e:
-        log(f"Error:{e}", 'E')
-        return 0, False
+from sprites import Agent, Exit
+from config import AgentType
 
 
-def save(all_agents, all_exits, filename, PIXELS_PER_METER, FLOORPLAN_FILENAME, log, memory=False):
+def load_to_scene(scene_data, filename, sim_config, floorplan, log):
+    with open(filename, 'r') as f:
+        data = json.load(f)
+    
+    scene_data.clear()
+    
+    ppm = sim_config.pixels_per_meter
+    for agent_data in data.get("agents", []):
+        pos = agent_data["position"]
+        agent_type = AgentType(
+            speed_mps=agent_data.get("speed_mps", sim_config.max_speed),
+            radius_m=agent_data.get("radius_m", sim_config.agent_size / ppm),
+            colour=tuple(agent_data.get("colour", [255, 255, 0])),
+            neighbor_dist_m=sim_config.neighbor_dist,
+            max_neighbors=sim_config.max_neighbors,
+            time_horizon=sim_config.time_horizon,
+            time_horizon_obst=sim_config.time_horizon_obst,
+            name=agent_data.get("agent_type", "Default")
+        )
+        agent = Agent(pos[0], pos[1], agent_type, floorplan.offset_x, floorplan.offset_y, ppm)
+        scene_data.agents.append(agent)
+    
+    for exit_data in data.get("exits", []):
+        pos = exit_data["position"]
+        exit_obj = Exit(
+            pos[0], pos[1],
+            exit_data["number"],
+            radius=exit_data.get("radius", sim_config.agent_size),
+            colour=tuple(exit_data.get("colour", [0, 200, 0])),
+            offset_x=floorplan.offset_x,
+            offset_y=floorplan.offset_y
+        )
+        scene_data.exits.append(exit_obj)
+    
+    log(f"Loaded from {filename}")
+
+
+def save_from_scene(scene_data, filename, pixels_per_meter, floorplan_filename, log):
     data = {
         "timestamp": datetime.now().isoformat(),
-        "pixels_per_meter": PIXELS_PER_METER,
-        "floorplan_filename": FLOORPLAN_FILENAME,
+        "pixels_per_meter": pixels_per_meter,
+        "floorplan_filename": floorplan_filename,
         "agents": [],
         "exits": []
     }
     
-    for agent in all_agents:
-        agent_data = {
+    for agent in scene_data.agents:
+        data["agents"].append({
             "agent_type": agent.agent_type.name,
             "position": list(agent.rect.center),
             "sim_position": list(agent.sim_pos),
-            "speed": agent.speed,
-            "radius": agent.radius,
+            "speed_mps": agent.agent_type.speed_mps,
+            "radius_m": agent.agent_type.radius_m,
             "colour": agent.colour
-        }
-        data["agents"].append(agent_data)
+        })
     
-    for exit in all_exits:
-        exit_data = {
-            "position": list(exit.rect.center),
-            "number": exit.number,
-            "radius": exit.radius,
-            "colour": exit.colour
-        }
-        data["exits"].append(exit_data)
+    for exit_obj in scene_data.exits:
+        data["exits"].append({
+            "position": list(exit_obj.rect.center),
+            "number": exit_obj.number,
+            "radius": exit_obj.radius,
+            "colour": exit_obj.colour
+        })
     
-    if not memory:
-        try:
-            with open(filename, 'w') as f:
-                json.dump(data, f, indent=2)
-            log(f"Saved to {filename}")
-        except Exception as e:
-            log(f"Error: {e}", 'E')
-    else:
-        global DATA
-        DATA = data
+    with open(filename, 'w') as f:
+        json.dump(data, f, indent=2)
+    log(f"Saved to {filename}")
