@@ -1,3 +1,13 @@
+from enum import Enum, auto
+
+
+class AppState(Enum):
+    LOADING = auto()
+    EDITING = auto()
+    RUNNING = auto()
+    COMPLETED = auto()
+
+
 class DisplayConfig:
     def __init__(self):
         self.fps = 60
@@ -15,10 +25,10 @@ class SimulationConfig:
         self.pixels_per_meter = 50.0
         self.agent_radius_meters = 0.3
         self.grid_spacing_meters = 0.5
-        self.neighbor_dist = 5.0
-        self.max_neighbors = 20
-        self.time_horizon = 1.5
-        self.time_horizon_obst = 0.5
+        self.neighbor_dist = 2.0
+        self.max_neighbors = 5
+        self.time_horizon = 0.5
+        self.time_horizon_obst = 0.3
         self.max_speed = 3.0
 
     @property
@@ -31,32 +41,41 @@ class SimulationConfig:
 
 
 class AgentType:
-    def __init__(self, name, speed, radius, colour,
-                 neighbor_dist=None, max_neighbors=None, time_horizon=None, time_horizon_obst=None):
+    def __init__(self, name, speed_mps, radius_m, colour,
+                 neighbor_dist_m=3.0, max_neighbors=10, time_horizon=1.0, time_horizon_obst=0.3):
         self.name = name
-        self.speed = speed
-        self.radius = radius
+        self.speed_mps = speed_mps  # meters per second
+        self.radius_m = radius_m    # meters
         self.colour = colour
-        self.neighbor_dist = neighbor_dist
+        self.neighbor_dist_m = neighbor_dist_m
         self.max_neighbors = max_neighbors
         self.time_horizon = time_horizon
         self.time_horizon_obst = time_horizon_obst
+    
+    def speed_px(self, ppm):
+        return self.speed_mps * ppm
+    
+    def radius_px(self, ppm):
+        return self.radius_m * ppm
+    
+    def neighbor_dist_px(self, ppm):
+        return self.neighbor_dist_m * ppm
         
     @classmethod
     def default(cls, sim_config):
         return cls(
             name="Default",
-            speed=sim_config.max_speed * sim_config.pixels_per_meter,
-            radius=sim_config.agent_radius_meters * sim_config.pixels_per_meter,
+            speed_mps=sim_config.max_speed,
+            radius_m=sim_config.agent_radius_meters,
             colour=(255, 255, 0),
-            neighbor_dist=sim_config.neighbor_dist * sim_config.pixels_per_meter,
+            neighbor_dist_m=sim_config.neighbor_dist,
             max_neighbors=sim_config.max_neighbors,
             time_horizon=sim_config.time_horizon,
             time_horizon_obst=sim_config.time_horizon_obst
         )
 
-    def resolve_rvo_params(self, sim_config):
-        return self.neighbor_dist, self.max_neighbors, self.time_horizon, self.time_horizon_obst
+    def resolve_rvo_params(self, ppm):
+        return self.neighbor_dist_px(ppm), self.max_neighbors, self.time_horizon, self.time_horizon_obst
 
 
 class CustomAgentDefaults:

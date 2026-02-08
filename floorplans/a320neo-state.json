@@ -1,0 +1,224 @@
+{
+  "timestamp": "2026-02-05T12:06:18.684563",
+  "pixels_per_meter": 30.0,
+  "floorplan_filename": "a320neo.png",
+  "agents": [
+    {
+      "agent_type": "Default",
+      "position": [
+        847,
+        397
+      ],
+      "sim_position": [
+        537,
+        187
+      ],
+      "speed_mps": 3.0,
+      "radius_m": 0.2,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        844,
+        336
+      ],
+      "sim_position": [
+        534,
+        126
+      ],
+      "speed_mps": 3.0,
+      "radius_m": 0.2,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        873,
+        339
+      ],
+      "sim_position": [
+        563,
+        129
+      ],
+      "speed_mps": 3.0,
+      "radius_m": 0.2,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        955,
+        347
+      ],
+      "sim_position": [
+        645,
+        137
+      ],
+      "speed_mps": 3.0,
+      "radius_m": 0.2,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        1019,
+        347
+      ],
+      "sim_position": [
+        709,
+        137
+      ],
+      "speed_mps": 3.0,
+      "radius_m": 0.2,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        1037,
+        350
+      ],
+      "sim_position": [
+        727,
+        140
+      ],
+      "speed_mps": 3.0,
+      "radius_m": 0.2,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        1070,
+        360
+      ],
+      "sim_position": [
+        760,
+        150
+      ],
+      "speed_mps": 3.0,
+      "radius_m": 0.2,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        1082,
+        362
+      ],
+      "sim_position": [
+        772,
+        152
+      ],
+      "speed_mps": 3.0,
+      "radius_m": 0.2,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Type A",
+      "position": [
+        738,
+        344
+      ],
+      "sim_position": [
+        428,
+        134
+      ],
+      "speed_mps": 3.0,
+      "radius_m": 0.4,
+      "colour": [
+        255,
+        100,
+        100
+      ]
+    },
+    {
+      "agent_type": "Type A",
+      "position": [
+        695,
+        355
+      ],
+      "sim_position": [
+        385,
+        145
+      ],
+      "speed_mps": 3.0,
+      "radius_m": 0.4,
+      "colour": [
+        255,
+        100,
+        100
+      ]
+    },
+    {
+      "agent_type": "Type A",
+      "position": [
+        665,
+        352
+      ],
+      "sim_position": [
+        355,
+        142
+      ],
+      "speed_mps": 3.0,
+      "radius_m": 0.4,
+      "colour": [
+        255,
+        100,
+        100
+      ]
+    },
+    {
+      "agent_type": "Type A",
+      "position": [
+        644,
+        353
+      ],
+      "sim_position": [
+        334,
+        143
+      ],
+      "speed_mps": 3.0,
+      "radius_m": 0.4,
+      "colour": [
+        255,
+        100,
+        100
+      ]
+    }
+  ],
+  "exits": []
+}

@@ -17,11 +17,12 @@ def has_agent_collision(sim_pos, radius, all_agents, exclude_agent=None):
 
 
 class Agent(pygame.sprite.Sprite):
-    def __init__(self, x, y, agent_type, offset_x=0, offset_y=0):
+    def __init__(self, x, y, agent_type, offset_x=0, offset_y=0, ppm=50.0):
         super().__init__()
         self.agent_type = agent_type
-        self.radius = int(agent_type.radius)
-        self.speed = agent_type.speed
+        self.ppm = ppm
+        self.radius = int(agent_type.radius_px(ppm))
+        self.speed = agent_type.speed_px(ppm)
         self.colour = agent_type.colour
         self.offset_x = offset_x
         self.offset_y = offset_y
@@ -34,6 +35,12 @@ class Agent(pygame.sprite.Sprite):
         self.sim_pos = (x - offset_x, y - offset_y)
         self.reached_threshold = 40
         self.rvo_id = None
+    
+    def update_ppm(self, ppm):
+        self.ppm = ppm
+        self.radius = int(self.agent_type.radius_px(ppm))
+        self.speed = self.agent_type.speed_px(ppm)
+        self.rebuild_image()
 
     def rebuild_image(self):
         center = self.rect.center
@@ -75,8 +82,8 @@ class Agent(pygame.sprite.Sprite):
         self.sim_pos = (position.x, position.y)
         self.rect.center = (position.x + self.offset_x, position.y + self.offset_y)
         
-    def register_with_rvo(self, rvo_sim, sim_config):
-        neighbor_dist, max_neighbors, time_horizon, time_horizon_obst = self.agent_type.resolve_rvo_params(sim_config)
+    def register_with_rvo(self, rvo_sim):
+        neighbor_dist, max_neighbors, time_horizon, time_horizon_obst = self.agent_type.resolve_rvo_params(self.ppm)
         self.rvo_id = rvo_sim.add_agent(
             (self.sim_pos[0], self.sim_pos[1]),
             neighbor_dist,
@@ -87,6 +94,9 @@ class Agent(pygame.sprite.Sprite):
             self.speed,
             (0.0, 0.0)
         )
+    
+    def copy(self):
+        return Agent(self.rect.centerx, self.rect.centery, self.agent_type, self.offset_x, self.offset_y, self.ppm)
 
 
 class Exit(pygame.sprite.Sprite):
@@ -114,4 +124,7 @@ class Exit(pygame.sprite.Sprite):
     def set_number(self, number):
         self.number = number
         self._draw_image()
+    
+    def copy(self):
+        return Exit(self.rect.centerx, self.rect.centery, self.number, self.radius, self.colour, self.offset_x, self.offset_y)
 

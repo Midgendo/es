@@ -17,6 +17,7 @@ class Floorplan:
         
         self.image = None
         self.wall_polygons = []
+        self.bg_surface = None
         self.walls_surface = None
         self.width = 0
         self.height = 0
@@ -100,14 +101,12 @@ class Floorplan:
         self._add_wall_obstacles(rvo_sim)
         
     def _create_walls_surface(self):
-        self.walls_surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
-        sim_bg = create_gradient(
+        self.bg_surface = create_gradient(
             self.width, self.height, 
             self.colours.sim_bg_top, 
             self.colours.sim_bg_bottom
         )
-        self.walls_surface.blit(sim_bg, (0, 0))
-        
+        self.walls_surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
         for poly in self.wall_polygons:
             pygame.draw.polygon(
                 self.walls_surface, 
