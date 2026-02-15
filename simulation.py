@@ -68,12 +68,12 @@ class Simulation:
         
     def rebuild_roadmap(self):
         if len(self.exits) > 0 and len(self.grid_nodes) > 0:
-            self.roadmap, self.exit_indices = self._build_roadmap()
+            self.roadmap, self.exit_indices = self.build_roadmap()
         else:
             self.roadmap = []
             self.exit_indices = []
             
-    def _build_roadmap(self):
+    def build_roadmap(self):
         roadmap = []
         exit_indices = []
         agent_radius = self.sim_config.agent_size
@@ -87,6 +87,7 @@ class Simulation:
         
         max_neighbor_dist = self.sim_config.grid_spacing_meters * self.sim_config.pixels_per_meter * 2.5
         
+        # Find each node's neighbors based on distance and visibility
         for i, node in enumerate(roadmap):
             for j, other_node in enumerate(roadmap):
                 if i != j:
@@ -98,10 +99,11 @@ class Simulation:
                         if self.rvo_sim.query_visibility(node.position, other_node.position, agent_radius):
                             node.neighbors.append(j)
         
-        self._compute_distances_to_exits(roadmap, exit_indices)
+        self.compute_distances_to_exits(roadmap, exit_indices)
         return roadmap, exit_indices
         
-    def _compute_distances_to_exits(self, roadmap, exit_indices):
+    # Dijkstra's algorithm to compute shortest distances from all vertices to nearest exit
+    def compute_distances_to_exits(self, roadmap, exit_indices):
         dist = [float("inf")] * len(roadmap)
         pq = []
         
@@ -112,7 +114,7 @@ class Simulation:
         while pq:
             d_u, u = heapq.heappop(pq)
             if d_u != dist[u]:
-                continue
+                continue    # If the distance is greater than the recorded distance, skip (stale entry)
             for v in roadmap[u].neighbors:
                 dx = roadmap[v].position[0] - roadmap[u].position[0]
                 dy = roadmap[v].position[1] - roadmap[u].position[1]
@@ -144,7 +146,7 @@ class Simulation:
         agents_to_remove = []
         
         if self.roadmap:
-            self._set_preferred_velocities_roadmap()
+            self.set_preferred_velocities()
             
             for agent in self.agents:
                 for exit_idx in self.exit_indices:
@@ -157,7 +159,7 @@ class Simulation:
                         break
         
         if mouse_override:
-            self._apply_mouse_override(mouse_override)
+            self.apply_mouse_override(mouse_override)
         
         self.rvo_sim.do_step()
         
@@ -173,7 +175,7 @@ class Simulation:
         
         return len(self.agents) == 0
         
-    def _set_preferred_velocities_roadmap(self):
+    def set_preferred_velocities(self):
         for agent in self.agents:
             if agent.rvo_id is None:
                 continue
@@ -208,7 +210,7 @@ class Simulation:
             
             self.rvo_sim.set_agent_pref_velocity(agent.rvo_id, pref_vel)
             
-    def _apply_mouse_override(self, target_pos):
+    def apply_mouse_override(self, target_pos):
         sim_target = self.floorplan.screen_to_sim(target_pos[0], target_pos[1])
         
         for agent in self.agents:

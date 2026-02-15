@@ -111,7 +111,7 @@ def create_gradient(width, height, colour1, colour2, alpha1=255, alpha2=255):
 
 
 class UIPanel:
-    def __init__(self, manager, floorplan_options, current_floorplan, colours):
+    def __init__(self, manager, floorplan_options, current_floorplan, colours, state_getter):
         self.start_pos = -UIConfig.PANEL_WIDTH - UIConfig.BORDER
         self.end_pos = UIConfig.BORDER
         self.current_pos = self.start_pos
@@ -122,6 +122,7 @@ class UIPanel:
         
         self.colours = colours
         self.manager = manager
+        self.state_getter = state_getter
         
         self.floorplan_picker = pygame_gui.elements.UIDropDownMenu(
             options_list=floorplan_options,
@@ -134,17 +135,17 @@ class UIPanel:
         half_width = (UIConfig.PANEL_WIDTH - 5) // 2
         
         self.buttons = {
-            "clear": self._create_button("Clear", UIConfig.PANEL_WIDTH),
-            "tool_agent": self._create_button("Agents", half_width),
-            "tool_exit": self._create_button("Exits", half_width),
-            "load": self._create_button("Load", half_width),
-            "save": self._create_button("Save", half_width),
-            "start": self._create_button("Start", UIConfig.PANEL_WIDTH),
-            "pause_resume": self._create_button("Pause", UIConfig.PANEL_WIDTH),
-            "stop": self._create_button("Stop", UIConfig.PANEL_WIDTH),
+            "clear": self.create_button("Clear", UIConfig.PANEL_WIDTH),
+            "tool_agent": self.create_button("Agents", half_width),
+            "tool_exit": self.create_button("Exits", half_width),
+            "load": self.create_button("Load", half_width),
+            "save": self.create_button("Save", half_width),
+            "start": self.create_button("Start", UIConfig.PANEL_WIDTH),
+            "pause_resume": self.create_button("Pause", UIConfig.PANEL_WIDTH),
+            "stop": self.create_button("Stop", UIConfig.PANEL_WIDTH),
         }
         
-    def _create_button(self, text, width):
+    def create_button(self, text, width):
         return pygame_gui.elements.UIButton(
             relative_rect=pygame.Rect((0, 0), (width, UIConfig.BUTTON_HEIGHT)),
             text=text,
@@ -179,7 +180,7 @@ class UIPanel:
         self.tween_progress = 0.0
         self.animation_delay = delay
     
-    def _update_animation(self, dt):
+    def update_animation(self, dt):
         if not self.animation_started or self.tween_progress >= 1.0:
             return
         if self.animation_delay > 0:
@@ -189,8 +190,8 @@ class UIPanel:
         eased = pytweening.easeOutQuad(self.tween_progress)
         self.current_pos = self.start_pos + (self.end_pos - self.start_pos) * eased
     
-    def _update_button_positions(self, state, dt):
-        self._update_animation(dt)
+    def update_button_positions(self, state, dt):
+        self.update_animation(dt)
         
         gap = 2
         half_width = (UIConfig.PANEL_WIDTH - gap) // 2
@@ -217,7 +218,7 @@ class UIPanel:
             self.floorplan_picker.show()
     
     def draw(self, surface, state, fps, dt, running_time=0.0, simulation_time=0.0, num_agents=0, evacuated_agents=0):
-        self._update_button_positions(state, dt)
+        self.update_button_positions(state, dt)
         x = self.current_pos
         
         panel_rect = pygame.Rect(x, UIConfig.BORDER + 80, UIConfig.PANEL_WIDTH, UIConfig.PANEL_HEIGHT - 80)
@@ -345,10 +346,10 @@ class SimWindow:
     def update_floorplan(self, floorplan):
         self.floorplan = floorplan
         self.crosshair = Crosshair(floorplan, self.sim_config)
-        self._build_grid()
-        self._update_border_rect()
+        self.build_grid()
+        self.update_border_rect()
     
-    def _update_border_rect(self):
+    def update_border_rect(self):
         if self.floorplan is None:
             self.border_rect = None
             return
@@ -359,7 +360,7 @@ class SimWindow:
             self.floorplan.height
         )
     
-    def _build_grid(self):
+    def build_grid(self):
         if self.floorplan is None:
             self.grid_surface = None
             return
@@ -387,7 +388,7 @@ class SimWindow:
         if mx > self.floorplan.offset_x:
             return mouse_pos
     
-    def _draw_roadmap(self, surface, simulation):
+    def draw_roadmap(self, surface, simulation):
         for i, vertex in enumerate(simulation.roadmap):
             for neighbor_idx in vertex.neighbors:
                 if neighbor_idx > i:
@@ -410,7 +411,7 @@ class SimWindow:
             surface.blit(exit_obj.image, exit_obj.rect)
 
         if show_paths and simulation.roadmap:
-            self._draw_roadmap(surface, simulation)
+            self.draw_roadmap(surface, simulation)
 
         for agent in agents:
             surface.blit(agent.image, agent.rect)

@@ -10,6 +10,11 @@ class AgentTypeCard:
     HEIGHT = 180
     CHIP_SIZE = 30
 
+    @staticmethod
+    def is_in_delete_chip(rx, ry):
+        offset = AgentTypeCard.WIDTH - AgentTypeCard.CHIP_SIZE
+        return rx >= offset and ry <= AgentTypeCard.CHIP_SIZE and ry <= rx - offset
+
     def __init__(self, agent_type, colour=(0, 0, 0, 150), manager=None, colours=None):
         self.agent_type = agent_type
         self.colour = colour
@@ -22,23 +27,19 @@ class AgentTypeCard:
         self.speed_rect = pygame.Rect()
         self.size_input = None
         self.speed_input = None
-        self._prev_size_m = None
-        self._prev_speed_m = None
+        self.prev_size_m = None
+        self.prev_speed_m = None
     
     def handle_click(self, mx, my, pixels_per_meter):
-        if self.size_input is not None and self.size_rect.collidepoint(mx, my):
-            return
-        if self.speed_input is not None and self.speed_rect.collidepoint(mx, my):
-            return
-        if self.size_rect.collidepoint(mx, my):
-            self._begin_edit_size(pixels_per_meter)
-        elif self.speed_rect.collidepoint(mx, my):
-            self._begin_edit_speed(pixels_per_meter)
+        if self.size_rect.collidepoint(mx, my) and self.size_input is None:
+            self.begin_edit_size(pixels_per_meter)
+        elif self.speed_rect.collidepoint(mx, my) and self.speed_input is None:
+            self.begin_edit_speed(pixels_per_meter)
 
-    def _begin_edit_size(self, pixels_per_meter):
+    def begin_edit_size(self, pixels_per_meter):
         self.edit_size = True
         self.edit_speed = False
-        self._prev_size_m = self._get_size_meters(pixels_per_meter)
+        self.prev_size_m = self.get_size_meters(pixels_per_meter)
         if self.size_input is None:
             self.size_input = pygame_gui.elements.UITextEntryLine(
                 relative_rect=self.size_rect,
@@ -46,15 +47,15 @@ class AgentTypeCard:
                 object_id="#agent_size_input"
             )
             self.size_input.text_length_limit=4
-        self.size_input.set_text(f"{self._prev_size_m:.1f}")
+        self.size_input.set_text(f"{self.prev_size_m:.1f}")
         if self.speed_input is not None:
             self.speed_input.kill()
             self.speed_input = None
 
-    def _begin_edit_speed(self, pixels_per_meter):
+    def begin_edit_speed(self, pixels_per_meter):
         self.edit_speed = True
         self.edit_size = False
-        self._prev_speed_m = self._get_speed_meters(pixels_per_meter)
+        self.prev_speed_m = self.get_speed_meters(pixels_per_meter)
         if self.speed_input is None:
             self.speed_input = pygame_gui.elements.UITextEntryLine(
                 relative_rect=self.speed_rect,
@@ -62,15 +63,15 @@ class AgentTypeCard:
                 object_id="#agent_speed_input"
             )
             self.speed_input.text_length_limit=4
-        self.speed_input.set_text(f"{self._prev_speed_m:.1f}")
+        self.speed_input.set_text(f"{self.prev_speed_m:.1f}")
         if self.size_input is not None:
             self.size_input.kill()
             self.size_input = None
 
-    def _get_size_meters(self, pixels_per_meter):
+    def get_size_meters(self, pixels_per_meter):
         return self.agent_type.radius_m * 2
 
-    def _get_speed_meters(self, pixels_per_meter):
+    def get_speed_meters(self, pixels_per_meter):
         return self.agent_type.speed_mps
 
     def commit_edits(self, scene_data, pixels_per_meter):
@@ -85,8 +86,8 @@ class AgentTypeCard:
                 scene_data.update_agents_of_type(self.agent_type, radius_m=value / 2.0)
                 committed = True
             else:
-                if self._prev_size_m is not None:
-                    self.size_input.set_text(f"{self._prev_size_m:.1f}")
+                if self.prev_size_m is not None:
+                    self.size_input.set_text(f"{self.prev_size_m:.1f}")
             self.size_input.kill()
             self.size_input = None
             self.edit_size = False
@@ -101,8 +102,8 @@ class AgentTypeCard:
                 scene_data.update_agents_of_type(self.agent_type, speed_mps=value)
                 committed = True
             else:
-                if self._prev_speed_m is not None:
-                    self.speed_input.set_text(f"{self._prev_speed_m:.1f}")
+                if self.prev_speed_m is not None:
+                    self.speed_input.set_text(f"{self.prev_speed_m:.1f}")
             self.speed_input.kill()
             self.speed_input = None
             self.edit_speed = False
@@ -218,7 +219,7 @@ class AgentPanel:
         self.animation_delay = delay
 
     
-    def _update_animation(self, dt):
+    def update_animation(self, dt):
         if not self.animation_started or self.tween_progress >= 1.0:
             return
         if self.animation_delay > 0:
@@ -228,11 +229,11 @@ class AgentPanel:
         eased = pytweening.easeOutQuad(self.tween_progress)
         self.current_pos = self.start_pos + (self.end_pos - self.start_pos) * eased
     
-    def _add_agent_type(self, agent_type, colour=(0, 0, 0, 150)):
+    def add_agent_type(self, agent_type, colour=(0, 0, 0, 150)):
         if len(self.cards) < self.MAX_VISIBLE_CARDS:
             self.cards.append(AgentTypeCard(agent_type=agent_type, colour=colour, manager=self.manager, colours=self.colours))
     
-    def _delete_agent_type(self, index):
+    def delete_agent_type(self, index):
         card = self.cards[index]
         if card.size_input is not None:
             card.size_input.kill()
@@ -253,92 +254,79 @@ class AgentPanel:
     def get_card_position(self, index):
         return (self.X + index * self.CARD_SPACING + 2, self.current_pos + 1)
     
+    def card_rect(self, index):
+        x, y = self.get_card_position(index)
+        return pygame.Rect(x, y, AgentTypeCard.WIDTH, AgentTypeCard.HEIGHT)
+
+    # Create a new agent type with the next available letter
+    def create_next_agent_type(self):
+        used_letters = {
+            card.agent_type.name.split()[1]
+            for card in self.cards
+            if card.agent_type.name.startswith("Type ") and len(card.agent_type.name) > 5
+        }
+        type_letter = next((chr(65 + i) for i in range(5) if chr(65 + i) not in used_letters), None)
+        if type_letter is None:
+            return False
+
+        defaults = self.custom_defaults
+        cfg = self.sim_config
+        new_type = AgentType(
+            name=f"Type {type_letter}",
+            speed_mps=defaults.speed_meters_per_sec,
+            radius_m=defaults.radius_meters,
+            colour=defaults.colours[(ord(type_letter) - 65) % len(defaults.colours)],
+            neighbor_dist_m=cfg.neighbor_dist,
+            max_neighbors=cfg.max_neighbors,
+            time_horizon=cfg.time_horizon,
+            time_horizon_obst=cfg.time_horizon_obst
+        )
+        self.add_agent_type(new_type)
+        self.focused_index = len(self.cards) - 1
+        return True
+
     def handle_click(self, mouse_pos):
         mx, my = mouse_pos
-        for i in range(len(self.cards)):
+
+        for i, card in enumerate(self.cards):
+            if not self.card_rect(i).collidepoint(mx, my):
+                continue
             card_x, card_y = self.get_card_position(i)
-            if (card_x <= mx <= card_x + AgentTypeCard.WIDTH and 
-                card_y <= my <= card_y + AgentTypeCard.HEIGHT):
-                
-                rx = mx - card_x  # relative x
-                ry = my - card_y  # relative y
-                
-                chip_size = AgentTypeCard.CHIP_SIZE
-                diagonal_offset = AgentTypeCard.WIDTH - chip_size
-                in_delete_chip = (
-                    rx >= diagonal_offset
-                    and ry <= chip_size
-                    and ry <= rx - diagonal_offset
-                )
-                if in_delete_chip:
-                    if self.cards[i].agent_type.name == "Default":
-                        return False
-                    self.scene_data.remove_agents_of_type(self.cards[i].agent_type)
-                    self._delete_agent_type(i)
-                    return True
-                else:
-                    if self.focused_index != i:
-                        self.focused_index = i
-                    self.cards[i].handle_click(mx, my, self.pixels_per_meter)
-                    return True
-        
+            rx, ry = mx - card_x, my - card_y
+
+            if AgentTypeCard.is_in_delete_chip(rx, ry):
+                if card.agent_type.name == "Default":
+                    return False
+                self.scene_data.remove_agents_of_type(card.agent_type)
+                self.delete_agent_type(i)
+                return True
+
+            self.focused_index = i
+            card.handle_click(mx, my, self.pixels_per_meter)
+            return True
+
         # Plus card
         if len(self.cards) < self.MAX_VISIBLE_CARDS and self.state_getter() == AppState.EDITING:
-            plus_card_x = self.X + len(self.cards) * self.CARD_SPACING
-            plus_card_y = self.current_pos
-            
-            if (plus_card_x <= mx <= plus_card_x + AgentTypeCard.WIDTH and 
-                plus_card_y <= my <= plus_card_y + AgentTypeCard.HEIGHT):
-                
-                rx = mx - plus_card_x
-                ry = my - plus_card_y
-                
+            plus_rect = pygame.Rect(
+                self.X + len(self.cards) * self.CARD_SPACING, self.current_pos,
+                AgentTypeCard.WIDTH, AgentTypeCard.HEIGHT
+            )
+            if plus_rect.collidepoint(mx, my):
+                rx, ry = mx - plus_rect.x, my - plus_rect.y
                 if rx + ry <= AgentTypeCard.WIDTH:
-                    used_letters = set()
-                    for card in self.cards:
-                        name = card.agent_type.name
-                        if name.startswith("Type ") and len(name) > 5:
-                            used_letters.add(name.split()[1])
-                    
-                    type_letter = None
-                    for i in range(5):
-                        letter = chr(65 + i)
-                        if letter not in used_letters:
-                            type_letter = letter
-                            break
-                    
-                    if type_letter is None:
-                        return False
-                    
-                    defaults = self.custom_defaults
-                    colour_index = (ord(type_letter) - 65) % len(defaults.colours)
-                    cfg = self.sim_config
-                    new_type = AgentType(
-                        name=f"Type {type_letter}",
-                        speed_mps=defaults.speed_meters_per_sec,
-                        radius_m=defaults.radius_meters,
-                        colour=defaults.colours[colour_index],
-                        neighbor_dist_m=cfg.neighbor_dist,
-                        max_neighbors=cfg.max_neighbors,
-                        time_horizon=cfg.time_horizon,
-                        time_horizon_obst=cfg.time_horizon_obst
-                    )
-                    self._add_agent_type(new_type)
-                    self.focused_index = len(self.cards) - 1
-                    return True
-            
+                    return self.create_next_agent_type()
+
         return False
 
+    # Commits edits if user clicks outside the cards while an input is active
     def handle_outside_click(self, mouse_pos):
-        mx, my = mouse_pos
         for card in self.cards:
-            if card.size_input is not None or card.speed_input is not None:
-                if card.size_rect.collidepoint(mx, my):
-                    return False
-                if card.speed_rect.collidepoint(mx, my):
-                    return False
-                card.commit_edits(self.scene_data, self.pixels_per_meter)
-                return True
+            if card.size_input is None and card.speed_input is None:
+                continue
+            if card.size_rect.collidepoint(mouse_pos) or card.speed_rect.collidepoint(mouse_pos):
+                return False
+            card.commit_edits(self.scene_data, self.pixels_per_meter)
+            return True
         return False
 
     def handle_text_entry_finished(self, ui_element):
@@ -349,7 +337,7 @@ class AgentPanel:
         return False
 
     def draw(self, surface, dt, pixels_per_meter):
-        self._update_animation(dt)
+        self.update_animation(dt)
         
         x, y = self.X, self.current_pos
         border_colour = (255, 255, 255)

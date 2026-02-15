@@ -109,11 +109,11 @@ class Exit(pygame.sprite.Sprite):
         self.offset_y = offset_y
         
         self.image = pygame.Surface((self.radius * 2, self.radius * 2), pygame.SRCALPHA)
-        self._draw_image()
+        self.draw_image()
         self.rect = self.image.get_rect(center=(x, y))
         self.sim_pos = (x - offset_x, y - offset_y)
         
-    def _draw_image(self):
+    def draw_image(self):
         self.image.fill((0, 0, 0, 0))
         pygame.draw.rect(self.image, self.colour, (0, 0, self.radius * 2, self.radius * 2))
         font = pygame.font.Font(None, 20)
@@ -123,7 +123,7 @@ class Exit(pygame.sprite.Sprite):
         
     def set_number(self, number):
         self.number = number
-        self._draw_image()
+        self.draw_image()
     
     def copy(self):
         return Exit(self.rect.centerx, self.rect.centery, self.number, self.radius, self.colour, self.offset_x, self.offset_y)

@@ -57,7 +57,8 @@ class EvacuationSimulator:
             self.ui_manager,
             self.available_floorplans,
             self.floorplan_filename,
-            self.colours
+            self.colours,
+            state_getter=lambda: self.state
         )
         self.agent_panel = AgentPanel(
             self.ui_manager, 
@@ -79,49 +80,50 @@ class EvacuationSimulator:
         self.state = AppState.LOADING
         self.tool = "agent"
         self.show_paths = False
-        self._first_load = True
+        self.first_load = True
         
         self.default_agent_type = AgentType.default(self.sim_config)
         self.editing_agent_type = self.default_agent_type
         self.last_selected_agent_index = None
         
     def run(self):
-        self._set_state(AppState.LOADING)
+        self.set_state(AppState.LOADING)
         
         while True:
             dt = self.clock.get_time() / 1000.0
             
-            self._handle_events()
-            self._update(dt)
-            self._render(dt)
+            self.handle_events()
+            self.update(dt)
+            self.render(dt)
             
             pygame.display.update()
             self.clock.tick(self.display_config.fps)
-            
-    def _handle_events(self):
+
+    # Polls user events
+    def handle_events(self):
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
                 
             if event.type == KEYDOWN:
-                self._handle_keydown(event)
+                self.handle_keydown(event)
                 
             if event.type == pygame_gui.UI_DROP_DOWN_MENU_CHANGED:
                 if event.ui_element == self.ui_panel.floorplan_picker:
                     new_floorplan = event.text
                     if new_floorplan != self.floorplan_filename:
                         self.floorplan_filename = new_floorplan
-                        self._set_state(AppState.LOADING)
+                        self.set_state(AppState.LOADING)
                         
             if event.type == pygame_gui.UI_BUTTON_PRESSED:
-                self._handle_button_press(event)
+                self.handle_button_press(event)
 
             if event.type == pygame_gui.UI_TEXT_ENTRY_FINISHED:
                 self.agent_panel.handle_text_entry_finished(event.ui_element)
                 
             if event.type == MOUSEBUTTONUP and self.state == AppState.EDITING:
-                self._handle_editing_click(event)
+                self.handle_editing_click(event)
                 
             if event.type == MOUSEBUTTONDOWN:
                 self.agent_panel.handle_outside_click(event.pos)
@@ -137,12 +139,12 @@ class EvacuationSimulator:
             
             self.ui_manager.process_events(event)
             
-    def _handle_keydown(self, event):
+    def handle_keydown(self, event):
         if event.key == K_p:
             self.show_paths = not self.show_paths
             log(f"Path visibility: {'ON' if self.show_paths else 'OFF'}", 'D')
             
-    def _handle_button_press(self, event):
+    def handle_button_press(self, event):
         buttons = self.ui_panel.buttons
         
         if event.ui_element == buttons["clear"]:
@@ -167,13 +169,13 @@ class EvacuationSimulator:
             self.agent_panel.focused_index = None
             
         elif event.ui_element == buttons["load"]:
-            self._load_state()
+            self.load_state()
             
         elif event.ui_element == buttons["save"]:
-            self._save_state()
+            self.save_state()
             
         elif event.ui_element == buttons["start"]:
-            self._set_state(AppState.RUNNING)
+            self.set_state(AppState.RUNNING)
             
         elif event.ui_element == buttons["pause_resume"]:
             paused = self.simulation.toggle_pause()
@@ -181,9 +183,9 @@ class EvacuationSimulator:
             
         elif event.ui_element == buttons["stop"]:
             self.simulation.reset()
-            self._set_state(AppState.EDITING, reset_sim=False)
+            self.set_state(AppState.EDITING, reset_sim=False)
             
-    def _handle_editing_click(self, event):
+    def handle_editing_click(self, event):
         mx, my = event.pos
         
         if not self.sim_window.is_within_bounds(mx, my, self.sim_config.agent_size):
@@ -201,7 +203,7 @@ class EvacuationSimulator:
             else:
                 self.scene_data.remove_exit_at(mx, my)
                 
-    def _load_state(self):
+    def load_state(self):
         filename = os.path.join(
             "floorplans",
             f"{self.floorplan_filename.rsplit('.', 1)[0]}-state.json"
@@ -214,7 +216,7 @@ class EvacuationSimulator:
             log
         )
         
-    def _save_state(self):
+    def save_state(self):
         filename = os.path.join(
             "floorplans",
             f"{self.floorplan_filename.rsplit('.', 1)[0]}-state.json"
@@ -227,7 +229,7 @@ class EvacuationSimulator:
             log
         )
         
-    def _set_state(self, new_state, reset_sim=True):
+    def set_state(self, new_state, reset_sim=True):
         self.state = new_state
         log(f"State changed to: {new_state.name}", 'D')
         
@@ -235,8 +237,8 @@ class EvacuationSimulator:
         
         if new_state == AppState.LOADING:
             self.scene_data.clear()
-            self._load_floorplan()
-            self._set_state(AppState.EDITING)
+            self.load_floorplan()
+            self.set_state(AppState.EDITING)
             
         elif new_state == AppState.EDITING:
             if reset_sim:
@@ -266,7 +268,7 @@ class EvacuationSimulator:
             self.agent_panel.focused_index = None
             log(f"Agents evacuated in {self.simulation.time:.2f} seconds")
             
-    def _load_floorplan(self):
+    def load_floorplan(self):
         if self.floorplan_filename not in self.available_floorplans:
             self.floorplan_filename = self.available_floorplans[0]
 
@@ -296,16 +298,17 @@ class EvacuationSimulator:
         self.sim_window.update_floorplan(self.floorplan)
         self.scene_data.set_floorplan(self.floorplan)
         
-        if self._first_load:
+        if self.first_load:
             self.ui_panel.enter(delay=0.25)
             self.agent_panel.enter(delay=0.35)
-            self.agent_panel._add_agent_type(self.default_agent_type)
+            self.agent_panel.add_agent_type(self.default_agent_type)
 
-            self._first_load = False
+            self.first_load = False
         
         log(f"Loaded floorplan: {self.floorplan_filename}")
         
-    def _update(self, dt):
+    # Advance simulation
+    def update(self, dt):
         self.ui_manager.update(dt)
         
         if self.state == AppState.RUNNING:
@@ -316,9 +319,9 @@ class EvacuationSimulator:
                     
             all_evacuated = self.simulation.update(dt, mouse_override)
             if all_evacuated:
-                self._set_state(AppState.COMPLETED)
+                self.set_state(AppState.COMPLETED)
                 
-    def _render(self, dt):
+    def render(self, dt):
         self.screen.blit(self.background, (0, 0))
         
         state_str = self.state.name.lower()

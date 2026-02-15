@@ -51,11 +51,11 @@ class Floorplan:
             (max_h - self.height) // 2
         )
         
-        self._load_config()
-        self._extract_walls(rvo_sim)
-        self._add_border_obstacles(rvo_sim)
+        self.load_config()
+        self.extract_walls(rvo_sim)
+        self.add_border_obstacles(rvo_sim)
         
-    def _load_config(self):
+    def load_config(self):
         try:
             config_filename = os.path.join(
                 "floorplans", 
@@ -70,7 +70,7 @@ class Floorplan:
         except FileNotFoundError:
             pass
             
-    def _extract_walls(self, rvo_sim):
+    def extract_walls(self, rvo_sim):
         scale = min(
             self.width / self.image.get_size()[0],
             self.height / self.image.get_size()[1]
@@ -97,10 +97,10 @@ class Floorplan:
         else:
             self.wall_polygons = []
         
-        self._create_walls_surface()
-        self._add_wall_obstacles(rvo_sim)
+        self.create_walls_surface()
+        self.add_wall_obstacles(rvo_sim)
         
-    def _create_walls_surface(self):
+    def create_walls_surface(self):
         self.bg_surface = create_gradient(
             self.width, self.height, 
             self.colours.sim_bg_top, 
@@ -114,7 +114,7 @@ class Floorplan:
                 list(poly.exterior.coords)
             )
             
-    def _add_wall_obstacles(self, rvo_sim):
+    def add_wall_obstacles(self, rvo_sim):
         for poly in self.wall_polygons:
             exterior_coords = list(poly.exterior.coords)
             vertices = [(float(x), float(y)) for x, y in exterior_coords[:-1]]
@@ -128,7 +128,7 @@ class Floorplan:
                 if len(interior_vertices) >= 2:
                     rvo_sim.add_obstacle(interior_vertices)
                     
-    def _add_border_obstacles(self, rvo_sim):
+    def add_border_obstacles(self, rvo_sim):
         w, h = self.width, self.height
         rvo_sim.add_obstacle([(0, 0), (w, 0), (w, 1), (0, 1)])
         rvo_sim.add_obstacle([(0, h - 1), (w, h - 1), (w, h), (0, h)])

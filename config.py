@@ -79,12 +79,9 @@ class AgentType:
 
 
 class CustomAgentDefaults:
-    """Default properties for custom agent types"""
-
     def __init__(self):
         self.speed_meters_per_sec = 3.0
         self.radius_meters = 0.3
-        # Colors for custom types A-F
         self.colours = [
             (255, 100, 100),  # Type A - Red
             (100, 255, 100),  # Type B - Green
