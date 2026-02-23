@@ -71,18 +71,20 @@ class Floorplan:
             pass
             
     def extract_walls(self, rvo_sim):
+        im_width, im_height = self.image.get_size()
+
         scale = min(
-            self.width / self.image.get_size()[0],
-            self.height / self.image.get_size()[1]
+            self.width / im_width,
+            self.height / im_height
         )
         
         wall_threshold = 50
         walls_mask = (pygame.surfarray.array3d(self.image).mean(axis=2)) < wall_threshold
         
         pixel_polygons = []
-        for y in range(self.image.get_size()[1]):
-            for x in range(self.image.get_size()[0]):
-                if walls_mask[x, y]:
+        for y in range(im_height):
+            for x in range(im_width):
+                if walls_mask[x, y]:    # Convert each pixel to a scaled polygon
                     x1, y1 = x * scale, y * scale
                     x2, y2 = (x + 1) * scale, (y + 1) * scale
                     pixel_polygons.append(Polygon([(x1, y1), (x2, y1), (x2, y2), (x1, y2)]))
@@ -90,9 +92,9 @@ class Floorplan:
         walls = unary_union(pixel_polygons)
         walls = walls.simplify(tolerance=1.0, preserve_topology=True)
         
-        if walls.geom_type == 'Polygon':
+        if walls.geom_type == 'Polygon': # If it's a single polygon, wrap it in a list for consistency
             self.wall_polygons = [walls]
-        elif walls.geom_type == 'MultiPolygon':
+        elif walls.geom_type == 'MultiPolygon': # If it's a MultiPolygon, convert it to a list of Polygons
             self.wall_polygons = list(walls.geoms)
         else:
             self.wall_polygons = []
@@ -117,8 +119,8 @@ class Floorplan:
     def add_wall_obstacles(self, rvo_sim):
         for poly in self.wall_polygons:
             exterior_coords = list(poly.exterior.coords)
-            vertices = [(float(x), float(y)) for x, y in exterior_coords[:-1]]
-            vertices.reverse()
+            vertices = [(float(x), float(y)) for x, y in exterior_coords[:-1]]  # Last point is same as first
+            vertices.reverse() # RVO2 expects vertices in counter-clockwise order
             if len(vertices) >= 2:
                 rvo_sim.add_obstacle(vertices)
             
