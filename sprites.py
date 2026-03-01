@@ -86,8 +86,6 @@ class Agent(pygame.sprite.Sprite):
 
 
 class Exit(pygame.sprite.Sprite):
-    """Coordinates are LOCAL (floorplan-relative, 0-based)."""
-
     def __init__(self, x, y, number, radius=20, colour=(0, 200, 0)):
         super().__init__()
 

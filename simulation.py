@@ -34,6 +34,7 @@ class Simulation:
         self.simulation_time = 0.0
         self.evacuated_count = 0
         self.paused = False
+        self.time_accumulator = 0.0
 
         self.floorplan = None
 
@@ -60,6 +61,7 @@ class Simulation:
         self.simulation_time = 0.0
         self.evacuated_count = 0
         self.paused = False
+        self.time_accumulator = 0.0
 
         if self.exits and self.grid_nodes:
             self.roadmap, self.exit_indices = self.build_roadmap()
@@ -81,6 +83,7 @@ class Simulation:
         self.simulation_time = 0.0
         self.evacuated_count = 0
         self.paused = False
+        self.time_accumulator = 0.0
 
     def toggle_pause(self):
         self.paused = not self.paused
@@ -91,6 +94,11 @@ class Simulation:
             return False
 
         self.time += dt
+        self.time_accumulator += dt
+
+        if self.time_accumulator < SIMULATION_STEP:
+            return False
+        self.time_accumulator -= SIMULATION_STEP
 
         arrived = self.collect_arrived_agents()
 
@@ -100,7 +108,7 @@ class Simulation:
             self.apply_mouse_override(mouse_override)
 
         self.rvo_sim.do_step()
-        self.simulation_time = self.rvo_sim.get_global_time()
+        self.simulation_time += SIMULATION_STEP
 
         for agent in self.agents:
             if agent not in arrived:

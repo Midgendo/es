@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-03-01T12:47:35.501260",
+  "timestamp": "2026-03-01T14:18:40.002010",
   "pixels_per_meter": 50.0,
   "floorplan_filename": "wall.png",
   "agents": [
@@ -191,8 +191,8 @@
         308,
         478
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed_mps": 3.5,
+      "radius_m": 0.25,
       "colour": [
         255,
         100,
@@ -205,8 +205,8 @@
         437,
         369
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed_mps": 3.5,
+      "radius_m": 0.25,
       "colour": [
         255,
         100,
@@ -219,8 +219,8 @@
         388,
         249
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed_mps": 3.5,
+      "radius_m": 0.25,
       "colour": [
         255,
         100,
@@ -233,8 +233,8 @@
         288,
         256
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed_mps": 3.5,
+      "radius_m": 0.25,
       "colour": [
         255,
         100,
@@ -247,8 +247,8 @@
         245,
         350
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed_mps": 3.5,
+      "radius_m": 0.25,
       "colour": [
         255,
         100,
@@ -259,10 +259,6 @@
   "exits": [
     {
       "position": [
-        807,
-        355
-      ],
-      "sim_position": [
         807,
         355
       ],

@@ -33,6 +33,9 @@ class AgentTypeCard:
         self.active_input = None   # the UITextEntryLine widget
         self.prev_value = None
 
+        self.tween = Tween(start=self.HEIGHT, end=1, duration=0.4)
+        self.tween.enter()
+
     def handle_click(self, mx, my):
         if self.active_input is not None:
             return
@@ -82,7 +85,7 @@ class AgentTypeCard:
         self.close_editor()
         return False
 
-    def draw(self, surface, x, y, selected=False, panel_offset=(0, 0)):
+    def draw(self, surface, x, y, dt, selected=False, panel_offset=(0, 0)):
         cs = self.CHIP_SIZE
         buffer = pygame.Surface((self.WIDTH, self.HEIGHT + cs), pygame.SRCALPHA)
 
@@ -128,7 +131,9 @@ class AgentTypeCard:
             # Size / speed labels (or inline editors)
             self.draw_field(buffer, "size",  f"Size: {at.radius_m * 2} m",  80, 34)
             self.draw_field(buffer, "speed", f"Speed: {at.speed_mps} m/s", 80, 50)
-
+        
+        y = self.tween.value
+        self.tween.update(dt)
         surface.blit(buffer, (x, y))
 
     def draw_field(self, surface, field, label_text, text_x, text_y):
@@ -252,10 +257,9 @@ class AgentPanel:
 
             # Delete chip
             if AgentTypeCard.is_in_delete_chip(rx, ry):
-                if card.agent_type.name == "Default":
-                    return False
                 self.scene_data.remove_agents_of_type(card.agent_type)
-                self.delete_agent_type(i)
+                if card.agent_type.name != "Default":
+                    self.delete_agent_type(i)
                 return True
 
             # Select + possibly open inline editor
@@ -299,7 +303,6 @@ class AgentPanel:
         x, y = self.X, self.tween.value
         border_colour = (255, 255, 255)
 
-        # All content is drawn onto a temporary surface then alpha-faded
         panel = pygame.Surface((self.WIDTH, self.HEIGHT), pygame.SRCALPHA)
         px, py = -x, -y
 
@@ -315,12 +318,12 @@ class AgentPanel:
 
             cs = AgentTypeCard.CHIP_SIZE
             diag_x = self.CARD_SPACING * (i + 1)
-            pygame.draw.line(panel, border_colour, (diag_x - cs, 0), (diag_x, cs), self.LINE_SIZE)
+            pygame.draw.line(panel, border_colour, (diag_x - cs, 0), (diag_x - 1, cs - 1), self.LINE_SIZE)
 
         # Cards
         for i, card in enumerate(self.cards):
             card_x, card_y = self.card_position(i)
-            card.draw(panel, card_x + px, card_y + py,
+            card.draw(panel, card_x + px, card_y + py, dt,
                       selected=(i == self.focused_index), panel_offset=(x, y))
 
             # Delete chip "−" label
@@ -347,7 +350,7 @@ class AgentPanel:
     def draw_plus_card(self, panel):
         r = self.PLUS_CIRCLE_R
         cx = len(self.cards) * self.CARD_SPACING + self.CARD_SPACING // 2
-        cy = self.HEIGHT - 90
+        cy = self.HEIGHT - 94
 
         temp = pygame.Surface((r * 2, r * 2), pygame.SRCALPHA)
         pygame.draw.circle(temp, (200, 200, 200, 150), (r, r), r, 2)
