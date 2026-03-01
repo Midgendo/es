@@ -1,20 +1,16 @@
 {
-  "timestamp": "2026-02-05T11:38:22.171421",
+  "timestamp": "2026-03-01T12:47:35.501260",
   "pixels_per_meter": 50.0,
   "floorplan_filename": "wall.png",
   "agents": [
     {
       "agent_type": "Default",
       "position": [
-        556,
-        494
-      ],
-      "sim_position": [
         246,
         469
       ],
-      "speed": 150.0,
-      "radius": 15,
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
       "colour": [
         255,
         255,
@@ -24,15 +20,11 @@
     {
       "agent_type": "Default",
       "position": [
-        685,
-        484
-      ],
-      "sim_position": [
         375,
         459
       ],
-      "speed": 150.0,
-      "radius": 15,
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
       "colour": [
         255,
         255,
@@ -42,15 +34,11 @@
     {
       "agent_type": "Default",
       "position": [
-        647,
-        385
-      ],
-      "sim_position": [
         337,
         360
       ],
-      "speed": 150.0,
-      "radius": 15,
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
       "colour": [
         255,
         255,
@@ -60,15 +48,11 @@
     {
       "agent_type": "Default",
       "position": [
-        490,
-        376
-      ],
-      "sim_position": [
         180,
         351
       ],
-      "speed": 150.0,
-      "radius": 15,
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
       "colour": [
         255,
         255,
@@ -78,15 +62,11 @@
     {
       "agent_type": "Default",
       "position": [
-        468,
-        432
-      ],
-      "sim_position": [
         158,
         407
       ],
-      "speed": 150.0,
-      "radius": 15,
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
       "colour": [
         255,
         255,
@@ -96,15 +76,11 @@
     {
       "agent_type": "Default",
       "position": [
-        619,
-        346
-      ],
-      "sim_position": [
         309,
         321
       ],
-      "speed": 150.0,
-      "radius": 15,
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
       "colour": [
         255,
         255,
@@ -114,15 +90,11 @@
     {
       "agent_type": "Default",
       "position": [
-        604,
-        416
-      ],
-      "sim_position": [
         294,
         391
       ],
-      "speed": 150.0,
-      "radius": 15,
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
       "colour": [
         255,
         255,
@@ -132,15 +104,11 @@
     {
       "agent_type": "Default",
       "position": [
-        705,
-        417
-      ],
-      "sim_position": [
         395,
         392
       ],
-      "speed": 150.0,
-      "radius": 15,
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
       "colour": [
         255,
         255,
@@ -150,15 +118,11 @@
     {
       "agent_type": "Default",
       "position": [
-        720,
-        446
-      ],
-      "sim_position": [
         410,
         421
       ],
-      "speed": 150.0,
-      "radius": 15,
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
       "colour": [
         255,
         255,
@@ -168,15 +132,11 @@
     {
       "agent_type": "Default",
       "position": [
-        740,
-        354
-      ],
-      "sim_position": [
         430,
         329
       ],
-      "speed": 150.0,
-      "radius": 15,
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
       "colour": [
         255,
         255,
@@ -186,15 +146,11 @@
     {
       "agent_type": "Default",
       "position": [
-        695,
-        329
-      ],
-      "sim_position": [
         385,
         304
       ],
-      "speed": 150.0,
-      "radius": 15,
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
       "colour": [
         255,
         255,
@@ -204,15 +160,11 @@
     {
       "agent_type": "Default",
       "position": [
-        657,
-        355
-      ],
-      "sim_position": [
         347,
         330
       ],
-      "speed": 150.0,
-      "radius": 15,
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
       "colour": [
         255,
         255,
@@ -222,15 +174,11 @@
     {
       "agent_type": "Default",
       "position": [
-        698,
-        364
-      ],
-      "sim_position": [
         388,
         339
       ],
-      "speed": 150.0,
-      "radius": 15,
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
       "colour": [
         255,
         255,
@@ -240,15 +188,11 @@
     {
       "agent_type": "Type A",
       "position": [
-        618,
-        503
-      ],
-      "sim_position": [
         308,
         478
       ],
-      "speed": 100.0,
-      "radius": 20,
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
       "colour": [
         255,
         100,
@@ -258,15 +202,11 @@
     {
       "agent_type": "Type A",
       "position": [
-        747,
-        394
-      ],
-      "sim_position": [
         437,
         369
       ],
-      "speed": 100.0,
-      "radius": 20,
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
       "colour": [
         255,
         100,
@@ -276,15 +216,11 @@
     {
       "agent_type": "Type A",
       "position": [
-        698,
-        274
-      ],
-      "sim_position": [
         388,
         249
       ],
-      "speed": 100.0,
-      "radius": 20,
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
       "colour": [
         255,
         100,
@@ -294,15 +230,11 @@
     {
       "agent_type": "Type A",
       "position": [
-        598,
-        281
-      ],
-      "sim_position": [
         288,
         256
       ],
-      "speed": 100.0,
-      "radius": 20,
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
       "colour": [
         255,
         100,
@@ -312,15 +244,11 @@
     {
       "agent_type": "Type A",
       "position": [
-        555,
-        375
-      ],
-      "sim_position": [
         245,
         350
       ],
-      "speed": 100.0,
-      "radius": 20,
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
       "colour": [
         255,
         100,
@@ -331,8 +259,12 @@
   "exits": [
     {
       "position": [
-        1117,
-        380
+        807,
+        355
+      ],
+      "sim_position": [
+        807,
+        355
       ],
       "number": 1,
       "radius": 18,

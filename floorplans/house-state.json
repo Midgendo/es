@@ -1,15 +1,11 @@
 {
-  "timestamp": "2026-02-08T19:25:52.982609",
+  "timestamp": "2026-03-01T12:47:49.686167",
   "pixels_per_meter": 50.0,
   "floorplan_filename": "house.png",
   "agents": [
     {
       "agent_type": "Default",
       "position": [
-        598,
-        295
-      ],
-      "sim_position": [
         177,
         270
       ],
@@ -24,10 +20,6 @@
     {
       "agent_type": "Default",
       "position": [
-        663,
-        231
-      ],
-      "sim_position": [
         242,
         206
       ],
@@ -42,10 +34,6 @@
     {
       "agent_type": "Default",
       "position": [
-        715,
-        254
-      ],
-      "sim_position": [
         294,
         229
       ],
@@ -60,10 +48,6 @@
     {
       "agent_type": "Default",
       "position": [
-        670,
-        286
-      ],
-      "sim_position": [
         249,
         261
       ],
@@ -78,10 +62,6 @@
     {
       "agent_type": "Default",
       "position": [
-        531,
-        224
-      ],
-      "sim_position": [
         110,
         199
       ],
@@ -96,10 +76,6 @@
     {
       "agent_type": "Default",
       "position": [
-        497,
-        282
-      ],
-      "sim_position": [
         76,
         257
       ],
@@ -114,10 +90,6 @@
     {
       "agent_type": "Default",
       "position": [
-        550,
-        300
-      ],
-      "sim_position": [
         129,
         275
       ],
@@ -132,10 +104,6 @@
     {
       "agent_type": "Default",
       "position": [
-        668,
-        194
-      ],
-      "sim_position": [
         247,
         169
       ],
@@ -150,10 +118,6 @@
     {
       "agent_type": "Default",
       "position": [
-        724,
-        213
-      ],
-      "sim_position": [
         303,
         188
       ],
@@ -168,10 +132,6 @@
     {
       "agent_type": "Default",
       "position": [
-        667,
-        147
-      ],
-      "sim_position": [
         246,
         122
       ],
@@ -186,10 +146,6 @@
     {
       "agent_type": "Default",
       "position": [
-        598,
-        177
-      ],
-      "sim_position": [
         177,
         152
       ],
@@ -204,10 +160,6 @@
     {
       "agent_type": "Default",
       "position": [
-        619,
-        240
-      ],
-      "sim_position": [
         198,
         215
       ],
@@ -222,10 +174,6 @@
     {
       "agent_type": "Default",
       "position": [
-        484,
-        161
-      ],
-      "sim_position": [
         63,
         136
       ],
@@ -240,10 +188,6 @@
     {
       "agent_type": "Default",
       "position": [
-        488,
-        194
-      ],
-      "sim_position": [
         67,
         169
       ],
@@ -258,10 +202,6 @@
     {
       "agent_type": "Default",
       "position": [
-        488,
-        233
-      ],
-      "sim_position": [
         67,
         208
       ],
@@ -276,10 +216,6 @@
     {
       "agent_type": "Default",
       "position": [
-        571,
-        164
-      ],
-      "sim_position": [
         150,
         139
       ],
@@ -294,10 +230,6 @@
     {
       "agent_type": "Default",
       "position": [
-        584,
-        221
-      ],
-      "sim_position": [
         163,
         196
       ],
@@ -312,10 +244,6 @@
     {
       "agent_type": "Default",
       "position": [
-        566,
-        256
-      ],
-      "sim_position": [
         145,
         231
       ],
@@ -330,10 +258,6 @@
     {
       "agent_type": "Default",
       "position": [
-        1112,
-        275
-      ],
-      "sim_position": [
         691,
         250
       ],
@@ -348,10 +272,6 @@
     {
       "agent_type": "Default",
       "position": [
-        1137,
-        242
-      ],
-      "sim_position": [
         716,
         217
       ],
@@ -366,10 +286,6 @@
     {
       "agent_type": "Default",
       "position": [
-        1105,
-        241
-      ],
-      "sim_position": [
         684,
         216
       ],
@@ -384,10 +300,6 @@
     {
       "agent_type": "Default",
       "position": [
-        1075,
-        261
-      ],
-      "sim_position": [
         654,
         236
       ],
@@ -402,10 +314,6 @@
     {
       "agent_type": "Default",
       "position": [
-        1040,
-        283
-      ],
-      "sim_position": [
         619,
         258
       ],
@@ -420,10 +328,6 @@
     {
       "agent_type": "Default",
       "position": [
-        974,
-        266
-      ],
-      "sim_position": [
         553,
         241
       ],
@@ -438,10 +342,6 @@
     {
       "agent_type": "Default",
       "position": [
-        885,
-        240
-      ],
-      "sim_position": [
         464,
         215
       ],
@@ -456,10 +356,6 @@
     {
       "agent_type": "Default",
       "position": [
-        826,
-        283
-      ],
-      "sim_position": [
         405,
         258
       ],
@@ -474,10 +370,6 @@
     {
       "agent_type": "Default",
       "position": [
-        913,
-        316
-      ],
-      "sim_position": [
         492,
         291
       ],
@@ -492,10 +384,6 @@
     {
       "agent_type": "Default",
       "position": [
-        1032,
-        324
-      ],
-      "sim_position": [
         611,
         299
       ],
@@ -510,10 +398,6 @@
     {
       "agent_type": "Default",
       "position": [
-        1178,
-        308
-      ],
-      "sim_position": [
         757,
         283
       ],
@@ -528,10 +412,6 @@
     {
       "agent_type": "Default",
       "position": [
-        1205,
-        292
-      ],
-      "sim_position": [
         784,
         267
       ],
@@ -546,10 +426,6 @@
     {
       "agent_type": "Default",
       "position": [
-        1218,
-        205
-      ],
-      "sim_position": [
         797,
         180
       ],
@@ -564,10 +440,6 @@
     {
       "agent_type": "Default",
       "position": [
-        1206,
-        177
-      ],
-      "sim_position": [
         785,
         152
       ],
@@ -582,10 +454,6 @@
     {
       "agent_type": "Default",
       "position": [
-        1066,
-        153
-      ],
-      "sim_position": [
         645,
         128
       ],
@@ -600,10 +468,6 @@
     {
       "agent_type": "Default",
       "position": [
-        929,
-        203
-      ],
-      "sim_position": [
         508,
         178
       ],
@@ -618,10 +482,6 @@
     {
       "agent_type": "Default",
       "position": [
-        1078,
-        200
-      ],
-      "sim_position": [
         657,
         175
       ],
@@ -636,10 +496,6 @@
     {
       "agent_type": "Default",
       "position": [
-        1124,
-        180
-      ],
-      "sim_position": [
         703,
         155
       ],
@@ -654,10 +510,6 @@
     {
       "agent_type": "Default",
       "position": [
-        1161,
-        149
-      ],
-      "sim_position": [
         740,
         124
       ],
@@ -672,10 +524,6 @@
     {
       "agent_type": "Default",
       "position": [
-        1137,
-        121
-      ],
-      "sim_position": [
         716,
         96
       ],
@@ -690,10 +538,6 @@
     {
       "agent_type": "Default",
       "position": [
-        1045,
-        216
-      ],
-      "sim_position": [
         624,
         191
       ],
@@ -708,10 +552,6 @@
     {
       "agent_type": "Default",
       "position": [
-        983,
-        193
-      ],
-      "sim_position": [
         562,
         168
       ],
@@ -726,10 +566,6 @@
     {
       "agent_type": "Default",
       "position": [
-        910,
-        157
-      ],
-      "sim_position": [
         489,
         132
       ],
@@ -744,10 +580,6 @@
     {
       "agent_type": "Default",
       "position": [
-        825,
-        176
-      ],
-      "sim_position": [
         404,
         151
       ],
@@ -762,10 +594,6 @@
     {
       "agent_type": "Default",
       "position": [
-        843,
-        208
-      ],
-      "sim_position": [
         422,
         183
       ],
@@ -780,10 +608,6 @@
     {
       "agent_type": "Default",
       "position": [
-        1007,
-        281
-      ],
-      "sim_position": [
         586,
         256
       ],
@@ -798,10 +622,6 @@
     {
       "agent_type": "Default",
       "position": [
-        1130,
-        331
-      ],
-      "sim_position": [
         709,
         306
       ],
@@ -816,10 +636,6 @@
     {
       "agent_type": "Default",
       "position": [
-        1175,
-        257
-      ],
-      "sim_position": [
         754,
         232
       ],
@@ -834,10 +650,6 @@
     {
       "agent_type": "Default",
       "position": [
-        1170,
-        216
-      ],
-      "sim_position": [
         749,
         191
       ],
@@ -852,10 +664,6 @@
     {
       "agent_type": "Default",
       "position": [
-        493,
-        425
-      ],
-      "sim_position": [
         72,
         400
       ],
@@ -870,10 +678,6 @@
     {
       "agent_type": "Default",
       "position": [
-        514,
-        455
-      ],
-      "sim_position": [
         93,
         430
       ],
@@ -888,10 +692,6 @@
     {
       "agent_type": "Default",
       "position": [
-        527,
-        515
-      ],
-      "sim_position": [
         106,
         490
       ],
@@ -906,10 +706,6 @@
     {
       "agent_type": "Default",
       "position": [
-        504,
-        541
-      ],
-      "sim_position": [
         83,
         516
       ],
@@ -924,10 +720,6 @@
     {
       "agent_type": "Default",
       "position": [
-        552,
-        389
-      ],
-      "sim_position": [
         131,
         364
       ],
@@ -942,10 +734,6 @@
     {
       "agent_type": "Default",
       "position": [
-        555,
-        429
-      ],
-      "sim_position": [
         134,
         404
       ],
@@ -960,10 +748,6 @@
     {
       "agent_type": "Default",
       "position": [
-        668,
-        535
-      ],
-      "sim_position": [
         247,
         510
       ],
@@ -978,10 +762,6 @@
     {
       "agent_type": "Default",
       "position": [
-        622,
-        526
-      ],
-      "sim_position": [
         201,
         501
       ],
@@ -996,10 +776,6 @@
     {
       "agent_type": "Default",
       "position": [
-        709,
-        561
-      ],
-      "sim_position": [
         288,
         536
       ],
@@ -1014,10 +790,6 @@
     {
       "agent_type": "Default",
       "position": [
-        661,
-        571
-      ],
-      "sim_position": [
         240,
         546
       ],
@@ -1032,10 +804,6 @@
     {
       "agent_type": "Default",
       "position": [
-        621,
-        565
-      ],
-      "sim_position": [
         200,
         540
       ],
@@ -1050,10 +818,6 @@
     {
       "agent_type": "Default",
       "position": [
-        703,
-        523
-      ],
-      "sim_position": [
         282,
         498
       ],
@@ -1068,10 +832,6 @@
     {
       "agent_type": "Default",
       "position": [
-        1146,
-        548
-      ],
-      "sim_position": [
         725,
         523
       ],
@@ -1086,10 +846,6 @@
     {
       "agent_type": "Default",
       "position": [
-        1207,
-        489
-      ],
-      "sim_position": [
         786,
         464
       ],
@@ -1104,10 +860,6 @@
     {
       "agent_type": "Default",
       "position": [
-        1166,
-        436
-      ],
-      "sim_position": [
         745,
         411
       ],
@@ -1122,10 +874,6 @@
     {
       "agent_type": "Default",
       "position": [
-        1123,
-        426
-      ],
-      "sim_position": [
         702,
         401
       ],
@@ -1140,10 +888,6 @@
     {
       "agent_type": "Default",
       "position": [
-        1009,
-        460
-      ],
-      "sim_position": [
         588,
         435
       ],
@@ -1158,10 +902,6 @@
     {
       "agent_type": "Default",
       "position": [
-        1004,
-        524
-      ],
-      "sim_position": [
         583,
         499
       ],
@@ -1176,10 +916,6 @@
     {
       "agent_type": "Default",
       "position": [
-        1034,
-        541
-      ],
-      "sim_position": [
         613,
         516
       ],
@@ -1194,10 +930,6 @@
     {
       "agent_type": "Default",
       "position": [
-        1047,
-        501
-      ],
-      "sim_position": [
         626,
         476
       ],
@@ -1212,10 +944,6 @@
     {
       "agent_type": "Default",
       "position": [
-        1076,
-        453
-      ],
-      "sim_position": [
         655,
         428
       ],
@@ -1230,10 +958,6 @@
     {
       "agent_type": "Default",
       "position": [
-        1153,
-        464
-      ],
-      "sim_position": [
         732,
         439
       ],
@@ -1248,10 +972,6 @@
     {
       "agent_type": "Default",
       "position": [
-        886,
-        439
-      ],
-      "sim_position": [
         465,
         414
       ],
@@ -1266,10 +986,6 @@
     {
       "agent_type": "Default",
       "position": [
-        886,
-        484
-      ],
-      "sim_position": [
         465,
         459
       ],
@@ -1284,10 +1000,6 @@
     {
       "agent_type": "Default",
       "position": [
-        856,
-        503
-      ],
-      "sim_position": [
         435,
         478
       ],
@@ -1302,10 +1014,6 @@
     {
       "agent_type": "Default",
       "position": [
-        810,
-        455
-      ],
-      "sim_position": [
         389,
         430
       ],
@@ -1320,10 +1028,6 @@
     {
       "agent_type": "Default",
       "position": [
-        796,
-        575
-      ],
-      "sim_position": [
         375,
         550
       ],
@@ -1338,10 +1042,6 @@
     {
       "agent_type": "Default",
       "position": [
-        676,
-        424
-      ],
-      "sim_position": [
         255,
         399
       ],
@@ -1356,10 +1056,6 @@
     {
       "agent_type": "Default",
       "position": [
-        605,
-        79
-      ],
-      "sim_position": [
         184,
         54
       ],
@@ -1374,10 +1070,6 @@
     {
       "agent_type": "Default",
       "position": [
-        922,
-        524
-      ],
-      "sim_position": [
         501,
         499
       ],
@@ -1392,10 +1084,6 @@
     {
       "agent_type": "Default",
       "position": [
-        983,
-        310
-      ],
-      "sim_position": [
         562,
         285
       ],
@@ -1410,10 +1098,6 @@
     {
       "agent_type": "Default",
       "position": [
-        901,
-        354
-      ],
-      "sim_position": [
         480,
         329
       ],
@@ -1428,10 +1112,6 @@
     {
       "agent_type": "Default",
       "position": [
-        837,
-        335
-      ],
-      "sim_position": [
         416,
         310
       ],
@@ -1446,10 +1126,6 @@
     {
       "agent_type": "Default",
       "position": [
-        909,
-        283
-      ],
-      "sim_position": [
         488,
         258
       ],
@@ -1464,10 +1140,6 @@
     {
       "agent_type": "Default",
       "position": [
-        799,
-        219
-      ],
-      "sim_position": [
         378,
         194
       ],
@@ -1482,10 +1154,6 @@
     {
       "agent_type": "Default",
       "position": [
-        802,
-        322
-      ],
-      "sim_position": [
         381,
         297
       ],
@@ -1500,10 +1168,6 @@
     {
       "agent_type": "Default",
       "position": [
-        779,
-        353
-      ],
-      "sim_position": [
         358,
         328
       ],
@@ -1518,10 +1182,6 @@
     {
       "agent_type": "Default",
       "position": [
-        1033,
-        143
-      ],
-      "sim_position": [
         612,
         118
       ],
@@ -1536,10 +1196,6 @@
     {
       "agent_type": "Default",
       "position": [
-        949,
-        146
-      ],
-      "sim_position": [
         528,
         121
       ],
@@ -1554,10 +1210,6 @@
     {
       "agent_type": "Default",
       "position": [
-        983,
-        148
-      ],
-      "sim_position": [
         562,
         123
       ],
@@ -1573,8 +1225,12 @@
   "exits": [
     {
       "position": [
-        865,
-        639
+        444,
+        614
+      ],
+      "sim_position": [
+        444,
+        614
       ],
       "number": 1,
       "radius": 18,
@@ -1586,8 +1242,12 @@
     },
     {
       "position": [
-        1120,
-        635
+        699,
+        610
+      ],
+      "sim_position": [
+        699,
+        610
       ],
       "number": 2,
       "radius": 18,
