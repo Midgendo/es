@@ -46,11 +46,11 @@ class SceneData:
 
     def add_agent(self, screen_x, screen_y, agent_type):
         local_x, local_y = self.floorplan.screen_to_sim(screen_x, screen_y)
-        radius_px = agent_type.radius_px(self.ppm)
+        max_radius_px = agent_type.max_radius_px(self.ppm)
 
-        if has_wall_collision(local_x, local_y, radius_px, self.floorplan.wall_polygons):
+        if has_wall_collision(local_x, local_y, max_radius_px, self.floorplan.wall_polygons):
             return False
-        if has_agent_collision((local_x, local_y), radius_px, self.agents):
+        if has_agent_collision((local_x, local_y), max_radius_px, self.agents):
             return False
 
         agent = Agent(local_x, local_y, agent_type, self.ppm)
@@ -68,16 +68,31 @@ class SceneData:
     def remove_agents_of_type(self, agent_type):
         self.agents = [a for a in self.agents if a.agent_type != agent_type]
 
-    def update_agents_of_type(self, agent_type, radius_m=None, speed_mps=None):
+    def update_agents_of_type(self, agent_type, radius_m=None, speed_mps=None, radius_m_range=None, speed_mps_range=None):
+        rand_speed = False
+        rand_radius = False
+        
         if radius_m is not None:
             agent_type.radius_m = radius_m
         if speed_mps is not None:
             agent_type.speed_mps = speed_mps
 
+        if radius_m_range is not None:
+            rand_radius = True
+            agent_type.radius_m_range = radius_m_range
+        if speed_mps_range is not None:
+            rand_speed = True
+            agent_type.speed_mps_range = speed_mps_range
+
         for agent in self.agents:
             if agent.agent_type is agent_type:
-                agent.radius = int(agent_type.radius_px(self.ppm))
-                agent.speed = agent_type.speed_px(self.ppm)
+                if rand_radius:
+                    agent.radius = int(agent_type.rand_radius_px(self.ppm))
+                elif rand_speed:
+                    agent.speed = agent_type.rand_speed_px(self.ppm)
+                else:
+                    agent.radius = int(agent_type.radius_px(self.ppm))
+                    agent.speed = agent_type.speed_px(self.ppm)
                 agent.rebuild_image()
 
     def add_exit(self, screen_x, screen_y, sim_config):
@@ -136,7 +151,7 @@ class Fonts:
     TIMER = pygame.font.Font("DSEG7Classic-BoldItalic.ttf", 28)
     TIMER2 = pygame.font.Font("DSEG7Classic-BoldItalic.ttf", 18)
 
-    AGENT_DETAILS = pygame.font.Font(None, 20)
+    AGENT_DETAILS = pygame.font.Font(None, 18)
 
 
 def create_gradient(width, height, colour1, colour2, alpha1=255, alpha2=255):
@@ -227,6 +242,7 @@ class UIPanel:
     def show_editing_buttons(self):
         for name in ("clear", "tool_agent", "tool_exit", "load", "save", "start"):
             self.buttons[name].show()
+        self.floorplan_picker.show()
         self.buttons["tool_agent"].disable()
         self.buttons["tool_exit"].enable()
 
@@ -234,6 +250,7 @@ class UIPanel:
         self.buttons["pause_resume"].set_text("Pause")
         self.buttons["pause_resume"].show()
         self.buttons["stop"].show()
+        self.floorplan_picker.hide()
 
     def show_completed_buttons(self):
         self.buttons["stop"].show()
@@ -262,11 +279,6 @@ class UIPanel:
 
         self.buttons["clear"].set_relative_position((x, bottom - row_h * 4))
         self.floorplan_picker.set_relative_position((x, bottom - row_h * 5))
-
-        if state in ("running", "completed"):
-            self.floorplan_picker.hide()
-        else:
-            self.floorplan_picker.show()
 
     def draw(self, surface, state, fps, dt,
              running_time=0.0, simulation_time=0.0,

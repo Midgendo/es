@@ -15,7 +15,7 @@ class AgentTypeCard:
     CHIP_SIZE = 30
 
     # Preview circle scale (independent of floorplan PPM so the card looks consistent)
-    PREVIEW_AGENT_PPM = 50
+    PREVIEW_AGENT_PPM = 70
 
     @staticmethod
     def is_in_delete_chip(rx, ry):
@@ -33,6 +33,9 @@ class AgentTypeCard:
         self.active_input = None   # the UITextEntryLine widget
         self.prev_value = None
 
+        self.preview_bg_s = create_gradient(50, 50, self.colours.sim_bg_top, self.colours.sim_bg_bottom)
+        self.preview_bg = create_gradient(50, 50, (150, 150, 150), (255, 255, 255))
+
         self.tween = Tween(start=self.HEIGHT, end=1, duration=0.4)
         self.tween.enter()
 
@@ -40,9 +43,10 @@ class AgentTypeCard:
         if self.active_input is not None:
             return
         if self.size_rect.collidepoint(mx, my):
-            self.open_editor("size", self.agent_type.radius_m * 2)
+            lo, hi = self.agent_type.radius_m_range
+            self.open_editor("size", (lo * 2, hi * 2))
         elif self.speed_rect.collidepoint(mx, my):
-            self.open_editor("speed", self.agent_type.speed_mps)
+            self.open_editor("speed", self.agent_type.speed_mps_range)
 
     def open_editor(self, field, current_value):
         self.close_editor()
@@ -53,7 +57,7 @@ class AgentTypeCard:
             relative_rect=rect, manager=self.manager, object_id=f"#agent_input"
         )
         self.active_input.text_length_limit = 4
-        self.active_input.set_text(f"{current_value:.1f}")
+        self.active_input.set_text(f"{current_value[0]}-{current_value[1]}")
 
     def close_editor(self):
         if self.active_input is not None:
@@ -69,16 +73,20 @@ class AgentTypeCard:
         lo, hi = (0.1, 1.5) if self.active_field == "size" else (0.0, 10.0)
 
         try:
-            value = float(self.active_input.get_text().strip())
+            input = self.active_input.get_text().strip().split("-")
+            if len(input) == 1:
+                value = (float(input[0]), float(input[0]))
+            else:
+                value = tuple(map(float, input))
         except ValueError:
             self.close_editor()
             return False
 
-        if lo <= value <= hi:
+        if lo <= value[0] <= hi and lo <= value[1] <= hi and value[0] <= value[1]:
             if self.active_field == "size":
-                scene_data.update_agents_of_type(self.agent_type, radius_m=value / 2.0)
+                scene_data.update_agents_of_type(self.agent_type, radius_m_range=(value[0] / 2.0, value[1] / 2.0))
             else:
-                scene_data.update_agents_of_type(self.agent_type, speed_mps=value)
+                scene_data.update_agents_of_type(self.agent_type, speed_mps_range=value)
             self.close_editor()
             return True
 
@@ -92,51 +100,56 @@ class AgentTypeCard:
         # Card polygon (top-right corner cut)
         points = [(0, 0), (self.WIDTH - cs, 0), (self.WIDTH, cs), (self.WIDTH, self.HEIGHT), (0, self.HEIGHT)]
         
-        p_surface = pygame.Surface((60, 60), pygame.SRCALPHA)
+        p_surface = pygame.Surface((50, 50), pygame.SRCALPHA)
         if selected:
             colour = (180, 180, 180, 220)
-            preview_background = create_gradient(60, 60, self.colours.sim_bg_top, self.colours.sim_bg_bottom)
             p_surface.set_alpha(220)
         else:
             colour = (0, 0, 0, 150)
-            preview_background = create_gradient(60, 60, (150, 150, 150), (255, 255, 255))
             p_surface.set_alpha(150)
             
         pygame.draw.polygon(buffer, colour, points)
-        p_surface.blit(preview_background, (0, 0))
-        
-        buffer.blit(p_surface, (10, 10))
 
         if self.agent_type:
             at = self.agent_type
 
-            buffer.blit(Fonts.DEFAULT.render(at.name, True, (255, 255, 255)), (80, 15))
+            buffer.blit(Fonts.DEFAULT.render(at.name, True, (255, 255, 255)), (66, 10))
 
             # Agent Preview
-            preview_r = int(at.radius_m * self.PREVIEW_AGENT_PPM)
-            pygame.draw.circle(buffer, at.colour, (40, 40), preview_r)
-
+            avg_radius = (at.radius_m_range[0] + at.radius_m_range[1]) / 2.0
+            preview_r = int(avg_radius * self.PREVIEW_AGENT_PPM)
+            p_surface.blit(self.preview_bg_s if selected else self.preview_bg, (0, 0))
+            pygame.draw.circle(p_surface, at.colour, (25, 25), preview_r)
             letter = at.type_letter()
             if letter:
-                glyph = pygame.font.Font(None, 24).render(letter, True, (255, 255, 255))
-                buffer.blit(glyph, (40 - glyph.get_width() // 2, 40 - glyph.get_height() // 2))
+                glyph = pygame.font.Font(None, max(20, avg_radius)).render(letter, True, (255, 255, 255))
+                p_surface.blit(glyph, glyph.get_rect(center=(25, 25)))
+            buffer.blit(p_surface, (8, 8))
 
             # Screen-space rects for pygame_gui inline editors
             screen_x = x + panel_offset[0]
             screen_y = y + panel_offset[1]
             BOX_Y_OFFSET, BOX_W, BOX_H = -2, 92, 22
-            self.size_rect = pygame.Rect(screen_x + 80, screen_y + 34 + BOX_Y_OFFSET, BOX_W, BOX_H)
-            self.speed_rect = pygame.Rect(screen_x + 80, screen_y + 50 + BOX_Y_OFFSET, BOX_W, BOX_H)
+            self.size_rect = pygame.Rect(screen_x + 70, screen_y + 28 + BOX_Y_OFFSET, BOX_W, BOX_H)
+            self.speed_rect = pygame.Rect(screen_x + 70, screen_y + 44 + BOX_Y_OFFSET, BOX_W, BOX_H)
 
             # Size / speed labels (or inline editors)
-            self.draw_field(buffer, "size",  f"Size: {at.radius_m * 2} m",  80, 34)
-            self.draw_field(buffer, "speed", f"Speed: {at.speed_mps} m/s", 80, 50)
+            size_text= f"Size: {at.radius_m_range[0] * 2:.2f}-{at.radius_m_range[1] * 2:.2f}m" if not at.same_radius() else f"Size: {at.radius_m_range[0] * 2:.2f}m"
+            speed_text = f"Speed: {at.speed_mps_range[0]}-{at.speed_mps_range[1]}m/s" if not at.same_speed() else f"Speed: {at.speed_mps_range[0]:.2f}m/s"
+            
+            self.draw_field(buffer, "size",  size_text, 66, 28)
+            self.draw_field(buffer, "speed", speed_text, 66, 44)
+
+        colour = (220, 220, 220) if selected else (70, 70, 70)
+        for i in range(0, 17):
+            pygame.draw.line(buffer, colour, (0, 74 + (2 * i)), (self.WIDTH - 1, 74 + (2 * i)), 2 if selected else 1)
         
         y = self.tween.value
         self.tween.update(dt)
         surface.blit(buffer, (x, y))
 
     def draw_field(self, surface, field, label_text, text_x, text_y):
+        """Draw the field or anchor the inline editor"""
         if self.active_field == field and self.active_input is not None:
             rect = self.size_rect if field == "size" else self.speed_rect
             self.active_input.set_relative_position(rect.topleft)

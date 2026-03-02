@@ -1,7 +1,7 @@
 """Configuration dataclasses and enums. Changing these might break things!"""
 
 from enum import Enum, auto
-
+import random
 
 class AppState(Enum):
     LOADING = auto()
@@ -47,7 +47,7 @@ class SimulationConfig:
         # how far into the future collisions with agents are anticipated (seconds)
         self.time_horizon = 0.5
         # same but for obstacles
-        self.time_horizon_obst = 0.3
+        self.time_horizon_obst = 0.2
 
         # Palette for custom agent types
         self.custom_agent_colours = [
@@ -84,6 +84,9 @@ class AgentType:
         self.radius_m = radius_m    # metres
         self.colour = colour
 
+        self.speed_mps_range = (3.7, 4.5)
+        self.radius_m_range = (0.175, 0.225)
+
         # RVO2 per-agent overrides
         self.neighbor_dist_m = neighbor_dist_m
         self.max_neighbors = max_neighbors
@@ -94,9 +97,24 @@ class AgentType:
 
     def speed_px(self, ppm):
         return self.speed_mps * ppm
+    
+    def rand_speed_px(self, ppm):
+        return random.uniform(*self.speed_mps_range) * ppm
 
     def radius_px(self, ppm):
         return self.radius_m * ppm
+    
+    def rand_radius_px(self, ppm):
+        return random.uniform(*self.radius_m_range) * ppm
+    
+    def max_radius_px(self, ppm):
+        return self.radius_m_range[1] * ppm
+    
+    def same_radius(self):
+        return self.radius_m_range[0] == self.radius_m_range[1]
+    
+    def same_speed(self):
+        return self.speed_mps_range[0] == self.speed_mps_range[1]
 
     def neighbor_dist_px(self, ppm):
         return self.neighbor_dist_m * ppm

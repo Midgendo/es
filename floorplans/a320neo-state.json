@@ -1,16 +1,16 @@
 {
-  "timestamp": "2026-03-01T12:48:14.855535",
+  "timestamp": "2026-03-01T17:57:26.624816",
   "pixels_per_meter": 30.0,
   "floorplan_filename": "a320neo.png",
   "agents": [
     {
       "agent_type": "Default",
       "position": [
-        537,
-        187
+        336,
+        55
       ],
       "speed_mps": 3.0,
-      "radius_m": 0.2,
+      "radius_m": 0.3,
       "colour": [
         255,
         255,
@@ -20,11 +20,11 @@
     {
       "agent_type": "Default",
       "position": [
-        534,
-        126
+        335,
+        77
       ],
       "speed_mps": 3.0,
-      "radius_m": 0.2,
+      "radius_m": 0.3,
       "colour": [
         255,
         255,
@@ -34,11 +34,11 @@
     {
       "agent_type": "Default",
       "position": [
-        563,
-        129
+        331,
+        100
       ],
       "speed_mps": 3.0,
-      "radius_m": 0.2,
+      "radius_m": 0.3,
       "colour": [
         255,
         255,
@@ -48,11 +48,11 @@
     {
       "agent_type": "Default",
       "position": [
-        645,
-        137
+        340,
+        165
       ],
       "speed_mps": 3.0,
-      "radius_m": 0.2,
+      "radius_m": 0.3,
       "colour": [
         255,
         255,
@@ -62,11 +62,11 @@
     {
       "agent_type": "Default",
       "position": [
-        709,
-        137
+        331,
+        224
       ],
       "speed_mps": 3.0,
-      "radius_m": 0.2,
+      "radius_m": 0.3,
       "colour": [
         255,
         255,
@@ -76,11 +76,11 @@
     {
       "agent_type": "Default",
       "position": [
-        727,
-        140
+        335,
+        190
       ],
       "speed_mps": 3.0,
-      "radius_m": 0.2,
+      "radius_m": 0.3,
       "colour": [
         255,
         255,
@@ -90,11 +90,11 @@
     {
       "agent_type": "Default",
       "position": [
-        760,
-        150
+        304,
+        224
       ],
       "speed_mps": 3.0,
-      "radius_m": 0.2,
+      "radius_m": 0.3,
       "colour": [
         255,
         255,
@@ -104,25 +104,459 @@
     {
       "agent_type": "Default",
       "position": [
-        772,
-        152
+        301,
+        198
       ],
       "speed_mps": 3.0,
-      "radius_m": 0.2,
+      "radius_m": 0.3,
       "colour": [
         255,
         255,
         0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        306,
+        173
+      ],
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        309,
+        98
+      ],
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        306,
+        53
+      ],
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        395,
+        58
+      ],
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        396,
+        105
+      ],
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        397,
+        226
+      ],
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        396,
+        174
+      ],
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        430,
+        226
+      ],
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        425,
+        181
+      ],
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        724,
+        226
+      ],
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        719,
+        175
+      ],
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        719,
+        97
+      ],
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        721,
+        51
+      ],
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        687,
+        89
+      ],
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        688,
+        52
+      ],
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        777,
+        224
+      ],
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        777,
+        173
+      ],
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        810,
+        229
+      ],
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        689,
+        225
+      ],
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        690,
+        175
+      ],
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        662,
+        224
+      ],
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        657,
+        195
+      ],
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        660,
+        172
+      ],
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        868,
+        227
+      ],
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        869,
+        191
+      ],
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        873,
+        163
+      ],
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        875,
+        45
+      ],
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        276,
+        49
+      ],
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        277,
+        90
+      ],
+      "speed_mps": 3.0,
+      "radius_m": 0.3,
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Type B",
+      "position": [
+        278,
+        223
+      ],
+      "speed_mps": 1.2,
+      "radius_m": 0.3,
+      "colour": [
+        100,
+        255,
+        100
+      ]
+    },
+    {
+      "agent_type": "Type B",
+      "position": [
+        721,
+        75
+      ],
+      "speed_mps": 1.2,
+      "radius_m": 0.3,
+      "colour": [
+        100,
+        255,
+        100
       ]
     },
     {
       "agent_type": "Type A",
       "position": [
-        428,
-        134
+        422,
+        100
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.4,
+      "speed_mps": 2.7,
+      "radius_m": 0.2,
       "colour": [
         255,
         100,
@@ -132,11 +566,11 @@
     {
       "agent_type": "Type A",
       "position": [
-        385,
-        145
+        427,
+        68
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.4,
+      "speed_mps": 2.7,
+      "radius_m": 0.2,
       "colour": [
         255,
         100,
@@ -146,11 +580,11 @@
     {
       "agent_type": "Type A",
       "position": [
-        355,
-        142
+        426,
+        50
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.4,
+      "speed_mps": 2.7,
+      "radius_m": 0.2,
       "colour": [
         255,
         100,
@@ -160,11 +594,235 @@
     {
       "agent_type": "Type A",
       "position": [
-        334,
-        143
+        397,
+        80
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.4,
+      "speed_mps": 2.7,
+      "radius_m": 0.2,
+      "colour": [
+        255,
+        100,
+        100
+      ]
+    },
+    {
+      "agent_type": "Type A",
+      "position": [
+        305,
+        77
+      ],
+      "speed_mps": 2.7,
+      "radius_m": 0.2,
+      "colour": [
+        255,
+        100,
+        100
+      ]
+    },
+    {
+      "agent_type": "Type A",
+      "position": [
+        276,
+        70
+      ],
+      "speed_mps": 2.7,
+      "radius_m": 0.2,
+      "colour": [
+        255,
+        100,
+        100
+      ]
+    },
+    {
+      "agent_type": "Type A",
+      "position": [
+        369,
+        195
+      ],
+      "speed_mps": 2.7,
+      "radius_m": 0.2,
+      "colour": [
+        255,
+        100,
+        100
+      ]
+    },
+    {
+      "agent_type": "Type A",
+      "position": [
+        362,
+        168
+      ],
+      "speed_mps": 2.7,
+      "radius_m": 0.2,
+      "colour": [
+        255,
+        100,
+        100
+      ]
+    },
+    {
+      "agent_type": "Type A",
+      "position": [
+        393,
+        189
+      ],
+      "speed_mps": 2.7,
+      "radius_m": 0.2,
+      "colour": [
+        255,
+        100,
+        100
+      ]
+    },
+    {
+      "agent_type": "Type A",
+      "position": [
+        425,
+        200
+      ],
+      "speed_mps": 2.7,
+      "radius_m": 0.2,
+      "colour": [
+        255,
+        100,
+        100
+      ]
+    },
+    {
+      "agent_type": "Type A",
+      "position": [
+        360,
+        224
+      ],
+      "speed_mps": 2.7,
+      "radius_m": 0.2,
+      "colour": [
+        255,
+        100,
+        100
+      ]
+    },
+    {
+      "agent_type": "Type A",
+      "position": [
+        685,
+        203
+      ],
+      "speed_mps": 2.7,
+      "radius_m": 0.2,
+      "colour": [
+        255,
+        100,
+        100
+      ]
+    },
+    {
+      "agent_type": "Type A",
+      "position": [
+        719,
+        200
+      ],
+      "speed_mps": 2.7,
+      "radius_m": 0.2,
+      "colour": [
+        255,
+        100,
+        100
+      ]
+    },
+    {
+      "agent_type": "Type A",
+      "position": [
+        689,
+        67
+      ],
+      "speed_mps": 2.7,
+      "radius_m": 0.2,
+      "colour": [
+        255,
+        100,
+        100
+      ]
+    },
+    {
+      "agent_type": "Type A",
+      "position": [
+        749,
+        229
+      ],
+      "speed_mps": 2.7,
+      "radius_m": 0.2,
+      "colour": [
+        255,
+        100,
+        100
+      ]
+    },
+    {
+      "agent_type": "Type A",
+      "position": [
+        754,
+        174
+      ],
+      "speed_mps": 2.7,
+      "radius_m": 0.2,
+      "colour": [
+        255,
+        100,
+        100
+      ]
+    },
+    {
+      "agent_type": "Type A",
+      "position": [
+        752,
+        195
+      ],
+      "speed_mps": 2.7,
+      "radius_m": 0.2,
+      "colour": [
+        255,
+        100,
+        100
+      ]
+    },
+    {
+      "agent_type": "Type A",
+      "position": [
+        783,
+        195
+      ],
+      "speed_mps": 2.7,
+      "radius_m": 0.2,
+      "colour": [
+        255,
+        100,
+        100
+      ]
+    },
+    {
+      "agent_type": "Type A",
+      "position": [
+        808,
+        176
+      ],
+      "speed_mps": 2.7,
+      "radius_m": 0.2,
+      "colour": [
+        255,
+        100,
+        100
+      ]
+    },
+    {
+      "agent_type": "Type A",
+      "position": [
+        875,
+        98
+      ],
+      "speed_mps": 2.7,
+      "radius_m": 0.2,
       "colour": [
         255,
         100,
@@ -175,12 +833,8 @@
   "exits": [
     {
       "position": [
-        530,
-        249
-      ],
-      "sim_position": [
-        530,
-        249
+        533,
+        256
       ],
       "number": 1,
       "radius": 10,
@@ -192,12 +846,8 @@
     },
     {
       "position": [
-        531,
-        20
-      ],
-      "sim_position": [
-        531,
-        20
+        530,
+        23
       ],
       "number": 2,
       "radius": 10,

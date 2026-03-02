@@ -25,14 +25,14 @@ class Agent(pygame.sprite.Sprite):
 
     REACHED_EXIT_THRESHOLD = 40 # pixels
 
-    def __init__(self, x, y, agent_type, ppm=50.0):
+    def __init__(self, x, y, agent_type, ppm=50.0, radius=None, speed=None):
         super().__init__()
 
         self.agent_type = agent_type
         self.ppm = ppm
 
-        self.radius = int(agent_type.radius_px(ppm))
-        self.speed = agent_type.speed_px(ppm)
+        self.radius = int(radius) if radius is not None else int(agent_type.rand_radius_px(ppm))
+        self.speed = speed if speed is not None else agent_type.rand_speed_px(ppm)
         self.colour = agent_type.colour
 
         self.image = pygame.Surface((self.radius * 2, self.radius * 2), pygame.SRCALPHA)
@@ -45,8 +45,8 @@ class Agent(pygame.sprite.Sprite):
 
     def update_ppm(self, ppm):
         self.ppm = ppm
-        self.radius = int(self.agent_type.radius_px(ppm))
-        self.speed = self.agent_type.speed_px(ppm)
+        self.radius = int(self.agent_type.rand_radius_px(ppm))
+        self.speed = self.agent_type.rand_speed_px(ppm)
         self.rebuild_image()
 
     def rebuild_image(self):
@@ -82,6 +82,8 @@ class Agent(pygame.sprite.Sprite):
             self.rect.centerx, self.rect.centery,
             self.agent_type,
             self.ppm,
+            radius=self.radius,
+            speed=self.speed,
         )
 
 
