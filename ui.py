@@ -68,32 +68,19 @@ class SceneData:
     def remove_agents_of_type(self, agent_type):
         self.agents = [a for a in self.agents if a.agent_type != agent_type]
 
-    def update_agents_of_type(self, agent_type, radius_m=None, speed_mps=None, radius_m_range=None, speed_mps_range=None):
-        rand_speed = False
-        rand_radius = False
-        
-        if radius_m is not None:
-            agent_type.radius_m = radius_m
-        if speed_mps is not None:
-            agent_type.speed_mps = speed_mps
-
+    def update_agents_of_type(self, agent_type, radius_m_range=None, speed_mps_range=None):
         if radius_m_range is not None:
-            rand_radius = True
             agent_type.radius_m_range = radius_m_range
         if speed_mps_range is not None:
-            rand_speed = True
             agent_type.speed_mps_range = speed_mps_range
 
         for agent in self.agents:
             if agent.agent_type is agent_type:
-                if rand_radius:
+                if radius_m_range is not None:
                     agent.radius = int(agent_type.rand_radius_px(self.ppm))
-                elif rand_speed:
+                    agent.rebuild_image()
+                if speed_mps_range is not None:
                     agent.speed = agent_type.rand_speed_px(self.ppm)
-                else:
-                    agent.radius = int(agent_type.radius_px(self.ppm))
-                    agent.speed = agent_type.speed_px(self.ppm)
-                agent.rebuild_image()
 
     def add_exit(self, screen_x, screen_y, sim_config):
         local_x, local_y = self.floorplan.screen_to_sim(screen_x, screen_y)
@@ -192,6 +179,7 @@ class UIPanel:
     SHADOW_OFFSET = 3
     SHADOW_COLOUR = (50, 50, 50)
     PAD = 10
+    TITLE_BLOCK_WIDTH = 80
 
     def __init__(self, manager, floorplan_options, current_floorplan, colours, state_getter):
         self.colours = colours
@@ -258,14 +246,11 @@ class UIPanel:
     def enter(self, delay=0.0):
         self.tween.enter(delay)
 
-    def layout_buttons(self, state, dt):
-        self.tween.update(dt)
-
+    def layout_buttons(self, x):
         gap = 2
         half_w = (UIConfig.PANEL_WIDTH - gap) // 2
         row_h = UIConfig.BUTTON_HEIGHT + gap
         bottom = UIConfig.BORDER + UIConfig.PANEL_HEIGHT - gap
-        x = self.tween.value
 
         self.buttons["start"].set_relative_position((x, bottom - row_h))
         self.buttons["stop"].set_relative_position((x, bottom - row_h))
@@ -280,62 +265,63 @@ class UIPanel:
         self.buttons["clear"].set_relative_position((x, bottom - row_h * 4))
         self.floorplan_picker.set_relative_position((x, bottom - row_h * 5))
 
-    def draw(self, surface, state, fps, dt,
-             running_time=0.0, simulation_time=0.0,
-             num_agents=0, evacuated_agents=0):
-        self.layout_buttons(state, dt)
+    def draw(self, surface, state, fps, dt, running_time=0.0, simulation_time=0.0, num_agents=0, evacuated_agents=0):
+        self.tween.update(dt)
         x = self.tween.value
+        self.layout_buttons(x)
 
         title_grad = create_gradient(
-            UIConfig.PANEL_WIDTH, 80, self.colours.ui_panel, self.colours.ui_panel, 125, 255,
+            UIConfig.PANEL_WIDTH, self.TITLE_BLOCK_WIDTH, self.colours.ui_panel, self.colours.ui_panel, 80, 255,
         )
         surface.blit(title_grad, (x, UIConfig.BORDER))
 
-        body_rect = pygame.Rect(x, UIConfig.BORDER + 80, UIConfig.PANEL_WIDTH, UIConfig.PANEL_HEIGHT - 80)
+        body_rect = pygame.Rect(x, UIConfig.BORDER + self.TITLE_BLOCK_WIDTH, UIConfig.PANEL_WIDTH, UIConfig.PANEL_HEIGHT - self.TITLE_BLOCK_WIDTH)
         pygame.draw.rect(surface, self.colours.ui_panel, body_rect)
 
         cursor = TextCursor(surface, x, self.PAD, self.SHADOW_OFFSET, self.SHADOW_COLOUR)
         cursor.y = 30
 
         # Title
-        cursor.text("Evacuation", Fonts.TITLE, self.colours.ui_text, shadow=True)
-        cursor.text("Simulator",  Fonts.TITLE, self.colours.ui_text, shadow=True, spacing=5)
+        cursor.render("Evacuation", Fonts.TITLE, self.colours.ui_text, shadow=True)
+        cursor.render("Simulator",  Fonts.TITLE, self.colours.ui_text, shadow=True, space_after=5)
 
         # Timer background
         timer_h = Fonts.TIMER.get_height() + Fonts.TIMER2.get_height() + 12
         timer_bg = pygame.Surface((UIConfig.PANEL_WIDTH, timer_h), pygame.SRCALPHA)
         pygame.draw.rect(timer_bg, (0, 0, 0, 128), timer_bg.get_rect())
         surface.blit(timer_bg, (x, cursor.y))
+        cursor.y += 2
 
         # Simulation timer
         surface.blit(
             Fonts.TIMER.render("88:88.888", True, self.SHADOW_COLOUR),
-            (x + self.PAD + self.SHADOW_OFFSET, cursor.y + self.SHADOW_OFFSET + 2),
+            (x + self.PAD + self.SHADOW_OFFSET, cursor.y + self.SHADOW_OFFSET),
         )
-        cursor.text(format_time(simulation_time), Fonts.TIMER, (255, 165, 0), spacing=5, y_offset=2)
+        text = format_time(simulation_time) if state in ("RUNNING", "COMPLETED") else "--:--.---"
+        cursor.render(text, Fonts.TIMER, (255, 165, 0), space_after=5)
 
         # Real-time timer
         surface.blit(
             Fonts.TIMER2.render("88:88.888", True, self.SHADOW_COLOUR),
-            (x + self.PAD + self.SHADOW_OFFSET, cursor.y + self.SHADOW_OFFSET + 2),
+            (x + self.PAD + self.SHADOW_OFFSET - 1, cursor.y + self.SHADOW_OFFSET - 1),
         )
-        cursor.text(format_time(running_time), Fonts.TIMER2, (0, 255, 0), spacing=6, y_offset=2)
-        cursor.text(
-            "RT", Fonts.DEFAULT_SMALL_ITALIC, (0, 255, 0),
-            same_line=True, x_offset=110, shadow=True, y_offset=10,
+        text = format_time(running_time) if state in ("RUNNING", "COMPLETED") else "--:--.---"
+        cursor.render(text, Fonts.TIMER2, (0, 225, 0), space_after=6, advance=False)
+        cursor.render(
+            "Rt", Fonts.DEFAULT_SMALL_ITALIC, (0, 225, 0), x_offset=100 + self.PAD, shadow=True, space_before=8, shadow_offset=self.SHADOW_OFFSET - 1
         )
 
         # Status info
         label, label_colour = STATE_LABELS.get(state, ("Unknown", (255, 255, 255)))
         remaining = num_agents - evacuated_agents
 
-        cursor.text(label, colour=label_colour, y_offset=4, spacing=5)
-        cursor.text(f"Evacuees: {remaining}")
-        cursor.text(f"Evacuated: {evacuated_agents}/{num_agents}")
-        cursor.text(f"FPS: {int(fps)}", spacing=10)
+        cursor.render(label, colour=label_colour, space_before=4, space_after=5)
+        cursor.render(f"Evacuees: {remaining}")
+        cursor.render(f"Evacuated: {evacuated_agents}/{num_agents}")
+        cursor.render(f"FPS: {int(fps)}", space_after=10)
 
         for line in INSTRUCTIONS.get(state, []):
-            cursor.text(line)
+            cursor.render(line)
 
 
 class TextCursor:
@@ -348,23 +334,23 @@ class TextCursor:
         self.shadow_offset = shadow_offset
         self.shadow_colour = shadow_colour
         self.y = 0
-        self._last_advance = 0
 
-    def text(self, content, font=Fonts.DEFAULT, colour=(255, 255, 255),
-             spacing=0, shadow=False, same_line=False, x_offset=0, y_offset=0):
-        draw_y = (self.y - self._last_advance if same_line else self.y) + y_offset
+    def render(self, content, font=Fonts.DEFAULT, colour=(255, 255, 255),
+             space_after=0, shadow=False, advance=True, x_offset=0, space_before=0, shadow_offset=0):
+        draw_y = self.y + space_before
         draw_x = self.panel_x + self.pad + x_offset
 
         if shadow:
+            if shadow_offset:
+                self.shadow_offset = shadow_offset
             self.surface.blit(
                 font.render(content, True, self.shadow_colour),
                 (draw_x + self.shadow_offset, draw_y + self.shadow_offset),
             )
         self.surface.blit(font.render(content, True, colour), (draw_x, draw_y))
 
-        if not same_line:
-            self._last_advance = font.get_height() + spacing
-            self.y += self._last_advance
+        if advance:
+            self.y += space_before + space_after + font.get_height()
 
 
 class Crosshair:
@@ -412,6 +398,14 @@ class SimWindow:
     """Simulation viewport."""
 
     BORDER_THICKNESS = 3
+    ROADMAP_COLOURS = [
+        (0, 100, 255, 128),
+        (255, 100, 0, 128),
+        (0, 255, 100, 128),
+        (255, 0, 255, 128),
+        (255, 255, 0, 128),
+        (0, 255, 255, 128),
+    ]
 
     def __init__(self, sim_config, colours=None):
         self.sim_config = sim_config
@@ -461,7 +455,7 @@ class SimWindow:
         self.opacity_tween.enter(delay)
 
     def draw(self, surface, simulation, dt, scene_data=None, show_paths=False,
-             show_crosshair=False, mouse_pos=None, tool="agent"):
+             show_crosshair=False, mouse_pos=None, tool="agent", roadmap_index=0):
         fp = self.floorplan
 
         buffer = pygame.Surface((fp.width, fp.height), pygame.SRCALPHA)
@@ -482,8 +476,8 @@ class SimWindow:
         for exit_obj in exits:
             buffer.blit(exit_obj.image, exit_obj.rect)
 
-        if show_paths and simulation.roadmap:
-            self.draw_roadmap(buffer, simulation)
+        if show_paths and simulation.roadmaps:
+            self.draw_roadmap(buffer, simulation, roadmap_index)
 
         for agent in agents:
             buffer.blit(agent.image, agent.rect)
@@ -495,10 +489,16 @@ class SimWindow:
         buffer.set_alpha(int(self.opacity_tween.value))
         surface.blit(buffer, (fp.offset_x, fp.offset_y))
 
-    def draw_roadmap(self, surface, simulation):
-        for i, vertex in enumerate(simulation.roadmap):
+    def draw_roadmap(self, surface, simulation, roadmap_index=0):
+        roadmaps = list(simulation.roadmaps.values())
+        if not roadmaps:
+            return
+        idx = roadmap_index % len(roadmaps)
+        roadmap = roadmaps[idx]
+        colour = self.ROADMAP_COLOURS[idx % len(self.ROADMAP_COLOURS)]
+        for i, vertex in enumerate(roadmap.vertices):
             for j in vertex.neighbors:
-                if j > i:  # draw each edge once
+                if j > i:
                     start = vertex.position
-                    end = simulation.roadmap[j].position
-                    pygame.draw.line(surface, (0, 100, 255, 128), start, end, 1)
+                    end = roadmap.vertices[j].position
+                    pygame.draw.line(surface, colour, start, end, 1)

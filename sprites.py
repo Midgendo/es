@@ -19,12 +19,6 @@ def has_agent_collision(sim_pos, radius, all_agents, exclude_agent=None):
 
 
 class Agent(pygame.sprite.Sprite):
-    """
-    A single evacuee. Wraps an AgentType with position, image and optional RVO agent handle.
-    """
-
-    REACHED_EXIT_THRESHOLD = 40 # pixels
-
     def __init__(self, x, y, agent_type, ppm=50.0, radius=None, speed=None):
         super().__init__()
 
@@ -39,7 +33,6 @@ class Agent(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(center=(x, y))
         self.rebuild_image()
 
-        self.target_pos = (x, y)
         self.sim_pos = (x, y)
         self.rvo_id = None
 

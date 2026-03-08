@@ -3,7 +3,7 @@
 import pygame
 import pygame_gui
 
-from config import ColourScheme, AgentType, AppState
+from config import AgentType, AppState
 from ui import Fonts, create_gradient, Tween
 
 
@@ -100,14 +100,10 @@ class AgentTypeCard:
         # Card polygon (top-right corner cut)
         points = [(0, 0), (self.WIDTH - cs, 0), (self.WIDTH, cs), (self.WIDTH, self.HEIGHT), (0, self.HEIGHT)]
         
+        colour = self.colours.card_bg_sel if selected else self.colours.card_bg
         p_surface = pygame.Surface((50, 50), pygame.SRCALPHA)
-        if selected:
-            colour = (180, 180, 180, 220)
-            p_surface.set_alpha(220)
-        else:
-            colour = (0, 0, 0, 150)
-            p_surface.set_alpha(150)
-            
+        p_surface.set_alpha(colour[3])
+
         pygame.draw.polygon(buffer, colour, points)
 
         if self.agent_type:
@@ -134,15 +130,16 @@ class AgentTypeCard:
             self.speed_rect = pygame.Rect(screen_x + 70, screen_y + 44 + BOX_Y_OFFSET, BOX_W, BOX_H)
 
             # Size / speed labels (or inline editors)
-            size_text= f"Size: {at.radius_m_range[0] * 2:.2f}-{at.radius_m_range[1] * 2:.2f}m" if not at.same_radius() else f"Size: {at.radius_m_range[0] * 2:.2f}m"
-            speed_text = f"Speed: {at.speed_mps_range[0]}-{at.speed_mps_range[1]}m/s" if not at.same_speed() else f"Speed: {at.speed_mps_range[0]:.2f}m/s"
+            size_text= f"Size: {at.radius_m_range[0] * 2:.2f}-{at.radius_m_range[1] * 2:.2f}m" if not at.same_radius else f"Size: {at.radius_m_range[0] * 2:.2f}m"
+            speed_text = f"Speed: {at.speed_mps_range[0]}-{at.speed_mps_range[1]}m/s" if not at.same_speed else f"Speed: {at.speed_mps_range[0]:.2f}m/s"
             
             self.draw_field(buffer, "size",  size_text, 66, 28)
             self.draw_field(buffer, "speed", speed_text, 66, 44)
 
-        colour = (220, 220, 220) if selected else (70, 70, 70)
-        for i in range(0, 17):
-            pygame.draw.line(buffer, colour, (0, 74 + (2 * i)), (self.WIDTH - 1, 74 + (2 * i)), 2 if selected else 1)
+        line_colour = (220, 220, 220) if selected else (70, 70, 70)
+        line_width = 2 if selected else 1
+        for ly in range(74, 108, 2):
+            pygame.draw.line(buffer, line_colour, (0, ly), (self.WIDTH - 1, ly), line_width)
         
         y = self.tween.value
         self.tween.update(dt)
@@ -246,12 +243,11 @@ class AgentPanel:
         if letter is None:
             return False
 
-        cfg = self.sim_config
-        colours = cfg.custom_agent_colours
-        new_type = AgentType.from_config(
-            cfg,
+        colours = self.colours.custom_agent_colours
+        new_type = AgentType(
             name=f"Type {letter}",
             colour=colours[(ord(letter) - 65) % len(colours)],
+            sim_config=self.sim_config,
         )
         self.add_agent_type(new_type)
         self.focused_index = len(self.cards) - 1
@@ -259,6 +255,13 @@ class AgentPanel:
 
     def handle_click(self, mouse_pos):
         mx, my = mouse_pos
+
+        # Commit any active inline editor if the click is outside it
+        for card in self.cards:
+            if card.active_input is not None:
+                if not card.size_rect.collidepoint(mx, my) and not card.speed_rect.collidepoint(mx, my):
+                    card.commit_edit(self.scene_data)
+                break
 
         # Existing cards
         for i, card in enumerate(self.cards):
@@ -291,16 +294,6 @@ class AgentPanel:
                 if rx + ry <= AgentTypeCard.WIDTH:
                     return self.create_next_agent_type()
 
-        return False
-
-    def handle_outside_click(self, mouse_pos):
-        for card in self.cards:
-            if card.active_input is None:
-                continue
-            if card.size_rect.collidepoint(mouse_pos) or card.speed_rect.collidepoint(mouse_pos):
-                return False
-            card.commit_edit(self.scene_data)
-            return True
         return False
 
     def handle_text_entry_finished(self, ui_element):
@@ -340,7 +333,8 @@ class AgentPanel:
                       selected=(i == self.focused_index), panel_offset=(x, y))
 
             # Delete chip "−" label
-            self.draw_delete_chip(panel, card, card_x + px, card_y + py)
+            if self.state_getter() == AppState.EDITING:
+                self.draw_delete_chip(panel, card, card_x + px, card_y + py)
 
         # "+" card
         if len(self.cards) < self.MAX_VISIBLE and self.state_getter() == AppState.EDITING:
@@ -354,8 +348,7 @@ class AgentPanel:
     def draw_delete_chip(panel, card, cx, cy):
         cs = card.CHIP_SIZE
         chip = pygame.Surface((cs - 3, cs - 3), pygame.SRCALPHA)
-        pygame.draw.polygon(chip, (255, 0, 0, 0), [(0, 0), (cs - 3, 0), (cs - 3, cs - 3), (0, 0)])
-        minus = pygame.font.Font(None, 60).render("-", True, (255, 255, 255))
+        minus = pygame.font.Font(None, 60).render("-", True, (200, 200, 200))
         minus.set_alpha(150)
         chip.blit(minus, (12, -14))
         panel.blit(chip, (cx + card.WIDTH - cs + 3, cy + 1))
@@ -370,5 +363,5 @@ class AgentPanel:
 
         plus = pygame.font.Font(None, 80).render("+", True, (200, 200, 200))
         plus.set_alpha(150)
-        temp.blit(plus, (cx - plus.get_width() // 2 - cx + r, cy - plus.get_height() // 2 - cy + r))
+        temp.blit(plus, (r - plus.get_width() // 2, r - plus.get_height() // 2))
         panel.blit(temp, (cx - r, cy - r))

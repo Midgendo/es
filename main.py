@@ -45,7 +45,7 @@ class EvacuationSimulator:
             "ui_theme.json",
         )
 
-        self.simulation = Simulation(self.display_config, self.sim_config)
+        self.simulation = Simulation(self.display_config, self.sim_config, log)
         self.scene_data = SceneData(ppm=self.sim_config.pixels_per_meter)
 
         self.floorplan = None
@@ -78,6 +78,7 @@ class EvacuationSimulator:
         self.state = AppState.LOADING
         self.tool = "agent"
         self.show_paths = False
+        self.roadmap_index = 0
         self.first_load = True
 
         self.default_agent_type = AgentType.default(self.sim_config)
@@ -128,6 +129,14 @@ class EvacuationSimulator:
             self.show_paths = not self.show_paths
             log(f"Path visibility: {'ON' if self.show_paths else 'OFF'}", "D")
 
+        elif event.key in (K_RIGHTBRACKET, K_LEFTBRACKET):
+            n = len(self.simulation.roadmaps)
+            if n > 0:
+                d = 1 if event.key == K_RIGHTBRACKET else -1
+                self.roadmap_index = (self.roadmap_index + d) % n
+                radius = list(self.simulation.roadmaps.keys())[self.roadmap_index]
+                log(f"Showing roadmap {self.roadmap_index + 1}/{n} (radius {radius}px)", "D")
+
     def on_floorplan_changed(self, event):
         if event.ui_element != self.ui_panel.floorplan_picker:
             return
@@ -161,8 +170,7 @@ class EvacuationSimulator:
             buttons["pause_resume"].set_text("Resume" if paused else "Pause")
 
         elif event.ui_element == buttons["stop"]:
-            self.simulation.reset()
-            self.set_state(AppState.EDITING, reset_sim=False)
+            self.set_state(AppState.EDITING)
 
     def select_tool(self, tool_name):
         buttons = self.ui_panel.buttons
@@ -183,8 +191,6 @@ class EvacuationSimulator:
             self.agent_panel.focused_index = None
 
     def on_mouse_down(self, event):
-        self.agent_panel.handle_outside_click(event.pos)
-
         if self.state == AppState.EDITING:
             if self.agent_panel.handle_click(event.pos):
                 idx = self.agent_panel.focused_index
@@ -196,24 +202,27 @@ class EvacuationSimulator:
                     self.select_tool("agent")
 
     def on_editing_click(self, event):
-        mx, my = event.pos
-
-        if not self.sim_window.is_within_bounds(mx, my, self.sim_config.agent_size):
+        if self.tool != "exit":
             return
+        mx, my = event.pos
+        if not self.sim_window.is_within_bounds(mx, my):
+            return
+        if event.button == 1:
+            self.scene_data.add_exit(mx, my, self.sim_config)
+        elif event.button == 3:
+            self.scene_data.remove_exit_at(mx, my)
 
-        if event.button == 1:       # left-click -> place
-            if self.tool == "agent":
-                self.scene_data.add_agent(mx, my, self.editing_agent_type)
-            else:
-                self.scene_data.add_exit(mx, my, self.sim_config)
+    def handle_agent_placement(self):
+        mx, my = pygame.mouse.get_pos()
+        if not self.sim_window.is_within_bounds(mx, my):
+            return
+        left, _, right = pygame.mouse.get_pressed()
+        if left:
+            self.scene_data.add_agent(mx, my, self.editing_agent_type)
+        elif right:
+            self.scene_data.remove_agent_at(mx, my)
 
-        elif event.button == 3:     # right-click -> remove
-            if self.tool == "agent":
-                self.scene_data.remove_agent_at(mx, my)
-            else:
-                self.scene_data.remove_exit_at(mx, my)
-
-    def set_state(self, new_state, reset_sim=True):
+    def set_state(self, new_state):
         self.state = new_state
         log(f"State → {new_state.name}", "D")
 
@@ -223,10 +232,17 @@ class EvacuationSimulator:
             self.scene_data.clear()
             self.load_floorplan()
             self.set_state(AppState.EDITING)
+            # Startup animations
+            if self.first_load:
+                self.sim_window.enter(delay=0.15)
+                self.ui_panel.enter(delay=0.25)
+                self.agent_panel.enter(delay=0.35)
+                self.agent_panel.add_agent_type(self.default_agent_type)
+                self.first_load = False
+
 
         elif new_state == AppState.EDITING:
-            if reset_sim:
-                self.simulation.reset()
+            self.simulation.reset()
             self.tool = "agent"
             self.agent_panel.focused_index = 0
             self.editing_agent_type = self.default_agent_type
@@ -243,7 +259,7 @@ class EvacuationSimulator:
             self.ui_panel.show_completed_buttons()
             self.last_selected_agent_index = self.agent_panel.focused_index
             self.agent_panel.focused_index = None
-            log(f"All agents evacuated in {self.simulation.time:.2f}s")
+            log(f"All agents evacuated in {self.simulation.time:.3f}s")
 
     def copy_scene_to_simulation(self):
         self.simulation.agents.empty()
@@ -278,14 +294,6 @@ class EvacuationSimulator:
         self.sim_window.update_floorplan(self.floorplan)
         self.scene_data.set_floorplan(self.floorplan)
 
-        # Startup animations
-        if self.first_load:
-            self.sim_window.enter(delay=0.15)
-            self.ui_panel.enter(delay=0.25)
-            self.agent_panel.enter(delay=0.35)
-            self.agent_panel.add_agent_type(self.default_agent_type)
-            self.first_load = False
-
         log(f"Loaded floorplan: {self.floorplan_filename}")
 
     def state_filename(self):
@@ -312,7 +320,11 @@ class EvacuationSimulator:
     def update(self, dt):
         self.ui_manager.update(dt)
 
-        if self.state == AppState.RUNNING:
+        if self.state == AppState.EDITING:
+            if self.tool == "agent":
+                self.handle_agent_placement()
+
+        elif self.state == AppState.RUNNING:
             mouse_override = None
             if pygame.mouse.get_pressed()[0]:
                 mouse_override = self.sim_window.get_mouse_override(pygame.mouse.get_pos())
@@ -358,6 +370,7 @@ class EvacuationSimulator:
             show_crosshair=show_crosshair,
             mouse_pos=mouse_pos,
             tool=self.tool,
+            roadmap_index=self.roadmap_index,
         )
 
         self.ui_manager.draw_ui(self.screen)

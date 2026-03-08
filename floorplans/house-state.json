@@ -1,16 +1,24 @@
 {
-  "timestamp": "2026-03-01T12:47:49.686167",
+  "timestamp": "2026-03-04T13:03:46.201049",
   "pixels_per_meter": 50.0,
   "floorplan_filename": "house.png",
   "agents": [
     {
       "agent_type": "Default",
       "position": [
-        177,
-        270
+        117,
+        540
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed": 209.33658391708482,
+      "radius": 8,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
       "colour": [
         255,
         255,
@@ -20,11 +28,19 @@
     {
       "agent_type": "Default",
       "position": [
-        242,
-        206
+        73,
+        488
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed": 218.31614902499052,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
       "colour": [
         255,
         255,
@@ -34,11 +50,19 @@
     {
       "agent_type": "Default",
       "position": [
-        294,
-        229
+        82,
+        459
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed": 203.85215695561723,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
       "colour": [
         255,
         255,
@@ -48,613 +72,19 @@
     {
       "agent_type": "Default",
       "position": [
-        249,
-        261
+        75,
+        373
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        110,
-        199
+      "speed": 204.74530331662325,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        76,
-        257
+      "radius_m_range": [
+        0.175,
+        0.225
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        129,
-        275
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        247,
-        169
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        303,
-        188
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        246,
-        122
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        177,
-        152
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        198,
-        215
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        63,
-        136
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        67,
-        169
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        67,
-        208
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        150,
-        139
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        163,
-        196
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        145,
-        231
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        691,
-        250
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        716,
-        217
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        684,
-        216
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        654,
-        236
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        619,
-        258
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        553,
-        241
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        464,
-        215
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        405,
-        258
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        492,
-        291
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        611,
-        299
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        757,
-        283
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        784,
-        267
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        797,
-        180
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        785,
-        152
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        645,
-        128
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        508,
-        178
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        657,
-        175
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        703,
-        155
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        740,
-        124
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        716,
-        96
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        624,
-        191
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        562,
-        168
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        489,
-        132
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        404,
-        151
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        422,
-        183
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        586,
-        256
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        709,
-        306
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        754,
-        232
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        749,
-        191
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
       "colour": [
         255,
         255,
@@ -665,10 +95,194 @@
       "agent_type": "Default",
       "position": [
         72,
-        400
+        419
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed": 205.6524691145054,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        64,
+        438
+      ],
+      "speed": 190.76814551018447,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        56,
+        462
+      ],
+      "speed": 217.28853860073426,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        61,
+        541
+      ],
+      "speed": 194.6716492672441,
+      "radius": 8,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        48,
+        520
+      ],
+      "speed": 210.1276731511944,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        118,
+        493
+      ],
+      "speed": 190.30124775300757,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        139,
+        508
+      ],
+      "speed": 186.4696519350631,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        152,
+        546
+      ],
+      "speed": 187.65489013761766,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        128,
+        562
+      ],
+      "speed": 189.5794928103306,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
       "colour": [
         255,
         255,
@@ -679,10 +293,18 @@
       "agent_type": "Default",
       "position": [
         93,
-        430
+        555
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed": 217.5383323474593,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
       "colour": [
         255,
         255,
@@ -692,39 +314,393 @@
     {
       "agent_type": "Default",
       "position": [
-        106,
+        75,
+        523
+      ],
+      "speed": 196.24586497655844,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        103,
+        515
+      ],
+      "speed": 196.39671204937395,
+      "radius": 11,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        137,
+        476
+      ],
+      "speed": 221.6453607420517,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        146,
+        450
+      ],
+      "speed": 204.69759752137756,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        104,
+        423
+      ],
+      "speed": 203.3410279191831,
+      "radius": 8,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        97,
+        383
+      ],
+      "speed": 207.36467653613406,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        66,
+        352
+      ],
+      "speed": 213.67677380830648,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        104,
+        352
+      ],
+      "speed": 214.5040488418243,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        141,
+        350
+      ],
+      "speed": 193.634067164475,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        172,
+        352
+      ],
+      "speed": 187.1657146716459,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        119,
+        378
+      ],
+      "speed": 211.2613632010888,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        129,
+        407
+      ],
+      "speed": 222.4694911917426,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        159,
+        374
+      ],
+      "speed": 207.11499208132196,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        159,
+        396
+      ],
+      "speed": 203.6058590503678,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        168,
+        418
+      ],
+      "speed": 210.61578093117555,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        111,
+        452
+      ],
+      "speed": 215.21876029261477,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        55,
+        397
+      ],
+      "speed": 207.76791438181573,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        97,
         490
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        83,
-        516
+      "speed": 213.68796765082868,
+      "radius": 11,
+      "speed_mps_range": [
+        3.7,
+        4.5
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        131,
-        364
+      "radius_m_range": [
+        0.175,
+        0.225
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
       "colour": [
         255,
         255,
@@ -734,11 +710,305 @@
     {
       "agent_type": "Default",
       "position": [
-        134,
+        225,
+        515
+      ],
+      "speed": 203.83137026342877,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        195,
+        540
+      ],
+      "speed": 221.27567544801363,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        199,
+        506
+      ],
+      "speed": 208.7223181773497,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        244,
+        503
+      ],
+      "speed": 216.44067998388707,
+      "radius": 8,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        265,
+        500
+      ],
+      "speed": 212.0128464821606,
+      "radius": 11,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        304,
+        517
+      ],
+      "speed": 198.97378770086354,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        286,
+        553
+      ],
+      "speed": 220.50743620023084,
+      "radius": 11,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        251,
+        552
+      ],
+      "speed": 186.20011754387775,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        228,
+        545
+      ],
+      "speed": 187.4768665226214,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        260,
+        525
+      ],
+      "speed": 208.11811335873998,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        296,
+        494
+      ],
+      "speed": 193.6789401199831,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        308,
+        557
+      ],
+      "speed": 214.41269430263904,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        191,
+        396
+      ],
+      "speed": 201.04616640575225,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        221,
         404
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed": 200.50916791441546,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
       "colour": [
         255,
         255,
@@ -748,11 +1018,19 @@
     {
       "agent_type": "Default",
       "position": [
-        247,
-        510
+        241,
+        414
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed": 220.74046319212158,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
       "colour": [
         255,
         255,
@@ -762,11 +1040,19 @@
     {
       "agent_type": "Default",
       "position": [
-        201,
-        501
+        232,
+        344
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed": 205.66847879997678,
+      "radius": 8,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
       "colour": [
         255,
         255,
@@ -776,11 +1062,195 @@
     {
       "agent_type": "Default",
       "position": [
-        288,
-        536
+        254,
+        359
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed": 221.03090297739922,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        178,
+        222
+      ],
+      "speed": 220.3608676558137,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        135,
+        234
+      ],
+      "speed": 207.97050872107522,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        109,
+        191
+      ],
+      "speed": 185.6066121583457,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        143,
+        159
+      ],
+      "speed": 218.70481536217494,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        167,
+        122
+      ],
+      "speed": 191.29101081259472,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        173,
+        75
+      ],
+      "speed": 207.70422992516066,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        199,
+        89
+      ],
+      "speed": 201.27104369053893,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        215,
+        119
+      ],
+      "speed": 209.2852614299692,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
       "colour": [
         255,
         255,
@@ -791,10 +1261,18 @@
       "agent_type": "Default",
       "position": [
         240,
-        546
+        142
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed": 223.09754576870722,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
       "colour": [
         255,
         255,
@@ -804,11 +1282,19 @@
     {
       "agent_type": "Default",
       "position": [
-        200,
-        540
+        277,
+        191
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed": 198.30400950606582,
+      "radius": 11,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
       "colour": [
         255,
         255,
@@ -818,11 +1304,19 @@
     {
       "agent_type": "Default",
       "position": [
-        282,
-        498
+        286,
+        223
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed": 207.51516788011565,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
       "colour": [
         255,
         255,
@@ -832,11 +1326,19 @@
     {
       "agent_type": "Default",
       "position": [
-        725,
-        523
+        277,
+        250
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed": 203.35297226869778,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
       "colour": [
         255,
         255,
@@ -846,11 +1348,19 @@
     {
       "agent_type": "Default",
       "position": [
-        786,
-        464
+        239,
+        258
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed": 218.74133139441554,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
       "colour": [
         255,
         255,
@@ -860,11 +1370,19 @@
     {
       "agent_type": "Default",
       "position": [
-        745,
-        411
+        178,
+        275
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed": 204.0848365647106,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
       "colour": [
         255,
         255,
@@ -874,11 +1392,19 @@
     {
       "agent_type": "Default",
       "position": [
-        702,
-        401
+        139,
+        280
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed": 223.86854827710505,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
       "colour": [
         255,
         255,
@@ -888,11 +1414,19 @@
     {
       "agent_type": "Default",
       "position": [
-        588,
-        435
+        76,
+        170
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed": 207.3832228038258,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
       "colour": [
         255,
         255,
@@ -902,11 +1436,19 @@
     {
       "agent_type": "Default",
       "position": [
-        583,
-        499
+        76,
+        142
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed": 212.5081942611913,
+      "radius": 8,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
       "colour": [
         255,
         255,
@@ -916,11 +1458,679 @@
     {
       "agent_type": "Default",
       "position": [
-        613,
-        516
+        87,
+        126
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed": 215.30960238851807,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        112,
+        130
+      ],
+      "speed": 212.74471536328085,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        167,
+        163
+      ],
+      "speed": 221.3651168825735,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        199,
+        212
+      ],
+      "speed": 209.4833387393705,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        198,
+        267
+      ],
+      "speed": 190.08923568995547,
+      "radius": 11,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        225,
+        289
+      ],
+      "speed": 220.91688853666014,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        262,
+        274
+      ],
+      "speed": 217.35896639952017,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        288,
+        275
+      ],
+      "speed": 198.77217089330773,
+      "radius": 11,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        307,
+        247
+      ],
+      "speed": 204.22458116408566,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        297,
+        142
+      ],
+      "speed": 188.5387543648058,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        260,
+        127
+      ],
+      "speed": 195.79464220121173,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        251,
+        192
+      ],
+      "speed": 211.8649425271666,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        213,
+        181
+      ],
+      "speed": 224.1836893736057,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        153,
+        208
+      ],
+      "speed": 205.02768499086653,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        98,
+        257
+      ],
+      "speed": 202.48527319724786,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        58,
+        226
+      ],
+      "speed": 217.18669963979136,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        61,
+        195
+      ],
+      "speed": 223.42836900630257,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        53,
+        139
+      ],
+      "speed": 187.6506752526781,
+      "radius": 8,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        52,
+        119
+      ],
+      "speed": 213.29727248540274,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        125,
+        110
+      ],
+      "speed": 206.16201589351655,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        154,
+        95
+      ],
+      "speed": 212.94630074576287,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        152,
+        66
+      ],
+      "speed": 215.82071994633765,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        88,
+        227
+      ],
+      "speed": 208.14523570612545,
+      "radius": 8,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        75,
+        257
+      ],
+      "speed": 193.66868734666608,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        55,
+        268
+      ],
+      "speed": 200.3473943650322,
+      "radius": 8,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        58,
+        296
+      ],
+      "speed": 214.76218710929786,
+      "radius": 11,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        83,
+        292
+      ],
+      "speed": 185.786365444632,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        240,
+        234
+      ],
+      "speed": 191.02326610945266,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        380,
+        248
+      ],
+      "speed": 187.43261849308084,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        433,
+        199
+      ],
+      "speed": 185.3668952537467,
+      "radius": 8,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        493,
+        187
+      ],
+      "speed": 221.72246012006934,
+      "radius": 11,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
       "colour": [
         255,
         255,
@@ -931,10 +2141,18 @@
       "agent_type": "Default",
       "position": [
         626,
-        476
+        163
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed": 214.30326830588498,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
       "colour": [
         255,
         255,
@@ -944,11 +2162,19 @@
     {
       "agent_type": "Default",
       "position": [
-        655,
-        428
+        659,
+        158
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed": 218.85188457836057,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
       "colour": [
         255,
         255,
@@ -958,11 +2184,19 @@
     {
       "agent_type": "Default",
       "position": [
-        732,
-        439
+        687,
+        166
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed": 224.24505452577256,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
       "colour": [
         255,
         255,
@@ -972,11 +2206,19 @@
     {
       "agent_type": "Default",
       "position": [
-        465,
-        414
+        706,
+        141
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed": 193.25887567187854,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
       "colour": [
         255,
         255,
@@ -986,11 +2228,19 @@
     {
       "agent_type": "Default",
       "position": [
-        465,
-        459
+        690,
+        107
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed": 192.12958538588003,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
       "colour": [
         255,
         255,
@@ -1000,81 +2250,19 @@
     {
       "agent_type": "Default",
       "position": [
-        435,
-        478
+        618,
+        108
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        389,
-        430
+      "speed": 199.47204347920348,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        375,
-        550
+      "radius_m_range": [
+        0.175,
+        0.225
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        255,
-        399
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        184,
-        54
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        501,
-        499
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
       "colour": [
         255,
         255,
@@ -1085,10 +2273,18 @@
       "agent_type": "Default",
       "position": [
         562,
-        285
+        122
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed": 211.51310209271946,
+      "radius": 11,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
       "colour": [
         255,
         255,
@@ -1098,109 +2294,19 @@
     {
       "agent_type": "Default",
       "position": [
-        480,
-        329
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        416,
-        310
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        488,
-        258
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        378,
-        194
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        381,
-        297
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        358,
-        328
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        612,
-        118
-      ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
-      "colour": [
-        255,
-        255,
-        0
-      ]
-    },
-    {
-      "agent_type": "Default",
-      "position": [
-        528,
+        508,
         121
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed": 194.4946706519446,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
       "colour": [
         255,
         255,
@@ -1210,11 +2316,1185 @@
     {
       "agent_type": "Default",
       "position": [
-        562,
+        402,
+        150
+      ],
+      "speed": 185.16774165938898,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        415,
+        207
+      ],
+      "speed": 218.07434348305193,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        498,
+        252
+      ],
+      "speed": 223.69784874648025,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        558,
+        238
+      ],
+      "speed": 207.34416974029165,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        581,
+        180
+      ],
+      "speed": 191.575799950554,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        620,
+        140
+      ],
+      "speed": 207.35699033316587,
+      "radius": 11,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        658,
         123
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed": 193.42451982773804,
+      "radius": 11,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        718,
+        79
+      ],
+      "speed": 190.63291933023282,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        742,
+        109
+      ],
+      "speed": 203.40020818201333,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        772,
+        152
+      ],
+      "speed": 203.01603341590098,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        769,
+        174
+      ],
+      "speed": 199.91932208971107,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        762,
+        222
+      ],
+      "speed": 189.93673138251273,
+      "radius": 8,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        741,
+        245
+      ],
+      "speed": 190.7003679118725,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        713,
+        203
+      ],
+      "speed": 207.2757282805844,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        635,
+        244
+      ],
+      "speed": 219.12236847863568,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        573,
+        201
+      ],
+      "speed": 211.8560755993302,
+      "radius": 11,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        526,
+        207
+      ],
+      "speed": 212.59393851338467,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        495,
+        159
+      ],
+      "speed": 218.87706016834335,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        398,
+        228
+      ],
+      "speed": 209.6918864102804,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        418,
+        249
+      ],
+      "speed": 195.02487864291683,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        475,
+        261
+      ],
+      "speed": 198.23844401996774,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        597,
+        282
+      ],
+      "speed": 201.79701147611047,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        628,
+        283
+      ],
+      "speed": 196.9997937517526,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        685,
+        293
+      ],
+      "speed": 189.00677035444113,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        743,
+        295
+      ],
+      "speed": 220.73950186323836,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        776,
+        285
+      ],
+      "speed": 220.70580847370104,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        736,
+        271
+      ],
+      "speed": 187.81326047240995,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        496,
+        305
+      ],
+      "speed": 203.72415037957234,
+      "radius": 8,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        417,
+        318
+      ],
+      "speed": 216.0176022569268,
+      "radius": 11,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        696,
+        419
+      ],
+      "speed": 193.86952583197822,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        767,
+        463
+      ],
+      "speed": 210.303547419951,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        762,
+        537
+      ],
+      "speed": 209.04974971232423,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        738,
+        530
+      ],
+      "speed": 193.97652865501803,
+      "radius": 11,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        740,
+        441
+      ],
+      "speed": 206.16507805591962,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        762,
+        405
+      ],
+      "speed": 197.2177212419829,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        715,
+        405
+      ],
+      "speed": 222.02635751682655,
+      "radius": 8,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        652,
+        415
+      ],
+      "speed": 200.6854909761008,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        629,
+        408
+      ],
+      "speed": 192.06673073952976,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        627,
+        436
+      ],
+      "speed": 206.9347421272202,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        611,
+        461
+      ],
+      "speed": 188.9976158825754,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        614,
+        485
+      ],
+      "speed": 204.92267228948396,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        712,
+        484
+      ],
+      "speed": 214.6480801229425,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        456,
+        433
+      ],
+      "speed": 187.22256525456123,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        414,
+        419
+      ],
+      "speed": 205.37836948236938,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        380,
+        415
+      ],
+      "speed": 208.66491701109155,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        377,
+        444
+      ],
+      "speed": 189.2382993154419,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        391,
+        470
+      ],
+      "speed": 185.81055162416547,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        510,
+        506
+      ],
+      "speed": 191.904666608908,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        514,
+        412
+      ],
+      "speed": 186.75104866562344,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        519,
+        461
+      ],
+      "speed": 189.32838377433606,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        515,
+        482
+      ],
+      "speed": 221.39265438413952,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        429,
+        514
+      ],
+      "speed": 199.1444247739384,
+      "radius": 11,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        397,
+        506
+      ],
+      "speed": 201.0931290424936,
+      "radius": 10,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        292,
+        415
+      ],
+      "speed": 189.07740237131796,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
       "colour": [
         255,
         255,
@@ -1225,12 +3505,8 @@
   "exits": [
     {
       "position": [
-        444,
-        614
-      ],
-      "sim_position": [
-        444,
-        614
+        451,
+        615
       ],
       "number": 1,
       "radius": 18,
@@ -1242,12 +3518,8 @@
     },
     {
       "position": [
-        699,
-        610
-      ],
-      "sim_position": [
-        699,
-        610
+        698,
+        612
       ],
       "number": 2,
       "radius": 18,

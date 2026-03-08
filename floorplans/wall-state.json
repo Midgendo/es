@@ -1,16 +1,16 @@
 {
-  "timestamp": "2026-03-02T23:14:25.844528",
+  "timestamp": "2026-03-04T13:00:30.131382",
   "pixels_per_meter": 50.0,
   "floorplan_filename": "wall.png",
   "agents": [
     {
       "agent_type": "Default",
       "position": [
-        246,
-        469
+        166,
+        458
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed": 202.64340571611257,
+      "radius": 11,
       "speed_mps_range": [
         3.7,
         4.5
@@ -28,11 +28,11 @@
     {
       "agent_type": "Default",
       "position": [
-        375,
-        459
+        274,
+        457
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed": 192.79310796452418,
+      "radius": 11,
       "speed_mps_range": [
         3.7,
         4.5
@@ -51,10 +51,10 @@
       "agent_type": "Default",
       "position": [
         337,
-        360
+        365
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed": 194.460267298708,
+      "radius": 10,
       "speed_mps_range": [
         3.7,
         4.5
@@ -72,11 +72,11 @@
     {
       "agent_type": "Default",
       "position": [
-        180,
-        351
+        241,
+        325
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed": 197.85197462313445,
+      "radius": 9,
       "speed_mps_range": [
         3.7,
         4.5
@@ -94,11 +94,143 @@
     {
       "agent_type": "Default",
       "position": [
-        158,
+        162,
+        346
+      ],
+      "speed": 192.17232217938965,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        201,
+        236
+      ],
+      "speed": 197.2534921084303,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        295,
+        237
+      ],
+      "speed": 191.57738241004796,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        334,
+        272
+      ],
+      "speed": 187.49777013135352,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        277,
+        358
+      ],
+      "speed": 190.97889323340732,
+      "radius": 9,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        215,
+        384
+      ],
+      "speed": 198.7402508348844,
+      "radius": 8,
+      "speed_mps_range": [
+        3.7,
+        4.5
+      ],
+      "radius_m_range": [
+        0.175,
+        0.225
+      ],
+      "colour": [
+        255,
+        255,
+        0
+      ]
+    },
+    {
+      "agent_type": "Default",
+      "position": [
+        174,
         407
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed": 197.2305661763442,
+      "radius": 10,
       "speed_mps_range": [
         3.7,
         4.5
@@ -116,11 +248,11 @@
     {
       "agent_type": "Default",
       "position": [
-        309,
-        321
+        103,
+        422
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed": 200.83770064056955,
+      "radius": 9,
       "speed_mps_range": [
         3.7,
         4.5
@@ -138,11 +270,11 @@
     {
       "agent_type": "Default",
       "position": [
-        294,
-        391
+        108,
+        349
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed": 198.75129178847132,
+      "radius": 9,
       "speed_mps_range": [
         3.7,
         4.5
@@ -160,11 +292,11 @@
     {
       "agent_type": "Default",
       "position": [
-        395,
-        392
+        237,
+        276
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed": 188.12376771195508,
+      "radius": 9,
       "speed_mps_range": [
         3.7,
         4.5
@@ -182,11 +314,11 @@
     {
       "agent_type": "Default",
       "position": [
-        410,
-        421
+        263,
+        297
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed": 187.03781671230084,
+      "radius": 10,
       "speed_mps_range": [
         3.7,
         4.5
@@ -204,11 +336,11 @@
     {
       "agent_type": "Default",
       "position": [
-        430,
-        329
+        318,
+        345
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed": 207.0341831837645,
+      "radius": 10,
       "speed_mps_range": [
         3.7,
         4.5
@@ -226,11 +358,11 @@
     {
       "agent_type": "Default",
       "position": [
-        385,
-        304
+        338,
+        429
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed": 194.20771956421882,
+      "radius": 11,
       "speed_mps_range": [
         3.7,
         4.5
@@ -248,11 +380,11 @@
     {
       "agent_type": "Default",
       "position": [
-        347,
-        330
+        289,
+        428
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed": 213.69389240120404,
+      "radius": 9,
       "speed_mps_range": [
         3.7,
         4.5
@@ -270,11 +402,11 @@
     {
       "agent_type": "Default",
       "position": [
-        388,
-        339
+        211,
+        436
       ],
-      "speed_mps": 3.0,
-      "radius_m": 0.3,
+      "speed": 186.4803667287218,
+      "radius": 10,
       "speed_mps_range": [
         3.7,
         4.5
@@ -292,18 +424,18 @@
     {
       "agent_type": "Type A",
       "position": [
-        308,
-        478
+        259,
+        389
       ],
-      "speed_mps": 3.5,
-      "radius_m": 0.25,
+      "speed": 222.854457910432,
+      "radius": 12,
       "speed_mps_range": [
         3.7,
         4.5
       ],
       "radius_m_range": [
-        0.175,
-        0.225
+        0.25,
+        0.25
       ],
       "colour": [
         255,
@@ -314,84 +446,18 @@
     {
       "agent_type": "Type A",
       "position": [
-        437,
-        369
+        166,
+        289
       ],
-      "speed_mps": 3.5,
-      "radius_m": 0.25,
+      "speed": 189.08715813110408,
+      "radius": 12,
       "speed_mps_range": [
         3.7,
         4.5
       ],
       "radius_m_range": [
-        0.175,
-        0.225
-      ],
-      "colour": [
-        255,
-        100,
-        100
-      ]
-    },
-    {
-      "agent_type": "Type A",
-      "position": [
-        388,
-        249
-      ],
-      "speed_mps": 3.5,
-      "radius_m": 0.25,
-      "speed_mps_range": [
-        3.7,
-        4.5
-      ],
-      "radius_m_range": [
-        0.175,
-        0.225
-      ],
-      "colour": [
-        255,
-        100,
-        100
-      ]
-    },
-    {
-      "agent_type": "Type A",
-      "position": [
-        288,
-        256
-      ],
-      "speed_mps": 3.5,
-      "radius_m": 0.25,
-      "speed_mps_range": [
-        3.7,
-        4.5
-      ],
-      "radius_m_range": [
-        0.175,
-        0.225
-      ],
-      "colour": [
-        255,
-        100,
-        100
-      ]
-    },
-    {
-      "agent_type": "Type A",
-      "position": [
-        245,
-        350
-      ],
-      "speed_mps": 3.5,
-      "radius_m": 0.25,
-      "speed_mps_range": [
-        3.7,
-        4.5
-      ],
-      "radius_m_range": [
-        0.175,
-        0.225
+        0.25,
+        0.25
       ],
       "colour": [
         255,
@@ -403,8 +469,8 @@
   "exits": [
     {
       "position": [
-        807,
-        355
+        821,
+        325
       ],
       "number": 1,
       "radius": 18,
