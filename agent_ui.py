@@ -39,9 +39,9 @@ class AgentTypeCard:
         self.tween = Tween(start=self.HEIGHT, end=1, duration=0.4)
         self.tween.enter()
 
-    def handle_click(self, mx, my):
+    def handle_click(self, mx, my, scene_data):
         if self.active_input is not None:
-            return
+            self.commit_edit(scene_data)
         if self.size_rect.collidepoint(mx, my):
             lo, hi = self.agent_type.radius_m_range
             self.open_editor("size", (lo * 2, hi * 2))
@@ -280,8 +280,8 @@ class AgentPanel:
 
             # Select + possibly open inline editor
             self.focused_index = i
-            card.handle_click(mx, my)
-            return True
+            card.handle_click(mx, my, self.scene_data)
+            return True     # Let the caller know a card was clicked
 
         # "+" card
         if len(self.cards) < self.MAX_VISIBLE and self.state_getter() == AppState.EDITING:
@@ -358,10 +358,10 @@ class AgentPanel:
         cx = len(self.cards) * self.CARD_SPACING + self.CARD_SPACING // 2
         cy = self.HEIGHT - 94
 
-        temp = pygame.Surface((r * 2, r * 2), pygame.SRCALPHA)
-        pygame.draw.circle(temp, (200, 200, 200, 150), (r, r), r, 2)
+        circle_outline = pygame.Surface((r * 2, r * 2), pygame.SRCALPHA)
+        pygame.draw.circle(circle_outline, (200, 200, 200, 150), (r, r), r, 2)
 
         plus = pygame.font.Font(None, 80).render("+", True, (200, 200, 200))
         plus.set_alpha(150)
-        temp.blit(plus, (r - plus.get_width() // 2, r - plus.get_height() // 2))
-        panel.blit(temp, (cx - r, cy - r))
+        circle_outline.blit(plus, (r - plus.get_width() // 2, r - plus.get_height() // 2))
+        panel.blit(circle_outline, (cx - r, cy - r))

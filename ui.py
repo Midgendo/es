@@ -169,7 +169,8 @@ STATE_LABELS = {
 # Help text per app-state
 INSTRUCTIONS = {
     "EDITING": ["Left click to place", "Right click to remove"],
-    "RUNNING": ["Click to override target"],
+    "RUNNING": ["Left click to", "override agent targets", "",
+                "Right click on agent to", "show details", ""],
 }
 
 
@@ -181,10 +182,11 @@ class UIPanel:
     PAD = 10
     TITLE_BLOCK_WIDTH = 80
 
-    def __init__(self, manager, floorplan_options, current_floorplan, colours, state_getter):
+    def __init__(self, manager, floorplan_options, current_floorplan, colours, state_getter, simulation_rate):
         self.colours = colours
         self.manager = manager
         self.state_getter = state_getter
+        self.simulation_rate = simulation_rate
 
         # Animation
         self.tween = Tween(
@@ -251,6 +253,8 @@ class UIPanel:
         half_w = (UIConfig.PANEL_WIDTH - gap) // 2
         row_h = UIConfig.BUTTON_HEIGHT + gap
         bottom = UIConfig.BORDER + UIConfig.PANEL_HEIGHT - gap
+        # Buttons stack upward from the bottom of the panel.
+        # x = left column, x + half_w + gap = right column.
 
         self.buttons["start"].set_relative_position((x, bottom - row_h))
         self.buttons["stop"].set_relative_position((x, bottom - row_h))
@@ -265,7 +269,7 @@ class UIPanel:
         self.buttons["clear"].set_relative_position((x, bottom - row_h * 4))
         self.floorplan_picker.set_relative_position((x, bottom - row_h * 5))
 
-    def draw(self, surface, state, fps, dt, running_time=0.0, simulation_time=0.0, num_agents=0, evacuated_agents=0):
+    def draw(self, surface, state, fps, dt, running_time=0.0, simulation_time=0.0, num_agents=0, evacuated_agents=0, selected_agent_info=None):
         self.tween.update(dt)
         x = self.tween.value
         self.layout_buttons(x)
@@ -316,12 +320,23 @@ class UIPanel:
         remaining = num_agents - evacuated_agents
 
         cursor.render(label, colour=label_colour, space_before=4, space_after=5)
+        cursor.render(f"FPS: {int(fps)}", colour=(255, 255, 255) if fps > self.simulation_rate else (255, 255, 0))
         cursor.render(f"Evacuees: {remaining}")
-        cursor.render(f"Evacuated: {evacuated_agents}/{num_agents}")
-        cursor.render(f"FPS: {int(fps)}", space_after=10)
+        cursor.render(f"Evacuated: {evacuated_agents}/{num_agents}", space_after=10)
+        
 
         for line in INSTRUCTIONS.get(state, []):
             cursor.render(line)
+
+        if selected_agent_info:
+            cursor.render(f"Size: {selected_agent_info['size_m']:.2f} m")
+            cursor.render(f"Max speed: {selected_agent_info['speed_m']:.2f} m/s")
+            cursor.render(f"Velocity: {selected_agent_info['velocity']:.2f} m/s")
+
+        if state == "EDITING" and num_agents == 0:
+            self.buttons["start"].disable()
+        else:
+            self.buttons["start"].enable()
 
 
 class TextCursor:
@@ -413,33 +428,12 @@ class SimWindow:
 
         self.floorplan = None
         self.crosshair = None
-        self.grid_surface = None
 
         self.opacity_tween = Tween(start=0, end=255, duration=0.7)
 
     def update_floorplan(self, floorplan):
         self.floorplan = floorplan
         self.crosshair = Crosshair(floorplan, self.sim_config)
-        self.build_grid()
-
-    def build_grid(self):
-        if self.floorplan is None:
-            self.grid_surface = None
-            return
-
-        spacing = int(self.sim_config.pixels_per_meter)
-        if spacing <= 0:
-            self.grid_surface = None
-            return
-
-        grid_colour = (200, 200, 200, 128)
-        grid = pygame.Surface((self.floorplan.width, self.floorplan.height), pygame.SRCALPHA)
-        for x in range(0, self.floorplan.width, spacing):
-            pygame.draw.line(grid, grid_colour, (x, 0), (x, self.floorplan.height))
-        for y in range(0, self.floorplan.height, spacing):
-            pygame.draw.line(grid, grid_colour, (0, y), (self.floorplan.width, y))
-
-        self.grid_surface = grid
 
     def is_within_bounds(self, x, y, margin=0):
         if self.floorplan is None:
@@ -455,20 +449,17 @@ class SimWindow:
         self.opacity_tween.enter(delay)
 
     def draw(self, surface, simulation, dt, scene_data=None, show_paths=False,
-             show_crosshair=False, mouse_pos=None, tool="agent", roadmap_index=0):
+             show_crosshair=False, mouse_pos=None, tool="agent", roadmap_index=0, selected_agent=None):
         fp = self.floorplan
 
         buffer = pygame.Surface((fp.width, fp.height), pygame.SRCALPHA)
 
-        # Background layers
         buffer.blit(fp.bg_surface, (0, 0))
-        buffer.blit(self.grid_surface, (0, 0))
+        buffer.blit(fp.grid_surface, (0, 0))
         buffer.blit(fp.walls_surface, (0, 0))
 
         # Border
-        pygame.draw.rect(buffer, (0, 0, 0),
-                         pygame.Rect(0, 0, fp.width, fp.height),
-                         self.BORDER_THICKNESS)
+        pygame.draw.rect(buffer, (0, 0, 0), pygame.Rect(0, 0, fp.width, fp.height), self.BORDER_THICKNESS)
 
         exits = scene_data.exits  if scene_data else simulation.exits
         agents = scene_data.agents if scene_data else simulation.agents
@@ -476,13 +467,18 @@ class SimWindow:
         for exit_obj in exits:
             buffer.blit(exit_obj.image, exit_obj.rect)
 
-        if show_paths and simulation.roadmaps:
+        if show_paths:
             self.draw_roadmap(buffer, simulation, roadmap_index)
 
         for agent in agents:
             buffer.blit(agent.image, agent.rect)
 
-        if show_crosshair and self.crosshair and mouse_pos:
+        if selected_agent:
+            cx, cy = selected_agent.rect.center
+            ring_radius = selected_agent.radius + 4
+            pygame.draw.circle(buffer, (255, 255, 0), (cx, cy), ring_radius, 2)
+
+        if show_crosshair and mouse_pos:
             self.crosshair.draw(buffer, mouse_pos, tool)
 
         self.opacity_tween.update(dt)

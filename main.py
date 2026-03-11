@@ -38,7 +38,7 @@ class EvacuationSimulator:
         )
         pygame.display.set_caption("Evacuation Simulator")
         self.clock = pygame.time.Clock()
-        self.display_config.fps = pygame.display.get_current_refresh_rate()
+        self.display_config.fps = pygame.display.get_current_refresh_rate() * 1.5
 
         self.ui_manager = pygame_gui.UIManager(
             (self.display_config.screen_width, self.display_config.screen_height),
@@ -58,6 +58,7 @@ class EvacuationSimulator:
             self.floorplan_filename,
             self.colours,
             state_getter=lambda: self.state,
+            simulation_rate = self.simulation.simulation_rate,
         )
         self.agent_panel = AgentPanel(
             self.ui_manager,
@@ -75,7 +76,7 @@ class EvacuationSimulator:
             self.colours.bg_bottom,
         )
 
-        self.state = AppState.LOADING
+        #self.state = AppState.LOADING
         self.tool = "agent"
         self.show_paths = False
         self.roadmap_index = 0
@@ -84,11 +85,15 @@ class EvacuationSimulator:
         self.default_agent_type = AgentType.default(self.sim_config)
         self.editing_agent_type = self.default_agent_type
         self.last_selected_agent_index = None
+        self.selected_agent = None
+
+
 
     def run(self):
         self.set_state(AppState.LOADING)
 
         while True:
+            self.clock.tick(self.display_config.fps)
             dt = self.clock.get_time() / 1000.0
 
             self.handle_events()
@@ -96,7 +101,6 @@ class EvacuationSimulator:
             self.render(dt)
 
             pygame.display.update()
-            self.clock.tick(self.display_config.fps)
 
     def handle_events(self):
         for event in pygame.event.get():
@@ -116,11 +120,30 @@ class EvacuationSimulator:
             elif event.type == pygame_gui.UI_TEXT_ENTRY_FINISHED:
                 self.agent_panel.handle_text_entry_finished(event.ui_element)
 
-            elif event.type == MOUSEBUTTONUP and self.state == AppState.EDITING:
-                self.on_editing_click(event)
+            elif event.type == MOUSEBUTTONUP:
+                mx, my = event.pos
+                # Add or remove exits
+                if self.state == AppState.EDITING and self.tool == "exit" and self.sim_window.is_within_bounds(mx, my):
+                    if event.button == 1:
+                        self.scene_data.add_exit(mx, my, self.sim_config)
+                    elif event.button == 3:
+                        self.scene_data.remove_exit_at(mx, my)
+
+                elif self.state == AppState.RUNNING:
+                    if event.button == 3:
+                        if self.sim_window.is_within_bounds(mx, my):
+                            local_x, local_y = self.floorplan.screen_to_sim(mx, my)
+                            for agent in self.simulation.agents:
+                                if agent.rect.collidepoint((local_x, local_y)):
+                                    self.selected_agent = agent
+                                    break
+                                else:
+                                    self.selected_agent = None
+                    else:
+                        self.selected_agent = None
 
             elif event.type == MOUSEBUTTONDOWN:
-                self.on_mouse_down(event)
+                self.check_agent_panel(event)
 
             self.ui_manager.process_events(event)
 
@@ -190,9 +213,9 @@ class EvacuationSimulator:
             self.last_selected_agent_index = self.agent_panel.focused_index
             self.agent_panel.focused_index = None
 
-    def on_mouse_down(self, event):
+    def check_agent_panel(self, event):
         if self.state == AppState.EDITING:
-            if self.agent_panel.handle_click(event.pos):
+            if self.agent_panel.handle_click(event.pos):    # True if a card was clicked
                 idx = self.agent_panel.focused_index
                 if idx is not None and idx < len(self.agent_panel.cards):
                     self.editing_agent_type = self.agent_panel.cards[idx].agent_type
@@ -201,16 +224,6 @@ class EvacuationSimulator:
                 if self.tool == "exit":
                     self.select_tool("agent")
 
-    def on_editing_click(self, event):
-        if self.tool != "exit":
-            return
-        mx, my = event.pos
-        if not self.sim_window.is_within_bounds(mx, my):
-            return
-        if event.button == 1:
-            self.scene_data.add_exit(mx, my, self.sim_config)
-        elif event.button == 3:
-            self.scene_data.remove_exit_at(mx, my)
 
     def handle_agent_placement(self):
         mx, my = pygame.mouse.get_pos()
@@ -249,8 +262,10 @@ class EvacuationSimulator:
             self.ui_panel.show_editing_buttons()
 
         elif new_state == AppState.RUNNING:
+            self.selected_agent = None
             self.copy_scene_to_simulation()
             self.simulation.start()
+            self.clock.tick()  # discard time spent on roadmap construction
             self.ui_panel.show_running_buttons()
             self.last_selected_agent_index = self.agent_panel.focused_index
             self.agent_panel.focused_index = None
@@ -259,7 +274,7 @@ class EvacuationSimulator:
             self.ui_panel.show_completed_buttons()
             self.last_selected_agent_index = self.agent_panel.focused_index
             self.agent_panel.focused_index = None
-            log(f"All agents evacuated in {self.simulation.time:.3f}s")
+            log(f"All agents evacuated in {self.simulation.real_time:.3f}s")
 
     def copy_scene_to_simulation(self):
         self.simulation.agents.empty()
@@ -270,9 +285,6 @@ class EvacuationSimulator:
             self.simulation.exits.add(exit_obj.copy())
 
     def load_floorplan(self):
-        if self.floorplan_filename not in self.available_floorplans:
-            self.floorplan_filename = self.available_floorplans[0]
-
         # Apply per-floorplan PPM
         old_ppm = self.sim_config.pixels_per_meter
         self.sim_config.pixels_per_meter = FloorplanManager.get_pixels_per_meter(
@@ -280,7 +292,6 @@ class EvacuationSimulator:
         )
         if self.sim_config.pixels_per_meter != old_ppm:
             self.scene_data.update_ppm(self.sim_config.pixels_per_meter)
-            self.agent_panel.pixels_per_meter = self.sim_config.pixels_per_meter
 
         # Initialise RVO and pass floorplan for extracting geometry
         self.simulation.initialize_rvo()
@@ -335,22 +346,33 @@ class EvacuationSimulator:
     def render(self, dt):
         self.screen.blit(self.background, (0, 0))
 
-        if self.state == AppState.EDITING:
-            num_agents = len(self.scene_data.agents)
-            evacuated = 0
+        sd_num_agents = len(self.scene_data.agents)
+        evacuated = self.simulation.evacuated_count
+
+        agent_details = None
+        if self.selected_agent and self.selected_agent in self.simulation.agents:
+            a = self.selected_agent
+            vel = self.simulation.rvo_sim.get_agent_velocity(a.rvo_id)
+            mpp = self.sim_config.meters_per_pixel
+            speed_mps = (vel.x ** 2 + vel.y ** 2) ** 0.5 * mpp
+            agent_details = {
+                "size_m": a.radius * mpp * 2,
+                "speed_m": a.speed * mpp,
+                "velocity": speed_mps,
+            }
         else:
-            num_agents = self.simulation.agent_count + self.simulation.evacuated_count
-            evacuated = self.simulation.evacuated_count
+            self.selected_agent = None
 
         self.ui_panel.draw(
             self.screen,
             self.state.name,
             self.clock.get_fps(),
             dt,
-            self.simulation.time,
+            self.simulation.real_time,
             self.simulation.simulation_time,
-            num_agents,
+            sd_num_agents,
             evacuated,
+            agent_details,
         )
         self.agent_panel.draw(self.screen, dt)
 
@@ -371,6 +393,7 @@ class EvacuationSimulator:
             mouse_pos=mouse_pos,
             tool=self.tool,
             roadmap_index=self.roadmap_index,
+            selected_agent=self.selected_agent,
         )
 
         self.ui_manager.draw_ui(self.screen)

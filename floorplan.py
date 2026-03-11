@@ -26,12 +26,15 @@ class Floorplan:
         self.wall_polygons = []
         self.bg_surface = None
         self.walls_surface = None
+        self.grid_surface = None
 
         self.width = self.height = self.offset_x = self.offset_y = 0
 
     def load(self, rvo_sim):
         self.load_and_scale_image()
-        self.extract_walls(rvo_sim)
+        self.extract_walls()
+        self.build_walls_surface()
+        self.register_wall_obstacles(rvo_sim)
         self.add_border_obstacles(rvo_sim)
 
     def is_within_bounds(self, x, y, margin=0):
@@ -74,18 +77,18 @@ class Floorplan:
         )
 
 
-    def extract_walls(self, rvo_sim):
+    def extract_walls(self):
         im_w, im_h = self.image.get_size()
         scale = min(self.width / im_w, self.height / im_h)
 
         # Build per-pixel quads for every "wall" pixel
         brightness = pygame.surfarray.array3d(self.image).mean(axis=2)
-        is_wall = brightness < WALL_BRIGHTNESS_THRESHOLD
+        wall = brightness < WALL_BRIGHTNESS_THRESHOLD
 
         pixel_quads = []
         for y in range(im_h):
             for x in range(im_w):
-                if is_wall[x, y]:
+                if wall[x, y]:
                     x1, y1 = x * scale, y * scale
                     x2, y2 = (x + 1) * scale, (y + 1) * scale
                     pixel_quads.append(Polygon([(x1, y1), (x2, y1), (x2, y2), (x1, y2)]))
@@ -95,14 +98,11 @@ class Floorplan:
         merged = merged.simplify(WALL_SIMPLIFY_TOLERANCE, preserve_topology=True)
 
         if merged.geom_type == "Polygon":
-            self.wall_polygons = [merged]
+            self.wall_polygons = [merged] # unary_union can return a single Polygon if all quads are connected
         elif merged.geom_type == "MultiPolygon":
-            self.wall_polygons = list(merged.geoms)
+            self.wall_polygons = list(merged.geoms) # Convert MultiPolygon to a list of Polygons so we can iterate over them more easily
         else:
             self.wall_polygons = []
-
-        self.build_walls_surface()
-        self.register_wall_obstacles(rvo_sim)
 
     def build_walls_surface(self):
         self.bg_surface = create_gradient(
@@ -113,25 +113,46 @@ class Floorplan:
         self.walls_surface = pygame.Surface(
             (self.width, self.height), pygame.SRCALPHA
         )
+        self.grid_surface = self.build_grid()
+        
         for poly in self.wall_polygons:
             pygame.draw.polygon(
                 self.walls_surface,
                 self.colours.wall,
                 list(poly.exterior.coords),
             )
+            # Cut out holes so they aren't filled in
+            for hole in poly.interiors:
+                pygame.draw.polygon(
+                    self.walls_surface,
+                    (0, 0, 0, 0),
+                    list(hole.coords),
+                )
+
+    def build_grid(self):
+        spacing = int(self.sim_config.pixels_per_meter)
+
+        grid_colour = (200, 200, 200, 128)
+        grid = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
+        for x in range(0, self.width, spacing):
+            pygame.draw.line(grid, grid_colour, (x, 0), (x, self.height))
+        for y in range(0, self.height, spacing):
+            pygame.draw.line(grid, grid_colour, (0, y), (self.width, y))
+
+        return grid
 
     def register_wall_obstacles(self, rvo_sim):
         for poly in self.wall_polygons:
             # RVO2 expects counter-clockwise winding
-            exterior = [(float(x), float(y)) for x, y in poly.exterior.coords[:-1]]
+            exterior = list(poly.exterior.coords)
             exterior.reverse()
-            if len(exterior) >= 2:
-                rvo_sim.add_obstacle(exterior)
+            rvo_sim.add_obstacle(exterior)
 
+            # If there are rooms or floorplans that are completely enclosed interior coordinates need to be processed
             for hole in poly.interiors:
-                interior = [(float(x), float(y)) for x, y in hole.coords[:-1]]
-                if len(interior) >= 2:
-                    rvo_sim.add_obstacle(interior)
+                interior = list(hole.coords)
+                interior.reverse()
+                rvo_sim.add_obstacle(interior)
 
     def add_border_obstacles(self, rvo_sim):
         w, h = self.width, self.height

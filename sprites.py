@@ -9,13 +9,9 @@ def has_wall_collision(sim_x, sim_y, radius, wall_polygons):
     return any(circle.intersects(poly) for poly in wall_polygons)
 
 
-def has_agent_collision(sim_pos, radius, all_agents, exclude_agent=None):
+def has_agent_collision(sim_pos, radius, all_agents):
     test_circle = Point(sim_pos).buffer(radius)
-    return any(
-        test_circle.intersects(Point(agent.sim_pos).buffer(agent.radius))
-        for agent in all_agents
-        if agent != exclude_agent
-    )
+    return any(test_circle.intersects(Point(agent.sim_pos).buffer(agent.radius)) for agent in all_agents)
 
 
 class Agent(pygame.sprite.Sprite):

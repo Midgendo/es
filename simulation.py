@@ -8,7 +8,8 @@ import pyrvo
 from sprites import Agent
 
 
-SIMULATION_STEP = 1.0 / 60.0
+SIMULATION_RATE = 60
+SIMULATION_STEP = 1.0 / SIMULATION_RATE
 NODE_DIST_METERS = 2.0  # Distance where nodes are connected
 GRID_SPACING_METRES = 0.25  # How close together nodes are
 REACHED_EXIT_THRESHOLD = 40 # pixels
@@ -29,13 +30,15 @@ class Simulation:
 
         self.rvo_sim = None
 
-        self.time = 0.0
+        self.real_time = 0.0
         self.simulation_time = 0.0
         self.evacuated_count = 0
         self.paused = False
         self.time_accumulator = 0.0
 
         self.floorplan = None
+
+        self.simulation_rate = SIMULATION_RATE
 
     def initialize_rvo(self):
         cfg = self.sim_config
@@ -62,7 +65,7 @@ class Simulation:
                     self.roadmaps[agent.radius] = self.build_roadmap(agent.radius)
         self.log(f"{len(self.roadmaps)} roadmaps built for agent radii: {list(self.roadmaps.keys())}", "D")
 
-        self.time = 0.0
+        self.real_time = 0.0
         self.simulation_time = 0.0
         self.evacuated_count = 0
         self.paused = False
@@ -74,7 +77,7 @@ class Simulation:
 
         self.roadmaps: dict[int, Roadmap] = {}
 
-        self.time = 0.0
+        self.real_time = 0.0
         self.simulation_time = 0.0
         self.evacuated_count = 0
         self.paused = False
@@ -88,7 +91,7 @@ class Simulation:
         if self.paused:
             return False
 
-        self.time += dt
+        self.real_time += dt
         self.time_accumulator += dt
 
         if self.time_accumulator < SIMULATION_STEP:
@@ -183,7 +186,7 @@ class Simulation:
             for v in roadmap[u].neighbors:
                 dx = roadmap[v].position[0] - roadmap[u].position[0]
                 dy = roadmap[v].position[1] - roadmap[u].position[1]
-                edge_len = (dx ** 2 + dy ** 2) ** 0.5
+                edge_len = (dx * dx + dy * dy) ** 0.5
 
                 if dist[v] > d_u + edge_len:
                     dist[v] = d_u + edge_len
@@ -211,7 +214,8 @@ class Simulation:
                     continue
                 dx = vertex.position[0] - pos[0]
                 dy = vertex.position[1] - pos[1]
-                cost = (dx ** 2 + dy ** 2) ** 0.5 + vertex.dist_to_exit
+                # Distance to a vertex + it's distance to the nearest exit
+                cost = (dx * dx + dy * dy) ** 0.5 + vertex.dist_to_exit
                 if cost < best_cost:
                     if self.rvo_sim.query_visibility(pos, vertex.position, agent.radius):
                         best_cost = cost
@@ -234,20 +238,21 @@ class Simulation:
     def velocity_toward(origin, target, speed):
         dx = target[0] - origin[0]
         dy = target[1] - origin[1]
-        dist = (dx ** 2 + dy ** 2) ** 0.5
+        dist = (dx * dx + dy * dy) ** 0.5
         if dist > 1.0:
             return (dx / dist * speed, dy / dist * speed)
         return (0.0, 0.0)
 
     def collect_arrived_agents(self):
         arrived = set()
+        REACHED_EXIT_THRESHOLD_SQ = REACHED_EXIT_THRESHOLD ** 2
         for agent in self.agents:
             rm = self.roadmaps[agent.radius]
             for exit_idx in rm.exit_indices:
                 exit_pos = rm.vertices[exit_idx].position
                 dx = agent.sim_pos[0] - exit_pos[0]
                 dy = agent.sim_pos[1] - exit_pos[1]
-                if (dx ** 2 + dy ** 2) < REACHED_EXIT_THRESHOLD ** 2:
+                if dx * dx + dy * dy < REACHED_EXIT_THRESHOLD_SQ:
                     arrived.add(agent)
                     break
         return arrived
