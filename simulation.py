@@ -5,7 +5,6 @@ import heapq
 import pygame
 import pyrvo
 
-from sprites import Agent
 
 
 SIMULATION_RATE = 60
@@ -58,12 +57,12 @@ class Simulation:
         self.floorplan = floorplan
 
     def start(self):
-        for agent in self.agents:
-            if agent.rvo_id is None:
-                agent.register_with_rvo(self.rvo_sim)
-                if agent.radius not in self.roadmaps:
-                    self.roadmaps[agent.radius] = self.build_roadmap(agent.radius)
-        self.log(f"{len(self.roadmaps)} roadmaps built for agent radii: {list(self.roadmaps.keys())}", "D")
+        # Caller must clear agents and add agents
+        for agent in self.agents:        
+            agent.register_with_rvo(self.rvo_sim)
+            if agent.radius not in self.roadmaps:
+                self.roadmaps[agent.radius] = self.build_roadmap(agent.radius)
+        self.log(f"{len(self.roadmaps)} roadmaps for agent radii: {list(self.roadmaps.keys())}", "D")
 
         self.real_time = 0.0
         self.simulation_time = 0.0
@@ -71,17 +70,8 @@ class Simulation:
         self.paused = False
         self.time_accumulator = 0.0
 
-    def reset(self):
-        self.agents.empty()
-        self.exits.empty()
-
+    def clear_roadmap(self):
         self.roadmaps: dict[int, Roadmap] = {}
-
-        self.real_time = 0.0
-        self.simulation_time = 0.0
-        self.evacuated_count = 0
-        self.paused = False
-        self.time_accumulator = 0.0
 
     def toggle_pause(self):
         self.paused = not self.paused
@@ -96,28 +86,22 @@ class Simulation:
 
         if self.time_accumulator < SIMULATION_STEP:
             return False
-        self.time_accumulator -= SIMULATION_STEP
+        self.time_accumulator = 0.0
 
-        arrived = self.collect_arrived_agents()
-
-        self.set_preferred_velocities()
+        self.check_arrived_agents()
 
         if mouse_override:
             self.apply_mouse_override(mouse_override)
+        else:
+            self.set_preferred_velocities()
 
         self.rvo_sim.do_step()
         self.simulation_time += SIMULATION_STEP
 
         for agent in self.agents:
-            if agent not in arrived:
-                agent.update_position(self.rvo_sim)
+            agent.update_position(self.rvo_sim)
 
-        for agent in arrived:
-            self.rvo_sim.set_agent_radius(agent.rvo_id, 0.0)
-            self.agents.remove(agent)
-            self.evacuated_count += 1
-
-        return len(self.agents) == 0
+        return self.agent_count == 0
 
 
     @property
@@ -152,7 +136,7 @@ class Simulation:
         # Connect roadmap vertices if they're within range and unobstructed.
         max_edge_len_sq = max_edge_len ** 2 # Compare squared distances to avoid computing sqrt for every pair.
         verts = rm.vertices
-        # Test each pair only once, edges added both ways.
+        # edges added both ways.
         for i in range(len(verts)):
             ni = verts[i]
             for j in range(i + 1, len(verts)):
@@ -196,14 +180,8 @@ class Simulation:
             vertex.dist_to_exit = dist[i]
 
     def set_preferred_velocities(self):
-        """
-        For every agent, find the visible roadmap vertex that minimises 
-        the distance to that vertex + its distance to the nearest exit.
-        """
+        """For every agent, find the visible roadmap vertex that minimises the distance to that vertex + its distance to nearest exit."""
         for agent in self.agents:
-            if agent.rvo_id is None:
-                continue
-
             rm = self.roadmaps[agent.radius]
             pos = agent.sim_pos
             best_cost = float("inf")
@@ -230,9 +208,8 @@ class Simulation:
     def apply_mouse_override(self, screen_target):
         sim_target = self.floorplan.screen_to_sim(*screen_target)
         for agent in self.agents:
-            if agent.rvo_id is not None:
-                pref_vel = self.velocity_toward(agent.sim_pos, sim_target, agent.speed)
-                self.rvo_sim.set_agent_pref_velocity(agent.rvo_id, pref_vel)
+            pref_vel = self.velocity_toward(agent.sim_pos, sim_target, agent.speed)
+            self.rvo_sim.set_agent_pref_velocity(agent.rvo_id, pref_vel)
 
     @staticmethod
     def velocity_toward(origin, target, speed):
@@ -243,8 +220,7 @@ class Simulation:
             return (dx / dist * speed, dy / dist * speed)
         return (0.0, 0.0)
 
-    def collect_arrived_agents(self):
-        arrived = set()
+    def check_arrived_agents(self):
         REACHED_EXIT_THRESHOLD_SQ = REACHED_EXIT_THRESHOLD ** 2
         for agent in self.agents:
             rm = self.roadmaps[agent.radius]
@@ -253,9 +229,10 @@ class Simulation:
                 dx = agent.sim_pos[0] - exit_pos[0]
                 dy = agent.sim_pos[1] - exit_pos[1]
                 if dx * dx + dy * dy < REACHED_EXIT_THRESHOLD_SQ:
-                    arrived.add(agent)
+                    self.rvo_sim.set_agent_radius(agent.rvo_id, 0.0)
+                    self.agents.remove(agent)
+                    self.evacuated_count += 1
                     break
-        return arrived
 
 class RoadmapVertex:
     """A single node in the pathfinding roadmap."""
@@ -265,8 +242,6 @@ class RoadmapVertex:
         self.dist_to_exit = dist_to_exit
 
 class Roadmap:
-    __slots__ = ("radius", "vertices", "exit_indices")  # Restrict instance attributes for memory efficiency
-
     def __init__(self, radius: int):
         self.radius = radius
         self.vertices: list[RoadmapVertex] = []

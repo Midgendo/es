@@ -1,5 +1,3 @@
-"""Serialisation helpers for saving/loading scene state to JSON."""
-
 import json
 import os
 from datetime import datetime

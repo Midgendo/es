@@ -2,7 +2,7 @@ import pygame
 import pygame_gui
 import pytweening
 
-from config import ColourScheme
+from config import ColourScheme, AppState as S
 from sprites import Agent, Exit, has_wall_collision, has_agent_collision
 
 
@@ -15,20 +15,20 @@ class Tween:
 
         self.value = start
         self.progress = 0.0
-        self._started = False
-        self._delay = 0.0
+        self.started = False
+        self.delay = 0.0
 
     def enter(self, delay=0.0):
-        self._started = True
+        self.started = True
         self.progress = 0.0
         self.value = self.start
-        self._delay = delay
+        self.delay = delay
 
     def update(self, dt):
-        if not self._started or self.progress >= 1.0:
+        if not self.started or self.progress >= 1.0:
             return
-        if self._delay > 0:
-            self._delay -= dt
+        if self.delay > 0:
+            self.delay -= dt
             return
         self.progress = min(self.progress + dt / self.duration, 1.0)
         self.value = self.start + (self.end - self.start) * self.easing(self.progress)
@@ -90,7 +90,7 @@ class SceneData:
         exit_obj = Exit(
             local_x, local_y,
             number=len(self.exits) + 1,
-            radius=sim_config.agent_size * 1.2,
+            radius=self.ppm / 3,
             colour=(0, 200, 0),
         )
         self.exits.append(exit_obj)
@@ -160,16 +160,16 @@ def format_time(seconds):
 
 # Status label + colour per app-state
 STATE_LABELS = {
-    "LOADING": ("Loading...", (255, 255, 0)),
-    "RUNNING": ("Running", (0, 0, 255)),
-    "EDITING": ("Editing", (255, 100, 100)),
-    "COMPLETED": ("All agents evacuated!!", (0, 255, 0)),
+    S.LOADING: ("Loading...", (255, 255, 0)),
+    S.RUNNING: ("Running", (0, 0, 255)),
+    S.EDITING: ("Editing", (255, 100, 100)),
+    S.COMPLETED: ("All agents evacuated!!", (0, 255, 0)),
 }
 
 # Help text per app-state
 INSTRUCTIONS = {
-    "EDITING": ["Left click to place", "Right click to remove"],
-    "RUNNING": ["Left click to", "override agent targets", "",
+    S.EDITING: ["Left click to place", "Right click to remove"],
+    S.RUNNING: ["Left click to", "override agent targets", "",
                 "Right click on agent to", "show details", ""],
 }
 
@@ -182,10 +182,9 @@ class UIPanel:
     PAD = 10
     TITLE_BLOCK_WIDTH = 80
 
-    def __init__(self, manager, floorplan_options, current_floorplan, colours, state_getter, simulation_rate):
+    def __init__(self, manager, floorplan_options, current_floorplan, colours, simulation_rate):
         self.colours = colours
         self.manager = manager
-        self.state_getter = state_getter
         self.simulation_rate = simulation_rate
 
         # Animation
@@ -301,7 +300,7 @@ class UIPanel:
             Fonts.TIMER.render("88:88.888", True, self.SHADOW_COLOUR),
             (x + self.PAD + self.SHADOW_OFFSET, cursor.y + self.SHADOW_OFFSET),
         )
-        text = format_time(simulation_time) if state in ("RUNNING", "COMPLETED") else "--:--.---"
+        text = format_time(simulation_time) if state in (S.RUNNING, S.COMPLETED) else "--:--.---"
         cursor.render(text, Fonts.TIMER, (255, 165, 0), space_after=5)
 
         # Real-time timer
@@ -309,7 +308,7 @@ class UIPanel:
             Fonts.TIMER2.render("88:88.888", True, self.SHADOW_COLOUR),
             (x + self.PAD + self.SHADOW_OFFSET - 1, cursor.y + self.SHADOW_OFFSET - 1),
         )
-        text = format_time(running_time) if state in ("RUNNING", "COMPLETED") else "--:--.---"
+        text = format_time(running_time) if state in (S.RUNNING, S.COMPLETED) else "--:--.---"
         cursor.render(text, Fonts.TIMER2, (0, 225, 0), space_after=6, advance=False)
         cursor.render(
             "Rt", Fonts.DEFAULT_SMALL_ITALIC, (0, 225, 0), x_offset=100 + self.PAD, shadow=True, space_before=8, shadow_offset=self.SHADOW_OFFSET - 1
@@ -317,9 +316,8 @@ class UIPanel:
 
         # Status info
         label, label_colour = STATE_LABELS.get(state, ("Unknown", (255, 255, 255)))
-        remaining = num_agents - evacuated_agents
-
-        cursor.render(label, colour=label_colour, space_before=4, space_after=5)
+        remaining = (num_agents - evacuated_agents) if evacuated_agents != '-' else num_agents
+        cursor.render(label, colour=label_colour, space_before=6, space_after=5)
         cursor.render(f"FPS: {int(fps)}", colour=(255, 255, 255) if fps > self.simulation_rate else (255, 255, 0))
         cursor.render(f"Evacuees: {remaining}")
         cursor.render(f"Evacuated: {evacuated_agents}/{num_agents}", space_after=10)
@@ -333,7 +331,7 @@ class UIPanel:
             cursor.render(f"Max speed: {selected_agent_info['speed_m']:.2f} m/s")
             cursor.render(f"Velocity: {selected_agent_info['velocity']:.2f} m/s")
 
-        if state == "EDITING" and num_agents == 0:
+        if state == S.EDITING and num_agents == 0:
             self.buttons["start"].disable()
         else:
             self.buttons["start"].enable()
@@ -394,10 +392,10 @@ class Crosshair:
 
         size = self.sim_config.agent_size
         if tool == "exit":
-            side = size * 2.4
+            side = (self.sim_config.pixels_per_meter / 3) * 2
             pygame.draw.rect(overlay, self.COLOUR, (x - side / 2, y - side / 2, side, side), 1)
         else:
-            pygame.draw.circle(overlay, self.COLOUR, (x, y), size, 1)
+            pygame.draw.circle(overlay, self.COLOUR, (x, y), size, 1)   # Supposed to match agent size but broke when custom agent sizes were added
 
         # Coordinate tooltip
         mpp = self.sim_config.meters_per_pixel
@@ -478,7 +476,7 @@ class SimWindow:
             ring_radius = selected_agent.radius + 4
             pygame.draw.circle(buffer, (255, 255, 0), (cx, cy), ring_radius, 2)
 
-        if show_crosshair and mouse_pos:
+        if show_crosshair:
             self.crosshair.draw(buffer, mouse_pos, tool)
 
         self.opacity_tween.update(dt)

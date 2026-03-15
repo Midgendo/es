@@ -3,7 +3,7 @@
 import pygame
 import pygame_gui
 
-from config import AgentType, AppState
+from config import AgentType, AppState as S
 from ui import Fonts, create_gradient, Tween
 
 
@@ -56,7 +56,7 @@ class AgentTypeCard:
         self.active_input = pygame_gui.elements.UITextEntryLine(
             relative_rect=rect, manager=self.manager, object_id=f"#agent_input"
         )
-        self.active_input.text_length_limit = 4
+        self.active_input.text_length_limit = 8
         self.active_input.set_text(f"{current_value[0]}-{current_value[1]}")
 
     def close_editor(self):
@@ -73,11 +73,11 @@ class AgentTypeCard:
         lo, hi = (0.1, 1.5) if self.active_field == "size" else (0.0, 10.0)
 
         try:
-            input = self.active_input.get_text().strip().split("-")
-            if len(input) == 1:
-                value = (float(input[0]), float(input[0]))
+            parts = self.active_input.get_text().strip().split("-")
+            if len(parts) == 1:
+                value = (float(parts[0]), float(parts[0]))
             else:
-                value = tuple(map(float, input))
+                value = tuple(map(float, parts))
         except ValueError:
             self.close_editor()
             return False
@@ -93,7 +93,9 @@ class AgentTypeCard:
         self.close_editor()
         return False
 
-    def draw(self, surface, x, y, dt, selected=False, panel_offset=(0, 0)):
+    def draw(self, surface, x, dt, selected=False, panel_offset=(0, 0)):
+        self.tween.update(dt)
+        y = self.tween.value
         cs = self.CHIP_SIZE
         buffer = pygame.Surface((self.WIDTH, self.HEIGHT + cs), pygame.SRCALPHA)
 
@@ -141,8 +143,6 @@ class AgentTypeCard:
         for ly in range(74, 108, 2):
             pygame.draw.line(buffer, line_colour, (0, ly), (self.WIDTH - 1, ly), line_width)
         
-        y = self.tween.value
-        self.tween.update(dt)
         surface.blit(buffer, (x, y))
 
     def draw_field(self, surface, field, label_text, text_x, text_y):
@@ -168,13 +168,11 @@ class AgentPanel:
     MAX_VISIBLE = 6
     PLUS_CIRCLE_R = 30
 
-    def __init__(self, manager, colours=None,
-                 sim_config=None, scene_data=None, state_getter=None):
+    def __init__(self, manager, colours=None, sim_config=None, scene_data=None):
         self.manager = manager
         self.colours = colours
         self.sim_config = sim_config
         self.scene_data = scene_data
-        self.state_getter = state_getter
 
         # Animation
         self.tween = Tween(start=800, end=800 - 108, duration=0.5)
@@ -234,11 +232,11 @@ class AgentPanel:
         return pygame.Rect(x, y, AgentTypeCard.WIDTH, AgentTypeCard.HEIGHT)
 
     def create_next_agent_type(self):
-        used = {
-            c.agent_type.name.split()[1]
-            for c in self.cards
-            if c.agent_type.name.startswith("Type ") and len(c.agent_type.name) > 5
-        }
+        used = set()
+        for c in self.cards:
+            name = c.agent_type.name
+            if name.startswith("Type ") and len(name) > 5:
+                used.add(name[5])
         letter = next((chr(65 + i) for i in range(5) if chr(65 + i) not in used), None)
         if letter is None:
             return False
@@ -284,15 +282,10 @@ class AgentPanel:
             return True     # Let the caller know a card was clicked
 
         # "+" card
-        if len(self.cards) < self.MAX_VISIBLE and self.state_getter() == AppState.EDITING:
-            plus_rect = pygame.Rect(
-                self.X + len(self.cards) * self.CARD_SPACING, self.tween.value,
-                AgentTypeCard.WIDTH, AgentTypeCard.HEIGHT,
-            )
+        if len(self.cards) < self.MAX_VISIBLE:
+            plus_rect = self.card_rect(len(self.cards))
             if plus_rect.collidepoint(mx, my):
-                rx, ry = mx - plus_rect.x, my - plus_rect.y
-                if rx + ry <= AgentTypeCard.WIDTH:
-                    return self.create_next_agent_type()
+                return self.create_next_agent_type()
 
         return False
 
@@ -303,7 +296,7 @@ class AgentPanel:
                 return True
         return False
 
-    def draw(self, surface, dt):
+    def draw(self, surface, dt, state):
         self.tween.update(dt)
 
         x, y = self.X, self.tween.value
@@ -329,15 +322,15 @@ class AgentPanel:
         # Cards
         for i, card in enumerate(self.cards):
             card_x, card_y = self.card_position(i)
-            card.draw(panel, card_x + px, card_y + py, dt,
+            card.draw(panel, card_x + px, dt,
                       selected=(i == self.focused_index), panel_offset=(x, y))
 
             # Delete chip "−" label
-            if self.state_getter() == AppState.EDITING:
+            if state == S.EDITING:
                 self.draw_delete_chip(panel, card, card_x + px, card_y + py)
 
         # "+" card
-        if len(self.cards) < self.MAX_VISIBLE and self.state_getter() == AppState.EDITING:
+        if len(self.cards) < self.MAX_VISIBLE and state == S.EDITING:
             self.draw_plus_card(panel)
 
         # Alpha mask

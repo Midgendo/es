@@ -52,9 +52,6 @@ class Agent(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(center=center)
 
     def update_position(self, rvo_sim):
-        if self.rvo_id is None:
-            return
-
         pos = rvo_sim.get_agent_position(self.rvo_id)
         self.sim_pos = (pos.x, pos.y)
         self.rect.center = (pos.x, pos.y)

@@ -11,6 +11,7 @@ from ui import create_gradient
 
 WALL_BRIGHTNESS_THRESHOLD = 50   # pixels darker than this are treated as walls
 WALL_SIMPLIFY_TOLERANCE = 1.0  # Shapely simplification tolerance (px)
+DEFAULT_PPM = 70
 
 
 class Floorplan:
@@ -30,12 +31,15 @@ class Floorplan:
 
         self.width = self.height = self.offset_x = self.offset_y = 0
 
-    def load(self, rvo_sim):
+    def load(self):
         self.load_and_scale_image()
         self.extract_walls()
         self.build_walls_surface()
+
+    def prepare_rvo(self, rvo_sim):
         self.register_wall_obstacles(rvo_sim)
         self.add_border_obstacles(rvo_sim)
+        rvo_sim.process_obstacles()
 
     def is_within_bounds(self, x, y, margin=0):
         return (
@@ -81,7 +85,7 @@ class Floorplan:
         im_w, im_h = self.image.get_size()
         scale = min(self.width / im_w, self.height / im_h)
 
-        # Build per-pixel quads for every "wall" pixel
+        # Build quads for every "wall" pixel
         brightness = pygame.surfarray.array3d(self.image).mean(axis=2)
         wall = brightness < WALL_BRIGHTNESS_THRESHOLD
 
@@ -143,7 +147,7 @@ class Floorplan:
 
     def register_wall_obstacles(self, rvo_sim):
         for poly in self.wall_polygons:
-            # RVO2 expects counter-clockwise winding
+            # RVO2 expects counterclockwise winding
             exterior = list(poly.exterior.coords)
             exterior.reverse()
             rvo_sim.add_obstacle(exterior)
@@ -174,7 +178,7 @@ class FloorplanManager:
         return sorted(names) if names else ["floorplan.png"]
 
     @staticmethod
-    def get_pixels_per_meter(filename, default_value):
+    def get_pixels_per_meter(filename):
         config_path = os.path.join(
             FloorplanManager.FOLDER,
             f"{filename.rsplit('.', 1)[0]}.json",
@@ -182,6 +186,6 @@ class FloorplanManager:
         try:
             with open(config_path, "r") as f:
                 data = json.load(f)
-            return data.get("pixels_per_meter", default_value)
+            return data.get("pixels_per_meter", DEFAULT_PPM)
         except FileNotFoundError:
-            return default_value
+            return DEFAULT_PPM
